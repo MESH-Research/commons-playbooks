@@ -1,0 +1,64 @@
+#!/bin/bash
+
+# Backup a database. Upload daily and hourly snapshots to Amazon S3.
+# DUMP_COMMAND examples:
+#   MySQL:    mysqldump --all-databases --skip-lock-tables
+#             [credentials stored in ~/.my.cnf]
+#   Postgres: pg_dump -h localhost -U [user] [database]
+#             [credentials stored in ~/.my.cnf]
+
+# Example cron entry (:05 of every hour):
+# 5  *  *  *  *  ~/bin/backup-db-to-s3.sh >/dev/null 2>&1
+
+
+# Exit on error.
+set -e
+
+# Local configuration.
+BACKUP_DIR={{ admin_home_directory }}/s3
+BACKUP_SLUG={{ s3_backup_project | default('app') }}-db
+DUMP_COMMAND="mysqldump --skip-lock-tables {{ mysql_app_database }}"
+
+# AWS configuration.
+AWS_CLI=/usr/local/bin/aws
+S3_LOCATION=s3://{{ s3_backup_bucket }}/{{ s3_backup_project | default('app') }}/db
+S3_FLAGS="--sse"
+
+# Get the current date and time.
+DATE=`date +%Y%m%d`
+TIME=`date +%H%M%S`
+HOUR=`date +%H`
+
+# Make sure backup directory exists.
+mkdir -p $BACKUP_DIR
+
+# Delete link to latest database backup.
+rm -f $BACKUP_DIR/latest
+
+# Delete backups older than three days.
+find $BACKUP_DIR/*.sql.gz -mtime +3 | xargs rm -f
+
+# Define backup type.
+if [ $HOUR -eq "00" ]; then
+  BACKUP_PATH=daily
+  BACKUP_FILE=${BACKUP_SLUG}_${DATE}.sql.gz
+else
+  BACKUP_PATH=hourly
+  BACKUP_FILE=${BACKUP_SLUG}_${DATE}_${TIME}.sql.gz
+fi
+
+# Backup database.
+$DUMP_COMMAND | gzip -c | cat > $BACKUP_DIR/$BACKUP_FILE
+
+# Link to latest backup.
+ln -s $BACKUP_DIR/$BACKUP_FILE $BACKUP_DIR/latest
+
+# Get file size of backup file.
+BACKUP_SIZE=`ls -nl $BACKUP_DIR/$BACKUP_FILE | awk '{print $5}'`
+
+# Push dump to Amazon S3.
+$AWS_CLI s3 cp $BACKUP_DIR/$BACKUP_FILE $S3_LOCATION/$BACKUP_PATH/$BACKUP_FILE $S3_FLAGS
+
+# Publish CloudWatch metrics.
+$AWS_CLI cloudwatch put-metric-data --namespace "Backup" --metric-name "HourlyBackup" --dimensions "Agent=$BACKUP_SLUG" --value "1"
+$AWS_CLI cloudwatch put-metric-data --namespace "Backup" --metric-name "BackupSize" --dimensions "Agent=$BACKUP_SLUG" --value "$BACKUP_SIZE" --unit "Bytes"

@@ -1,0 +1,61 @@
+---
+
+- name: "Users | add admin user"
+  user:
+    name="{{ admin_user }}"
+    groups="sudoers,sshusers,www-data"
+    password="$6$OIzcrsr2oE7IbFh$GFzXEqlx3x56RJgB8.1vFLJyVDP9it7iMhPk2qOY/DJhEEEiHODju/yYIIjvvuoGcsjewLrycujLVi1r0ibrs."
+    shell="/bin/bash"
+    state="present"
+  tags:
+    - "common"
+    - "users"
+
+- name: "Users | add deploy user"
+  user:
+    name="{{ deploy_user }}"
+    groups="sudoers,sshusers,www-data"
+    shell="/bin/bash"
+    state="present"
+  when: deploy_user is defined
+  tags:
+    - "common"
+    - "users"
+
+- name: "Users | public keys for admin user"
+  authorized_key:
+    key="{{ lookup('file', item) }}"
+    user="{{ admin_user }}"
+  with_fileglob: "{{ authorized_keys_directory }}/*"
+  tags:
+    - "common"
+    - "users"
+
+- name: "Users | useful dotfiles for admin user"
+  copy:
+    src="{{ item }}"
+    dest="{{ admin_home_directory }}/.{{ item }}"
+    owner="{{ admin_user }}"
+    group="{{ admin_user }}"
+    mode="0644"
+  with_items:
+    - "tmux.conf"
+  tags:
+    - "common"
+    - "users"
+
+- name: "Users | useful directories for admin user"
+  file:
+    path="{{ admin_home_directory }}/{{ item }}"
+    state="directory"
+    owner="{{ admin_user }}"
+    group="{{ admin_user }}"
+    mode="0755"
+  with_items:
+    - "bin"
+    - "log"
+    - "pkg"
+    - "tmp"
+  tags:
+    - "common"
+    - "users"

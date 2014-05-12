@@ -1,0 +1,18 @@
+---
+
+- name: "UFW | deny all"
+  ufw:
+    policy="deny"
+  tags:
+    - "common"
+    - "ufw"
+
+- name: "UFW | allow rate-limited ssh"
+  ufw:
+    port="{{ ssh_port }}"
+    proto="tcp"
+    rule="limit"
+    state="enabled"
+  tags:
+    - "common"
+    - "ufw"

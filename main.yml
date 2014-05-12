@@ -1,0 +1,52 @@
+---
+
+# Requires Ansible >= 1.6
+
+- name: "Common"
+  hosts: "all"
+  sudo: "yes"
+  gather_facts: "yes"
+  roles:
+    - "common"
+
+- name: "WordPress DB"
+  hosts:
+    - "wordpress-db"
+    - "development"
+  sudo: "yes"
+  gather_facts: "yes"
+  roles:
+    - "mysql"
+
+- name: "WordPress Web"
+  hosts:
+    - "wordpress-web"
+    - "development"
+  sudo: "yes"
+  roles:
+    - "ssl"
+    - "nginx"
+    - "php-fpm"
+    - "wordpress"
+
+- name: "Development tasks"
+  hosts: "development"
+  sudo: "yes"
+  roles:
+    - "dns"
+
+- name: "Backup"
+  hosts: "wordpress-web"
+  sudo: "yes"
+  vars:
+    s3_backup_task: "wordpress"
+  roles:
+    - "s3-backup"
+
+- name: "Backup"
+  hosts: "wordpress-db"
+  sudo: "yes"
+  vars:
+    s3_backup_task: "mysql"
+  roles:
+    - "s3-backup"

@@ -1,0 +1,37 @@
+# Inventory
+
+[initialize]
+200.200.200.200 set_hostname=my-host-name
+
+[wordpress-web]
+200.200.200.200
+production-web-server
+
+[wordpress-db]
+production-db-server
+
+[development]
+development-server
+
+
+# Functional groups
+
+[production:children]
+wordpress-web
+wordpress-db
+
+[commons:children]
+production
+development
+
+
+# Group variables
+
+[commons:vars]
+# sensitive values
+
+[production:vars]
+# overrides
+
+[development:vars]
+# overrides

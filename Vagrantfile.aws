@@ -1,0 +1,57 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+
+  # Vagrant-AWS uses a dummy box:
+  # https://github.com/mitchellh/vagrant-aws
+  config.vm.box = "dummy"
+
+  # Use second parameter as machine name and hostname.
+  if ("#{ARGV[1]}" == "")
+    abort("Please provide a hostname, e.g.: `vagrant up hostname`")
+  end
+
+  # Forward SSH credentials.
+  config.ssh.forward_agent = true
+
+  # Provision with Ansible.
+  config.vm.provision :ansible do |ansible|
+
+    # Point to Ansible resources.
+    ansible.inventory_path = ENV['ANSIBLE_HOSTS']
+    ansible.playbook = "../commons-playbooks/main.yml"
+
+    # Send extra variables.
+    ansible.extra_vars = {
+      wordpress_install_directory: "/vagrant/app"
+    }
+
+  end
+
+  # Deploy using AWS.
+  config.vm.define "#{ARGV[1]}" do |machine|
+
+    machine.vm.hostname = "#{ARGV[1]}"
+
+    machine.vm.provider :aws do |aws, override|
+
+      # AWS credentials are stored in environment variables.
+      aws.access_key_id = ENV['VAGRANT_AWS_ACCESS_KEY_ID']
+      aws.secret_access_key = ENV['VAGRANT_AWS_SECRET_ACCESS_KEY']
+      aws.keypair_name = ENV['VAGRANT_AWS_KEYPAIR_NAME']
+
+      # Debian 7.5 wheezy x86_64 instance-store.
+      aws.ami = "ami-848a6eec"
+      aws.instance_type = "m1.small"
+      aws.security_groups = ENV['VAGRANT_AWS_SECURITY_GROUP']
+
+      # Override vagrant defaults.
+      override.ssh.username = "admin"
+      override.ssh.private_key_path = ENV['VAGRANT_AWS_PRIVATE_KEY']
+
+    end
+
+  end
+
+end

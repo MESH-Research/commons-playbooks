@@ -1,0 +1,10 @@
+---
+
+- name: "Timezone | set timezone"
+  copy:
+    content="{{ timezone }}"
+    dest="/etc/timezone"
+  notify: "update timezone"
+  tags:
+    - "common"
+    - "timezone"

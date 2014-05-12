@@ -1,0 +1,52 @@
+---
+
+- name: "Packages | basic"
+  apt:
+    pkg="{{ item }}"
+    state="present"
+    update_cache="true"
+  with_items:
+    - "atop"
+    - "cron"
+    - "curl"
+    - "diffutils"
+    - "dnsutils"
+    - "findutils"
+    - "git"
+    - "grep"
+    - "gzip"
+    - "hostname"
+    - "iotop"
+    - "less"
+    - "logrotate"
+    - "manpages"
+    - "nano"
+    - "python-setuptools"
+    - "python-software-properties"
+    - "rsync"
+    - "sed"
+    - "sudo"
+    - "tar"
+    - "telnet"
+    - "tmux"
+    - "ufw"
+    - "unzip"
+    - "vim"
+    - "wget"
+  tags:
+    - "common"
+    - "packages"
+
+- name: "Packages | pip"
+  easy_install:
+    name="pip"
+  tags:
+    - "common"
+    - "packages"
+
+- name: "Packages | awscli"
+  pip:
+    name="awscli"
+  tags:
+    - "common"
+    - "packages"

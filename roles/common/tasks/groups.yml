@@ -1,0 +1,12 @@
+---
+
+- name: "Groups | create admin groups"
+  group:
+    name="{{ item }}"
+    state="present"
+  with_items:
+    - sshusers
+    - sudoers
+  tags:
+    - "common"
+    - "groups"

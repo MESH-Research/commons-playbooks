@@ -1,0 +1,17 @@
+---
+
+- name: "Users | useful directories for admin user"
+  file:
+    path="{{ admin_home_directory }}/s3"
+    state="directory"
+    owner="{{ admin_user }}"
+    group="{{ admin_user }}"
+    mode="0755"
+  tags:
+    - "s3-backup"
+
+- include: "mysql.yml"
+  when: s3_backup_task == 'mysql'
+
+- include: "wordpress.yml"
+  when: s3_backup_task == 'wordpress'

@@ -1,0 +1,31 @@
+{
+  "Comment": "DNS records for zone {{ dns_aws_zone_id }}",
+  "Changes": [
+    {
+      "Action": "UPSERT",
+      "ResourceRecordSet": {
+        "Name": "{{ wordpress_hostname }}",
+        "Type": "A",
+        "TTL": 300,
+        "ResourceRecords": [
+          {
+            "Value": "{{ public_ip_address.stdout }}"
+          }
+        ]
+      }
+    },
+    {
+      "Action": "UPSERT",
+      "ResourceRecordSet": {
+        "Name": "*.{{ wordpress_hostname }}",
+        "Type": "A",
+        "TTL": 300,
+        "ResourceRecords": [
+          {
+            "Value": "{{ public_ip_address.stdout }}"
+          }
+        ]
+      }
+    }
+  ]
+}

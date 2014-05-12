@@ -1,0 +1,72 @@
+#!/bin/bash
+
+# Backup a directory or directories. Upload monthly and daily snapshots to
+# Amazon S3. Extend the latest daily snapshot with hourly tar incremental
+# snapshots. At the end of the day, the hourly snapshots are deleted and the
+# process repeats.
+
+# Example cron entry (:05 of every hour):
+# 5  *  *  *  *  ~/bin/backup-directory-to-s3.sh >/dev/null 2>&1
+
+
+# Exit on error.
+set -e
+
+# Local configuration.
+SOURCE_DIR={{ wordpress_install_directory }}/public/wp-content
+SOURCE_ITEMS="blogs.dir plugins themes uploads wptouch-data"
+BACKUP_DIR={{ admin_home_directory }}/s3
+BACKUP_SLUG={{ s3_backup_project | default('app') }}-www
+TAR_FLAGS=
+
+# AWS configuration.
+AWS_CLI=/usr/local/bin/aws
+S3_LOCATION=s3://{{ s3_backup_bucket }}/{{ s3_backup_project | default('app') }}/www
+S3_FLAGS="--sse"
+
+# Get the current date and time.
+DATE=`date +%Y%m%d`
+TIME=`date +%H%M%S`
+MONTH=`date +%Y%m`
+DAY=`date +%d%H`
+HOUR=`date +%H`
+
+# Define backup log file name.
+BACKUP_LOG=${BACKUP_SLUG}_${DATE}.log
+
+# Make sure backup directory exists.
+mkdir -p $BACKUP_DIR
+
+# Start over with new full backup every day.
+if [ $HOUR -eq "00" ]; then
+  rm $BACKUP_DIR/*.log
+  rm $BACKUP_DIR/*.tar.gz
+fi
+
+# Define backup type.
+if [ $DAY -eq "0100" ]; then
+  BACKUP_PATH=monthly
+  BACKUP_FILE=${BACKUP_SLUG}_${MONTH}.tar.gz
+elif [ $HOUR -eq "00" ]; then
+  BACKUP_PATH=daily
+  BACKUP_FILE=${BACKUP_SLUG}_${DATE}.tar.gz
+else
+  BACKUP_PATH=hourly
+  BACKUP_FILE=${BACKUP_SLUG}_${DATE}_${TIME}.tar.gz
+fi
+
+# Create incremental backup.
+tar $TAR_FLAGS -czf $BACKUP_DIR/$BACKUP_FILE --listed-incremental=$BACKUP_DIR/$BACKUP_LOG -C $SOURCE_DIR $SOURCE_ITEMS
+
+# Get file size of backup file.
+BACKUP_SIZE=`ls -nl $BACKUP_DIR/$BACKUP_FILE | awk '{print $5}'`
+
+# Push backup to Amazon S3.
+$AWS_CLI s3 cp $BACKUP_DIR/$BACKUP_FILE $S3_LOCATION/$BACKUP_PATH/$BACKUP_FILE $S3_FLAGS
+
+# Push log file to Amazon S3.
+$AWS_CLI s3 cp $BACKUP_DIR/$BACKUP_LOG $S3_LOCATION/$BACKUP_PATH/$BACKUP_LOG $S3_FLAGS
+
+# Publish CloudWatch metrics.
+$AWS_CLI cloudwatch put-metric-data --namespace "Backup" --metric-name "HourlyBackup" --dimensions "Agent=$BACKUP_SLUG" --value "1"
+$AWS_CLI cloudwatch put-metric-data --namespace "Backup" --metric-name "BackupSize" --dimensions "Agent=$BACKUP_SLUG" --value "$BACKUP_SIZE" --unit "Bytes"

@@ -1,0 +1,39 @@
+---
+
+- name: "WordPress | get new salts"
+  shell: curl https://api.wordpress.org/secret-key/1.1/salt/
+  register: "wordpress_salts"
+  tags:
+    - "wordpress"
+    - "config"
+
+- name: "WordPress | fetch remote config"
+  fetch:
+    src="{{ wordpress_install_directory }}/wp-config.php.j2"
+    dest="roles/wordpress/templates/"
+    fail_on_missing="yes"
+    flat="yes"
+  tags:
+    - "wordpress"
+    - "config"
+
+- name: "WordPress | create wp-config"
+  template:
+    src="wp-config.php.j2"
+    dest="{{ wordpress_install_directory }}/wp-config.php"
+    owner="{{ admin_user }}"
+    group="{{ admin_user }}"
+    mode="0644"
+  tags:
+    - "wordpress"
+    - "config"
+
+- name: "WordPress | disable e-mail notifications"
+  lineinfile:
+    dest="{{ wordpress_install_directory }}/wp-config.php"
+    regexp="^function wp_mail"
+    line="function wp_mail(){}"
+    state="present"
+  tags:
+    - "wordpress"
+    - "config"

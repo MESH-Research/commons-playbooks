@@ -1,0 +1,11 @@
+---
+
+- name: "Sudo | allow sudoers group"
+  lineinfile:
+    "dest='/etc/sudoers'
+    regexp='^%sudoers ALL'
+    line='%sudoers ALL=(ALL) NOPASSWD: ALL'
+    state='present'"
+  tags:
+    - "common"
+    - "sudo"

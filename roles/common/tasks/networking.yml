@@ -1,0 +1,11 @@
+---
+
+- name: "Networking | static networking"
+  template:
+    src="interfaces.j2"
+    dest="/etc/network/interfaces"
+  when: private_ip_address is defined
+  notify: "restart networking"
+  tags:
+    - "common"
+    - "networking"

@@ -1,0 +1,24 @@
+---
+
+- name: "Backup | install wordpress backup script"
+  template:
+    src="backup-directory-to-s3.sh.j2"
+    dest="{{ admin_home_directory }}/bin/backup-wordpress.sh"
+    owner="{{ admin_user }}"
+    group="{{ admin_user }}"
+    mode="0744"
+  when: s3_backup_bucket is defined
+  tags:
+    - "s3-backup"
+    - "wordpress"
+
+- name: "Backup | wordpress backup script cron job"
+  sudo: "no"
+  cron:
+    name="wordpress backup"
+    special_time="hourly"
+    job="~/bin/backup-wordpress.sh >> ~/log/backup-wordpress.log"
+  when: s3_backup_bucket is defined
+  tags:
+    - "s3-backup"
+    - "wordpress"

@@ -1,0 +1,10 @@
+---
+
+# Requires Ansible >= 1.6
+
+- name: "Common"
+  hosts: "initialize"
+  sudo: "yes"
+  gather_facts: "yes"
+  roles:
+    - "common"
