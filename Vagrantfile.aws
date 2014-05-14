@@ -5,7 +5,7 @@ Vagrant.configure("2") do |config|
 
   # Vagrant-AWS uses a dummy box.
   config.vm.box = "dummy"
-  config.vm.box_url = "https://github.com/mitchellh/vagrant-aws"
+  config.vm.box_url = "https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box"
 
   # Use second parameter as machine name and hostname.
   if ("#{ARGV[1]}" == "")
