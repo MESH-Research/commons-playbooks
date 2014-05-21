@@ -3,6 +3,7 @@ port = {{ mysql_port }}
 socket = /var/run/mysqld/mysqld.sock
 
 [mysqld]
+user=mysql
 bind-address = {{ mysql_bind_ip_address | default('127.0.0.1') }}
 port = {{ mysql_port }}
 socket = /var/run/mysqld/mysqld.sock
