@@ -34,10 +34,16 @@
     state="present"
   tags: "php-fpm"
 
+- name: "PHP-FPM | find PHP conf.d"
+  command: "ls -d /etc/php5/mods-available || echo /etc/php5/fpm/conf.d"
+  register: "php_mods_dir"
+  failed_when: "'ERROR' in php_mods_dir.stderr"
+  tags: "php-fpm"
+
 - name: "PHP-FPM | apc.ini"
   template:
     src="apc.ini.j2"
-    dest="/etc/php5/mods-available/apc.ini"
+    dest="{{ php_mods_dir.stdout }}/apc.ini"
   notify: "restart php-fpm"
   tags: "php-fpm"
 
