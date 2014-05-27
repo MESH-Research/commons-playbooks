@@ -32,6 +32,12 @@
     dest="{{ admin_home_directory }}/bin/wp-cli.phar"
   tags: "wordpress"
 
+- name: "WordPress | install SASS"
+  gem:
+    name="sass"
+    state="latest"
+  tags: "wordpress"
+
 - include: "import.yml"
 - include: "config.yml"
 - include: "migrate.yml"
