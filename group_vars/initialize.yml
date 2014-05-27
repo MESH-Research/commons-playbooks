@@ -1,9 +1,0 @@
----
-
-# This group is for non-Vagrant or bare-metal servers that need to have
-# admin/deploy accounts created for them.
-
-# You may need to use paramiko to get a password prompt:
-# ansible-playbook initialize.yml --ask-pass -c paramiko
-
-ansible_ssh_user: "root"

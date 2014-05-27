@@ -2,9 +2,17 @@
 
 # Requires Ansible >= 1.6
 
+# This playbook is for non-Vagrant or bare-metal servers that need to have
+# admin/deploy accounts created for them.
+
+# You may need to use paramiko to get a password prompt:
+# ansible-playbook initialize.yml --ask-pass -c paramiko
+
 - name: "Common"
   hosts: "initialize"
   sudo: "yes"
   gather_facts: "yes"
+  vars:
+    - ansible_ssh_user: "root"
   roles:
     - "common"
