@@ -19,14 +19,13 @@ the [vagrant-aws][vagrant-aws] plugin:
 
 ```sh
 vagrant plugin install vagrant-aws
-vagrant box add dummy https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box
 ```
 
 The Vagrantfiles are designed to let you stand up a development server just by
-adding an entry to `ansible_hosts` and typing:
+typing:
 
 ```sh
-vagrant up think-up-a-hostname
+vagrant up think-up-a-hostname --provider=aws
 ```
 
 
