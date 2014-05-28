@@ -42,7 +42,7 @@ Vagrant.configure("2") do |config|
       aws.keypair_name = ENV['VAGRANT_AWS_KEYPAIR_NAME']
 
       # Debian 7.5 wheezy x86_64 EBS us-east-1.
-      aws.ami = "ami-86896dee"
+      aws.ami = "ami-2c886c44"
       aws.instance_type = "m1.small"
       aws.security_groups = "commons"
 
