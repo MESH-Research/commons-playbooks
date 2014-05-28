@@ -15,6 +15,9 @@ Vagrant.configure("2") do |config|
   # Forward SSH credentials.
   config.ssh.forward_agent = true
 
+  # Configure synced folder.
+  config.vm.synced_folder "#{ARGV[1]}", "/home/admin/app", :create => "true"
+
   # Provision with Ansible.
   config.vm.provision :ansible do |ansible|
 
@@ -23,7 +26,6 @@ Vagrant.configure("2") do |config|
 
     # Send extra variables.
     ansible.extra_vars = {
-      wordpress_install_directory: "/vagrant/app",
       set_hostname: "#{ARGV[1]}"
     }
 
