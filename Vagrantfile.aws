@@ -19,7 +19,6 @@ Vagrant.configure("2") do |config|
   config.vm.provision :ansible do |ansible|
 
     # Point to Ansible resources.
-    ansible.inventory_path = ENV['ANSIBLE_HOSTS']
     ansible.playbook = "../commons-playbooks/development.yml"
 
     # Send extra variables.
