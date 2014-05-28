@@ -48,6 +48,7 @@
     regexp="^AuthorizedKeysFile"
     line="AuthorizedKeysFile %h/.ssh/authorized_keys"
     state="present"
+    insertbefore="BOF"
   notify: "restart ssh"
   tags:
     - "common"
@@ -59,6 +60,7 @@
     regexp="^AllowGroups"
     line="AllowGroups sshusers"
     state="present"
+    insertbefore="BOF"
   notify: "restart ssh"
   tags:
     - "common"
