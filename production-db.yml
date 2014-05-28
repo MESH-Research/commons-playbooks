@@ -1,0 +1,15 @@
+---
+
+- name: "Production DB server"
+  hosts: "production-db"
+  sudo: "yes"
+  gather_facts: "yes"
+  vars_files:
+    - "group_vars/production.yml"
+    - "~/.ansible/commons.yml"
+  vars:
+    s3_backup_task: "mysql"
+  roles:
+    - "common"
+    - "mysql"
+    - "s3-backup"
