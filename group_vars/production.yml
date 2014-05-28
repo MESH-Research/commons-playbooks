@@ -1,0 +1,5 @@
+---
+
+authorized_keys_directory: "~/.ssh/deploy/production/public"
+aws_credentials_file: "~/.aws/deploy/s3-backup"
+ssl_certs_directory: "~/.ssh/ssl/commons.mla.org"
