@@ -12,10 +12,3 @@ production-db-server
 
 [development]
 development-server
-
-
-# Functional groups
-
-[production:children]
-production-web
-production-db
