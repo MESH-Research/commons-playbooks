@@ -7,5 +7,7 @@
     php {{ admin_home_directory }}/bin/wp-cli.phar search-replace --skip-columns=guid --network --url='{{ wordpress_production_hostname }}' --path='{{ wordpress_install_directory }}/public' '{{ wordpress_production_hostname }}' '{{ wordpress_hostname }}' && touch {{ admin_home_directory }}/tmp/mysql.backup.migrated
   when: wordpress_production_hostname is defined
   tags:
+    - "s3-import"
     - "wordpress"
+    - "mysql"
     - "migrate"

@@ -39,5 +39,4 @@
   tags: "wordpress"
 
 - include: "config.yml"
-- include: "migrate.yml"
 - include: "nginx.yml"

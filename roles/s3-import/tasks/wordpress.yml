@@ -1,0 +1,62 @@
+---
+
+- name: "WordPress | fetch latest daily backup from s3"
+  sudo: "no"
+  shell:
+    creates="{{ admin_home_directory }}/tmp/wordpress.backup.tar.gz"
+    aws s3 cp {{ wordpress_s3_restore_file }} {{ admin_home_directory }}/tmp/wordpress.backup.tar.gz
+  tags:
+    - "s3-import"
+    - "wordpress"
+
+- name: "WordPress | extract latest backup"
+  sudo: "no"
+  shell:
+    creates="{{ wordpress_install_directory }}/public/wp-content/blogs.dir"
+    tar -xzf {{ admin_home_directory }}/tmp/wordpress.backup.tar.gz -C {{ wordpress_install_directory }}/public/wp-content
+  tags:
+    - "s3-import"
+    - "wordpress"
+
+- name: "WordPress | change directory permissions"
+  file:
+    path="{{ wordpress_install_directory }}/public/wp-content/{{ item }}"
+    owner="www-data"
+    group="www-data"
+    recurse="yes"
+    state="directory"
+  with_items:
+    - "blogs.dir"
+    - "plugins"
+    - "themes"
+    - "uploads"
+    - "wptouch-data"
+  tags:
+    - "s3-import"
+    - "wordpress"
+
+- name: "WordPress | change repository permissions"
+  file:
+    path="{{ wordpress_install_directory }}/public/wp-content/{{ item }}"
+    owner="{{ admin_user }}"
+    group="{{ admin_user }}"
+    recurse="yes"
+    state="directory"
+  with_items: wordpress_repositories
+  when: wordpress_repositories is defined
+  tags:
+    - "s3-import"
+    - "wordpress"
+
+- name: "WordPress | change file permissions"
+  file:
+    path="{{ wordpress_install_directory }}/public/wp-content/{{ item }}"
+    owner="www-data"
+    group="www-data"
+    state="file"
+  with_items:
+    - "advanced-cache.php"
+    - "wp-cache-config.php"
+  tags:
+    - "s3-import"
+    - "wordpress"
