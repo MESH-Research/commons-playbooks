@@ -11,7 +11,7 @@
 
 - name: "WordPress DB"
   hosts:
-    - "wordpress-db"
+    - "production-db"
     - "development"
   sudo: "yes"
   gather_facts: "yes"
@@ -20,7 +20,7 @@
 
 - name: "WordPress Web"
   hosts:
-    - "wordpress-web"
+    - "production-web"
     - "development"
   sudo: "yes"
   roles:
@@ -36,7 +36,7 @@
     - "dns"
 
 - name: "Backup"
-  hosts: "wordpress-web"
+  hosts: "production-web"
   sudo: "yes"
   vars:
     s3_backup_task: "wordpress"
@@ -44,7 +44,7 @@
     - "s3-backup"
 
 - name: "Backup"
-  hosts: "wordpress-db"
+  hosts: "production-db"
   sudo: "yes"
   vars:
     s3_backup_task: "mysql"
