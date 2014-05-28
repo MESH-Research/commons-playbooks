@@ -2,6 +2,9 @@
 
 # Requires Ansible >= 1.6
 
+- vars_files:
+    - "vars/commons-sensitive.yml"
+
 - name: "Common"
   hosts: "all"
   sudo: "yes"
@@ -14,7 +17,6 @@
     - "production-db"
     - "development"
   sudo: "yes"
-  gather_facts: "yes"
   roles:
     - "mysql"
 
@@ -34,6 +36,7 @@
   sudo: "yes"
   roles:
     - "dns"
+    - "s3-import"
 
 - name: "Backup"
   hosts: "production-web"

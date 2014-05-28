@@ -38,7 +38,6 @@
     state="latest"
   tags: "wordpress"
 
-- include: "import.yml"
 - include: "config.yml"
 - include: "migrate.yml"
 - include: "nginx.yml"

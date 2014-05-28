@@ -64,5 +64,4 @@
   shell: "curl -L {{ mysql_tuner }} > {{ admin_home_directory }}/bin/mysqltuner.pl"
   tags: "mysql"
 
-- include: "import.yml"
 - include: "ufw.yml"
