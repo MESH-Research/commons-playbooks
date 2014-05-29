@@ -1,10 +1,18 @@
 ---
 
+- name: "WordPress CBOX | install multisite"
+  sudo: "no"
+  shell:
+    php {{ admin_home_directory }}/bin/wp-cli.phar core multisite-install --url='{{ wordpress_hostname }}' --subdomains --admin_user='{{ mysql_app_user }}' --admin_password='{{ mysql_app_password }}' --admin_email='admin@example.com' --title='CBOX Test' --path='{{ wordpress_install_directory }}/public'
+  tags:
+    - "wordpress"
+    - "wordpress-cbox"
+
 - name: "WordPress CBOX | install CBOX"
   sudo: "no"
   shell:
     creates="{{ wordpress_install_directory }}/public/wp-content/plugins/commons-in-a-box"
-    php {{ admin_home_directory }}/bin/wp-cli.phar plugin install commons-in-a-box --activate
+    php {{ admin_home_directory }}/bin/wp-cli.phar plugin install commons-in-a-box --activate --path='{{ wordpress_install_directory }}/public'
   tags:
     - "wordpress"
     - "wordpress-cbox"
@@ -12,8 +20,8 @@
 - name: "WordPress CBOX | install CBOX theme"
   sudo: "no"
   shell:
-    creates="{{ wordpress_install_directory }}/public/wp-content/plugins/commons-in-a-box"
-    php {{ admin_home_directory }}/bin/wp-cli.phar theme install https://github.com/cuny-academic-commons/cbox-theme/archive/master.zip --activate
+    creates="{{ wordpress_install_directory }}/public/wp-content/themes/cbox-theme"
+    php {{ admin_home_directory }}/bin/wp-cli.phar theme install https://github.com/cuny-academic-commons/cbox-theme/archive/master.zip --activate --path='{{ wordpress_install_directory }}/public'
   tags:
     - "wordpress"
     - "wordpress-cbox"
