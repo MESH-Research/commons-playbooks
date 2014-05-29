@@ -1,7 +1,16 @@
 ---
 
 - name: "WordPress | get new salts"
-  shell: curl https://api.wordpress.org/secret-key/1.1/salt/
+  shell:
+    creates="{{ admin_home_directory }}/tmp/wordpress.salts.txt"
+    curl -L https://api.wordpress.org/secret-key/1.1/salt/ > {{ admin_home_directory }}/tmp/wordpress.salts.txt
+  tags:
+    - "wordpress"
+    - "config"
+
+- name: "WordPress | load salts into variable"
+  shell:
+    cat {{ admin_home_directory }}/tmp/wordpress.salts.txt
   register: "wordpress_salts"
   tags:
     - "wordpress"
