@@ -10,10 +10,10 @@
     - "~/.ansible/commons.yml"
   roles:
     - "common"
+    - "dns"
     - "mysql"
     - "ssl"
     - "nginx"
     - "php-fpm"
     - "wordpress"
     - "s3-import"
-    - "dns"

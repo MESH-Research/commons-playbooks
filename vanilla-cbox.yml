@@ -10,10 +10,10 @@
     - "~/.ansible/vanilla-cbox.yml"
   roles:
     - "common"
+    - "dns"
     - "mysql"
     - "ssl"
     - "nginx"
     - "php-fpm"
     - "wordpress"
     - "wordpress-cbox"
-    - "dns"
