@@ -25,6 +25,7 @@
     - "python-software-properties"
     - "rsync"
     - "ruby"
+    - "rubygems"
     - "sed"
     - "sudo"
     - "tar"
