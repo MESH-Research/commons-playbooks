@@ -61,7 +61,9 @@
 
 - name: "MySQL | install mysqltuner"
   sudo: "no"
-  shell: "curl -L {{ mysql_tuner }} > {{ admin_home_directory }}/bin/mysqltuner.pl"
+  shell:
+    creates="{{ admin_home_directory }}/bin/mysqltuner.pl"
+    curl -L {{ mysql_tuner }} > {{ admin_home_directory }}/bin/mysqltuner.pl
   tags: "mysql"
 
 - include: "ufw.yml"
