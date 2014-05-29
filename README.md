@@ -1,9 +1,10 @@
 # Commons playbooks
 
-This is a set of [Ansible][ansible] playbooks that can launch a WordPress
-installation in a production or development environment. They were written for
-the [MLA Commons][commons] but could be generally useful for any Debian-based
-LEMP stack. They can be used on bare-metal, local-VM, or cloud-VM deployments.
+This is a set of [Ansible][ansible] playbooks that launches a customized
+[Commons-in-a-Box][cbox] installation in a production or development
+environment. They were written for the [MLA Commons][commons] but could be
+generally useful for any Debian-based LEMP stack. They can be used on
+bare-metal, local-VM, or cloud-VM deployments.
 
 ## Dependencies
 
@@ -15,24 +16,22 @@ brew install ansible
 
 ## Vagrant
 
-Ansible provisioning is included in [Vagrant][vagrant], and I have included
-sample Vagrantfiles for deploying locally or to Amazon EC2. The latter requires
-the [vagrant-aws][vagrant-aws] plugin:
+Ansible provisioning is included in [Vagrant][vagrant], and I have included a
+`Vagrantfile` for deploying locally or to Amazon EC2. The latter requires the
+[vagrant-aws][vagrant-aws] plugin:
 
 ```sh
 vagrant plugin install vagrant-aws
 ```
 
-Copy `Vagrantfile.aws` to a sibling directory and rename it `Vagrantfile`.
-Then, you can stand up a development server on AWS simply by typing:
+This allows you to stand up a development server on AWS simply by typing:
 
 ```sh
 vagrant up think-up-a-hostname --provider=aws
 ```
 
-For local deployment, copy `Vagrantfile.local`  to a sibling directory and
-rename it `Vagrantfile`. You will need to add an entry to your local
-`/etc/hosts` file to resolve the hostname.
+For [VirtualBox][virtualbox] deployment, omit the `--provider` switch. You will
+need to add an entry to your local `/etc/hosts` file to resolve the hostname.
 
 ## Configuration
 
@@ -46,8 +45,10 @@ making it unnecessary to specify or transfer any private keys.
 
 
 [ansible]: http://www.ansible.com
+[cbox]: http://commonsinabox.org
 [commons]: http://commons.mla.org
 [brew]: http://brew.sh
 [vagrant]: http://www.vagrantup.com
 [vagrant-aws]: https://github.com/mitchellh/vagrant-aws
+[virtualbox]: https://www.virtualbox.org
 [best-practices]: http://docs.ansible.com/playbooks_best_practices.html
