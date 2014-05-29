@@ -48,6 +48,9 @@ Vagrant.configure("2") do |config|
       aws.instance_type = "m1.small"
       aws.security_groups = "commons"
 
+      # Create an Elastic IP and associate it with the instance.
+      aws.elastic_ip = "true"
+
       # Set instance name to match hostname.
       aws.tags["Name"] = "#{ARGV[1]}"
 
