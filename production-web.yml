@@ -15,5 +15,4 @@
     - "nginx"
     - "php-fpm"
     - "wordpress"
-    - "dns"
     - "s3-backup"

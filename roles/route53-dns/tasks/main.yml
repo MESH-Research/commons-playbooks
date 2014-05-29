@@ -3,7 +3,7 @@
 - name: "DNS | get public ip address"
   shell: curl ipv4.icanhazip.com
   register: "public_ip_address"
-  tags: "dns"
+  tags: "route53-dns"
 
 - name: "DNS | create DNS records changeset"
   template:
@@ -12,11 +12,11 @@
     owner="{{ admin_user }}"
     group="{{ admin_user }}"
     mode="0644"
-  tags: "dns"
+  tags: "route53-dns"
 
 - name: "DNS | create DNS records"
   sudo: "no"
   shell:
     creates="{{ admin_home_directory }}/tmp/aws-route53.created"
-    aws route53 change-resource-record-sets --hosted-zone-id {{ dns_aws_zone_id }} --change-batch file://{{ admin_home_directory }}/tmp/aws-route53.json && touch {{ admin_home_directory }}/tmp/aws-route53.created
-  tags: "dns"
+    aws route53 change-resource-record-sets --hosted-zone-id {{ route53_zone_id }} --change-batch file://{{ admin_home_directory }}/tmp/aws-route53.json && touch {{ admin_home_directory }}/tmp/aws-route53.created
+  tags: "route53-dns"

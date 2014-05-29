@@ -10,7 +10,7 @@
     - "~/.ansible/commons.yml"
   roles:
     - "common"
-    - "dns"
+    - "route53-dns"
     - "mysql"
     - "ssl"
     - "nginx"

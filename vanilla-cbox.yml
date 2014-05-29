@@ -11,7 +11,7 @@
     - "group_vars/vanilla-cbox.yml"
   roles:
     - "common"
-    - "dns"
+    - "route53-dns"
     - "mysql"
     - "ssl"
     - "nginx"

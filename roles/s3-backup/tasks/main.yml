@@ -1,6 +1,6 @@
 ---
 
-- name: "Users | useful directories for admin user"
+- name: "Backup | backup directory for admin user"
   file:
     path="{{ admin_home_directory }}/s3"
     state="directory"
