@@ -7,7 +7,8 @@
   vars_files:
     - "group_vars/development.yml"
     - "group_vars/low-memory.yml"
-    - "~/.ansible/vanilla-cbox.yml"
+    - "~/.ansible/commons.yml"
+    - "group_vars/vanilla-cbox.yml"
   roles:
     - "common"
     - "dns"

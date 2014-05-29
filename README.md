@@ -36,8 +36,8 @@ need to add an entry to your local `/etc/hosts` file to resolve the hostname.
 ## Configuration
 
 These playbooks were written to quarantine sensitive configuration values in a
-file stored at `~/.ansible/commons.yml`. Use `group_vars/commons-example.yml`
-as a template. Before embarking, you will probably want to read Ansible's
+file stored at `~/.ansible/commons.yml`. Use `group_vars/vanilla-cbox.yml` as a
+template. Before embarking, you will probably want to read Ansible's
 documentation on [playbook best practices][best-practices].
 
 It is assumed that you will use a local SSH config file and agent forwarding,
