@@ -1,6 +1,6 @@
 ---
 
-# Sensitive variables. Edit and keep outside version control.
+# Edit and move to ~/.ansible/commons.yml.
 
 dns_aws_zone_id: "zone-id"
 
