@@ -78,7 +78,7 @@ Vagrant.configure("2") do |config|
       override.vm.box = "hashicorp/precise64"
 
       # Synced folder.
-      override.vm.synced_folder "sync/" + options[:hostname], "/vagrant/app", :create => "true"
+      override.vm.synced_folder "sync/" + options[:hostname], "/vagrant", create: true
 
       # Provision with Ansible.
       override.vm.provision :ansible do |ansible|
