@@ -15,8 +15,8 @@ Vagrant.configure("2") do |config|
   # Forward SSH credentials.
   config.ssh.forward_agent = true
 
-  # Configure synced folder.
-  config.vm.synced_folder "#{ARGV[1]}", "/home/admin/app", :create => "true"
+  # Disable synced folder.
+  config.vm.synced_folder ".", "/vagrant", :disabled => "true"
 
   # Provision with Ansible.
   config.vm.provision :ansible do |ansible|
