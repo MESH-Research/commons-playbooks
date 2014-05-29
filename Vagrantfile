@@ -4,7 +4,7 @@
 Vagrant.configure("2") do |config|
 
   # Use second parameter as machine name and hostname.
-  if ("#{ARGV[1]}" == "")
+  if ("#{ARGV[0]}" != "" && "#{ARGV[1]}" == "")
     abort("Please provide a hostname, e.g.: `vagrant #{ARGV[0]} hostname`")
   end
 
