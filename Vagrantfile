@@ -1,20 +1,29 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-Vagrant.configure("2") do |config|
+options = {}
 
-  # Use second parameter as machine name and hostname.
-  if ("#{ARGV[0]}" != "" && "#{ARGV[1]}" == "")
-    abort("Please provide a hostname, e.g.: `vagrant #{ARGV[0]} hostname`")
-  end
+# Set hostname from command-line argument.
+options[:hostname] = ARGV[1] || false
+
+# Set playbook from environment variable.
+options[:playbook] = ENV['PLAYBOOK'] || "../commons-playbooks/development.yml"
+
+# Require the user to specify a hostname.
+if ("#{ARGV[0]}" != "" && !options[:hostname])
+  abort("Please provide a hostname, e.g.: `vagrant #{ARGV[0]} hostname`")
+end
+
+
+Vagrant.configure("2") do |config|
 
   # Forward SSH credentials.
   config.ssh.forward_agent = true
 
-  config.vm.define "#{ARGV[1]}" do |machine|
+  config.vm.define options[:hostname] do |machine|
 
     # Use user-supplied hostname.
-    machine.vm.hostname = "#{ARGV[1]}"
+    machine.vm.hostname = options[:hostname]
 
     # AWS provider.
     machine.vm.provider :aws do |aws, override|
@@ -33,7 +42,7 @@ Vagrant.configure("2") do |config|
       aws.elastic_ip = "true"
 
       # Set instance name to match hostname.
-      aws.tags["Name"] = "#{ARGV[1]}"
+      aws.tags["Name"] = options[:hostname]
 
       # Override vagrant defaults.
       override.ssh.username = "admin"
@@ -50,12 +59,12 @@ Vagrant.configure("2") do |config|
       override.vm.provision :ansible do |ansible|
 
         # Point to Ansible resources.
-        ansible.playbook = "../commons-playbooks/development.yml"
+        ansible.playbook = options[:playbook]
 
         # Send extra variables.
         ansible.extra_vars = {
-          ansible_hostname: "#{ARGV[1]}",
-          set_hostname: "#{ARGV[1]}"
+          ansible_hostname: options[:hostname],
+          set_hostname: options[:hostname]
         }
 
       end
@@ -69,13 +78,16 @@ Vagrant.configure("2") do |config|
       override.vm.box = "hashicorp/precise64"
 
       # Synced folder.
-      override.vm.synced_folder "sync/#{ARGV[1]}", "/vagrant/app", :create => "true"
+      override.vm.synced_folder "sync/" + options[:hostname], "/vagrant/app", :create => "true"
 
       # Provision with Ansible.
       override.vm.provision :ansible do |ansible|
 
         # Point to Ansible resources.
-        ansible.playbook = "../commons-playbooks/development.yml"
+        ansible.playbook = options[:playbook]
+
+        # Skip DNS for local VMs.
+        ansible.skip_tags = "route53-dns"
 
         # Send extra variables.
         ansible.extra_vars = {
@@ -84,7 +96,7 @@ Vagrant.configure("2") do |config|
           ansible_ssh_user: "vagrant",
           ansible_ssh_port: "2222",
           deploy_user: "vagrant",
-          set_hostname: "#{ARGV[1]}",
+          set_hostname: options[:hostname],
           wordpress_install_directory: "/vagrant/app"
         }
 
