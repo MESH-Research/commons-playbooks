@@ -1,0 +1,19 @@
+---
+
+- name: "Vanilla CBOX server"
+  hosts: "all"
+  sudo: "yes"
+  gather_facts: "yes"
+  vars_files:
+    - "group_vars/development.yml"
+    - "group_vars/low-memory.yml"
+    - "~/.ansible/vanilla-cbox.yml"
+  roles:
+    - "common"
+    - "mysql"
+    - "ssl"
+    - "nginx"
+    - "php-fpm"
+    - "wordpress"
+    - "wordpress-cbox"
+    - "dns"

@@ -1,0 +1,19 @@
+---
+
+- name: "WordPress CBOX | install CBOX"
+  sudo: "no"
+  shell:
+    creates="{{ wordpress_install_directory }}/public/wp-content/plugins/commons-in-a-box"
+    php {{ admin_home_directory }}/bin/wp-cli.phar plugin install commons-in-a-box --activate
+  tags:
+    - "wordpress"
+    - "wordpress-cbox"
+
+- name: "WordPress CBOX | install CBOX theme"
+  sudo: "no"
+  shell:
+    creates="{{ wordpress_install_directory }}/public/wp-content/plugins/commons-in-a-box"
+    php {{ admin_home_directory }}/bin/wp-cli.phar theme install https://github.com/cuny-academic-commons/cbox-theme/archive/master.zip --activate
+  tags:
+    - "wordpress"
+    - "wordpress-cbox"
