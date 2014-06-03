@@ -5,7 +5,7 @@
 #   MySQL:    mysqldump --all-databases --skip-lock-tables
 #             [credentials stored in ~/.my.cnf]
 #   Postgres: pg_dump -h localhost -U [user] [database]
-#             [credentials stored in ~/.my.cnf]
+#             [credentials stored in ~/.pgpass]
 
 # Example cron entry (:05 of every hour):
 # 5  *  *  *  *  ~/bin/backup-db-to-s3.sh >/dev/null 2>&1
