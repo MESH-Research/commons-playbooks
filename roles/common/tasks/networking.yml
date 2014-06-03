@@ -1,8 +1,18 @@
 ---
 
-- name: "Networking | static networking"
+- name: "Networking | static public networking"
   template:
     src="interfaces.j2"
+    dest="/etc/network/interfaces"
+  when: public_ip_address is defined and private_ip_address is not defined
+  notify: "restart networking"
+  tags:
+    - "common"
+    - "networking"
+
+- name: "Networking | static public/private networking"
+  template:
+    src="interfaces-private.j2"
     dest="/etc/network/interfaces"
   when: private_ip_address is defined
   notify: "restart networking"
