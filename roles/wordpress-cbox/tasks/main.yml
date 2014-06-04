@@ -1,9 +1,48 @@
 ---
 
+- name: "WordPress | install wp-cli"
+  sudo: "no"
+  get_url:
+    url="{{ wordpress_cli }}"
+    dest="{{ admin_home_directory }}/bin/wp-cli.phar"
+  tags:
+    - "wordpress"
+    - "wordpress-cbox"
+
+- name: "WordPress | create webroot directory"
+  file:
+    path="{{ wordpress_install_directory }}/public"
+    state="directory"
+    owner="{{ admin_user }}"
+    group="{{ admin_user }}"
+    mode="0755"
+  tags:
+    - "wordpress"
+    - "wordpress-cbox"
+
+- name: "WordPress CBOX | download WordPress"
+  sudo: "no"
+  shell:
+    creates="{{ wordpress_install_directory }}/public/wp-config-sample.php"
+    php {{ admin_home_directory }}/bin/wp-cli.phar core download --path='{{ wordpress_install_directory }}/public'
+  tags:
+    - "wordpress"
+    - "wordpress-cbox"
+
+- name: "WordPress CBOX | create config file"
+  sudo: "no"
+  shell:
+    creates="{{ wordpress_install_directory }}/public/wp-config.php"
+    php {{ admin_home_directory }}/bin/wp-cli.phar core config --path='{{ wordpress_install_directory }}/public' --dbname='{{ mysql_app_database }}' --dbuser='{{ mysql_app_user }}' --dbpass='{{ mysql_app_password }}' --locale='en_US'
+  tags:
+    - "wordpress"
+    - "wordpress-cbox"
+
 - name: "WordPress CBOX | install multisite"
   sudo: "no"
   shell:
-    php {{ admin_home_directory }}/bin/wp-cli.phar core multisite-install --url='{{ wordpress_hostname }}' --subdomains --admin_user='{{ mysql_app_user }}' --admin_password='{{ mysql_app_password }}' --admin_email='admin@example.com' --title='CBOX Test' --path='{{ wordpress_install_directory }}/public'
+    creates="{{ admin_home_directory }}/tmp/wordpress.multisite.installed"
+    php {{ admin_home_directory }}/bin/wp-cli.phar core multisite-install --url='{{ wordpress_hostname }}' --subdomains --admin_user='{{ mysql_app_user }}' --admin_password='{{ mysql_app_password }}' --admin_email='admin@example.com' --title='CBOX Test' --path='{{ wordpress_install_directory }}/public' && touch {{ admin_home_directory }}/tmp/wordpress.multisite.installed
   tags:
     - "wordpress"
     - "wordpress-cbox"
@@ -12,16 +51,20 @@
   sudo: "no"
   shell:
     creates="{{ wordpress_install_directory }}/public/wp-content/plugins/commons-in-a-box"
-    php {{ admin_home_directory }}/bin/wp-cli.phar plugin install commons-in-a-box --activate --path='{{ wordpress_install_directory }}/public'
+    php {{ admin_home_directory }}/bin/wp-cli.phar plugin install commons-in-a-box --path='{{ wordpress_install_directory }}/public'
   tags:
     - "wordpress"
     - "wordpress-cbox"
 
-- name: "WordPress CBOX | install CBOX theme"
-  sudo: "no"
-  shell:
-    creates="{{ wordpress_install_directory }}/public/wp-content/themes/cbox-theme-master"
-    php {{ admin_home_directory }}/bin/wp-cli.phar theme install https://github.com/cuny-academic-commons/cbox-theme/archive/master.zip --activate --path='{{ wordpress_install_directory }}/public'
+- name: "WordPress | change directory permissions"
+  file:
+    path="{{ wordpress_install_directory }}/public"
+    owner="www-data"
+    group="www-data"
+    recurse="yes"
+    state="directory"
   tags:
     - "wordpress"
     - "wordpress-cbox"
+
+- include: "nginx.yml"
