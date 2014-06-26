@@ -7,14 +7,12 @@
   vars_files:
     - "group_vars/development.yml"
     - "group_vars/low-memory.yml"
-    - "~/.ansible/commons.yml"
+    - "~/.ansible/vanilla-cbox.yml"
     - "group_vars/vanilla-cbox.yml"
   roles:
     - "common"
     - "route53-dns"
     - "mysql"
-    - "ssl"
     - "nginx"
     - "php-fpm"
-    - "wordpress"
     - "wordpress-cbox"
