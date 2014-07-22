@@ -2,9 +2,6 @@
 
 # Order these by the sequence you would want them to run.
 
-- name: "update timezone"
-  shell: dpkg-reconfigure --frontend noninteractive tzdata
-
 - name: "restart ssh"
   service:
     name="ssh"

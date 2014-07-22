@@ -4,7 +4,12 @@
   copy:
     content="{{ timezone }}"
     dest="/etc/timezone"
-  notify: "update timezone"
+  tags:
+    - "common"
+    - "timezone"
+
+- name: "Timezone | update timezone"
+  shell: dpkg-reconfigure --frontend noninteractive tzdata
   tags:
     - "common"
     - "timezone"
