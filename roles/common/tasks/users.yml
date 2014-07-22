@@ -26,7 +26,7 @@
   authorized_key:
     key="{{ lookup('file', item) }}"
     user="{{ admin_user }}"
-  with_fileglob: "{{ authorized_keys_directory }}/*"
+  with_fileglob: "{{ authorized_keys_directory }}/*.pub"
   tags:
     - "common"
     - "users"
