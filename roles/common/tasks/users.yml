@@ -33,13 +33,18 @@
 
 - name: "Users | useful dotfiles for admin user"
   copy:
-    src="{{ item }}"
+    src="~/.{{ item }}"
     dest="{{ admin_home_directory }}/.{{ item }}"
     owner="{{ admin_user }}"
     group="{{ admin_user }}"
     mode="0644"
   with_items:
+    - "bashrc"
+    - "bash_profile"
+    - "bash_aliases"
+    - "gitconfig"
     - "tmux.conf"
+    - "vimrc"
   tags:
     - "common"
     - "users"
