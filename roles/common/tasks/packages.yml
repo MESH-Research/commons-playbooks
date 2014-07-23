@@ -17,6 +17,7 @@
     - "gzip"
     - "hostname"
     - "iotop"
+    - "keychain"
     - "less"
     - "logrotate"
     - "manpages"
