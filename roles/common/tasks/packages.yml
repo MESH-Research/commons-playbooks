@@ -20,7 +20,9 @@
     - "less"
     - "logrotate"
     - "manpages"
+    - "markdown"
     - "nano"
+    - "pandoc"
     - "python-setuptools"
     - "python-software-properties"
     - "rsync"
@@ -34,6 +36,8 @@
     - "ufw"
     - "unzip"
     - "vim"
+    - "vim-nox"
+    - "weechat"
     - "wget"
   tags:
     - "common"
