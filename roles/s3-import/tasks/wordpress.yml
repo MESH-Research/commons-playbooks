@@ -36,14 +36,8 @@
     - "wordpress"
 
 - name: "WordPress | change repository permissions"
-  file:
-    path="{{ wordpress_install_directory }}/public/wp-content/{{ item }}"
-    owner="{{ admin_user }}"
-    group="{{ admin_user }}"
-    recurse="yes"
-    state="directory"
-  with_items: wordpress_repositories
-  when: wordpress_repositories is defined
+  shell:
+    find {{ wordpress_install_directory }}/public -name '.git' -type d -exec dirname {} \; | xargs chown -R {{ admin_user }}:{{ admin_user }}
   tags:
     - "s3-import"
     - "wordpress"
