@@ -37,6 +37,18 @@
     - "wordpress"
     - "config"
 
+- name: "WordPress | create debug log"
+  file:
+    path="{{ wordpress_install_directory }}/public/wp-content/debug.log"
+    state="touch"
+    owner="www-data"
+    group="www-data"
+    mode="0644"
+  when: "wordpress_enable_debug is defined and wordpress_enable_debug == 'true'"
+  tags:
+    - "wordpress"
+    - "config"
+
 - name: "WordPress | disable e-mail notifications"
   lineinfile:
     dest="{{ wordpress_install_directory }}/wp-config.php"
