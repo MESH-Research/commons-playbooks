@@ -77,6 +77,9 @@ Vagrant.configure("2") do |config|
       # Ubuntu 12.04.
       override.vm.box = "hashicorp/precise64"
 
+      # Forward port.
+      override.vm.network "forwarded_port", guest: 80, host: 9000, auto_correct: true
+
       # Synced folder.
       override.vm.synced_folder "sync/" + options[:hostname], "/vagrant", create: true
 
@@ -87,7 +90,7 @@ Vagrant.configure("2") do |config|
         ansible.playbook = options[:playbook]
 
         # Skip DNS for local VMs.
-        ansible.skip_tags = "route53-dns"
+        ansible.skip_tags = "route53-dns,permissions"
 
         # Send extra variables.
         ansible.extra_vars = {
@@ -97,7 +100,9 @@ Vagrant.configure("2") do |config|
           ansible_ssh_port: "2222",
           deploy_user: "vagrant",
           set_hostname: options[:hostname],
-          wordpress_install_directory: "/vagrant/app"
+          wordpress_hostname: options[:hostname] + ".dev",
+          wordpress_install_directory: "/vagrant/app",
+          www_user: "vagrant"
         }
 
       end
