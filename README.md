@@ -17,9 +17,20 @@ brew install ansible
 ## Vagrant
 
 Ansible provisioning is included in [Vagrant][vagrant], and I have included a
-`Vagrantfile` for deploying to [VirtualBox][virtualbox]. You will need to add
-an entry to your local `hosts` file to resolve the hostname (WordPress
-multisite does not allow browsing by IP address).
+`Vagrantfile` for deploying to [VirtualBox][virtualbox]. However, local wildcard
+DNS resolution for WordPress Multisite on a VM is a bit fraught, and there are
+no quick and easy solutions. We use [Pow][pow] to proxy per-host `.dev` entries
+for each VM. This allows everything to run off port 80 on the local machine,
+and requests are proxied by Pow to the local forwarded port (`9000` by default).
+Then the VM receives the request on its port 80. Once Pow is installed, you can
+run:
+
+```sh
+vagrant up think-up-a-hostname 9000 && echo 9000 > ~/.pow/think-up-a-hostname
+```
+
+After the VM is provisioned, you can browse to `http://think-up-a-hostname.dev`
+on your local machine.
 
 ## AWS
 
@@ -58,6 +69,7 @@ agent forwarding, making it unnecessary to specify or transfer any private keys.
 [cbox]: http://commonsinabox.org
 [commons]: http://commons.mla.org
 [brew]: http://brew.sh
+[pow]: http://pow.cx
 [vagrant]: http://www.vagrantup.com
 [vagrant-aws]: https://github.com/mitchellh/vagrant-aws
 [virtualbox]: https://www.virtualbox.org
