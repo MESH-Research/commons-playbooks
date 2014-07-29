@@ -1,9 +1,9 @@
 [www]
-user = www-data
-group = www-data
+user = {{ www_user | default('www-data') }}
+group = {{ www_user | default('www-data') }}
 listen = /var/run/php5-fpm.sock
-listen.owner = www-data
-listen.group = www-data
+listen.owner = {{ www_user | default('www-data') }}
+listen.group = {{ www_user | default('www-data') }}
 listen.mode = 0600
 pm = dynamic
 pm.max_children = {{ php_max_children | default('48') }}

@@ -1,4 +1,4 @@
-user www-data;
+user {{ nginx_user | default('www-data') }};
 worker_processes {{ nginx_worker_processes | default('6') }};
 pid /var/run/nginx.pid;
 
