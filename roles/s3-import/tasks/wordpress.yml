@@ -34,6 +34,7 @@
   tags:
     - "s3-import"
     - "wordpress"
+    - "permissions"
 
 - name: "WordPress | change repository permissions"
   shell:
@@ -41,6 +42,7 @@
   tags:
     - "s3-import"
     - "wordpress"
+    - "permissions"
 
 - name: "WordPress | change file permissions"
   file:
@@ -54,3 +56,4 @@
   tags:
     - "s3-import"
     - "wordpress"
+    - "permissions"
