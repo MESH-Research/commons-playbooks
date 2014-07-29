@@ -1,0 +1,40 @@
+## Exports
+export EDITOR=vim
+
+
+## Prompt
+export PS1='\w\[\033[1;33m\]$(parse_git_status)\[\033[0m\]$ '
+
+
+## Functions
+
+# Get git repository status in shorthand form (branch name and cleanliness).
+function parse_git_status () {
+  git status -b --porcelain 2>/dev/null | awk -F'[#\./ ]+' '{print $2}' |
+  while read statusline; do
+    if [[ -n "$git_has_branch" && -n "$statusline" ]]; then
+      printf "\033[35m⌾"
+      break
+    fi
+    printf "⎇ $statusline" && git_has_branch="yes"
+  done
+}
+
+# Find the target of a redirecting URL.
+function expandurl () {
+# wget -S $1 2>&1 | grep ^Location;
+  curl -sIL $1 | grep '^Location' | tail -n 1 | awk '{print $2}'
+}
+
+# Change git remote by supplying user/repo.
+function gitremote () {
+  if [ -d ".git" ] && [ -n "$1" ]; then
+    git remote rm origin
+    git remote add origin git@github.com:${1}.git
+    git config master.remote origin
+    git config master.merge refs/heads/master
+    echo "Updated git remote to git@github.com:${1}.git"
+  else
+    echo "Not a git repository."
+  fi
+}

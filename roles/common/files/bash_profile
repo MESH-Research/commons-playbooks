@@ -1,0 +1,19 @@
+# Trimmed from https://github.com/mathiasbynens/dotfiles
+
+# Source .bashrc
+[ -r ~/.bashrc ] && source ~/.bashrc
+
+# Source .bash_aliases
+[ -r ~/.bash_aliases ] && source ~/.bash_aliases
+
+# Source .local_exports (private or local-specific stuff)
+[ -r ~/.local_exports ] && source ~/.local_exports
+
+# Case-insensitive globbing (used in pathname expansion)
+shopt -s nocaseglob
+
+# Append to the Bash history file, rather than overwriting it
+shopt -s histappend
+
+# Autocorrect typos in path names when using `cd`
+shopt -s cdspell
