@@ -55,7 +55,7 @@
     host="{{ item }}"
     priv="{{ mysql_app_database }}.*:ALL"
     state="present"
-  with_items: mysql_default_hosts | union(mysql_app_hosts | default([]))
+  with_items: "{{ mysql_default_hosts + (mysql_app_hosts | default([])) }}"
   when: mysql_app_database is defined
   tags: "mysql"
 
