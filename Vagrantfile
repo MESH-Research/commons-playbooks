@@ -6,6 +6,9 @@ options = {}
 # Set hostname from command-line argument.
 options[:hostname] = ARGV[1] || false
 
+# Set hostname from command-line argument.
+options[:guest_port] = ARGV[2] || 9000
+
 # Set playbook from environment variable.
 options[:playbook] = ENV['PLAYBOOK'] || "../commons-playbooks/development.yml"
 
@@ -78,7 +81,7 @@ Vagrant.configure("2") do |config|
       override.vm.box = "hashicorp/precise64"
 
       # Forward port.
-      override.vm.network "forwarded_port", guest: 80, host: 9000, auto_correct: true
+      override.vm.network "forwarded_port", guest: 80, host: options[:guest_port], auto_correct: true
 
       # Synced folder.
       override.vm.synced_folder "sync/" + options[:hostname], "/vagrant", create: true
