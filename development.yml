@@ -16,5 +16,5 @@
     - "ssl"
     - "nginx"
     - "php-fpm"
-    - "s3-import"
     - "wordpress"
+    - "s3-import"

@@ -21,6 +21,3 @@
     group="{{ admin_user }}"
     mode="0644"
   tags: "wordpress"
-
-- include: "config.yml"
-- include: "nginx.yml"

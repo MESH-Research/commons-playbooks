@@ -19,7 +19,7 @@
 - name: "WordPress | fetch remote config"
   fetch:
     src="{{ wordpress_install_directory }}/wp-config.php.j2"
-    dest="roles/wordpress/templates/"
+    dest="roles/s3-import/templates/"
     fail_on_missing="yes"
     flat="yes"
   tags:

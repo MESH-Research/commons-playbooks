@@ -1,4 +1,4 @@
 .vagrant
 host_vars
 sync
-roles/wordpress/templates/wp-config.php.j2
+roles/s3-import/templates/wp-config.php.j2

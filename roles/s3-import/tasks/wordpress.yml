@@ -68,3 +68,6 @@
     - "s3-import"
     - "wordpress"
     - "permissions"
+
+- include: "config.yml"
+- include: "nginx.yml"
