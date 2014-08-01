@@ -9,11 +9,22 @@
     - "s3-import"
     - "wordpress"
 
+- name: "WordPress | create app directory"
+  file:
+    path="{{ wordpress_install_directory }}"
+    state="directory"
+    owner="{{ admin_user }}"
+    group="{{ admin_user }}"
+    mode="0755"
+  tags:
+    - "s3-import"
+    - "wordpress"
+
 - name: "WordPress | extract latest backup"
   sudo: "no"
   shell:
-    creates="{{ wordpress_install_directory }}/public/wp-content/blogs.dir"
-    tar -xzf {{ admin_home_directory }}/tmp/wordpress.backup.tar.gz -C {{ wordpress_install_directory }}/public/wp-content
+    creates="{{ wordpress_install_directory }}/wp-config.php.j2"
+    tar -xzf {{ admin_home_directory }}/tmp/wordpress.backup.tar.gz -C {{ wordpress_install_directory }}
   tags:
     - "s3-import"
     - "wordpress"

@@ -11,9 +11,10 @@
   roles:
     - "common"
     - "route53-dns"
+    - "dnsmasq"
     - "mysql"
     - "ssl"
     - "nginx"
     - "php-fpm"
-    - "wordpress"
     - "s3-import"
+    - "wordpress"
