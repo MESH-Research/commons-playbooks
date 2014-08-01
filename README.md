@@ -17,20 +17,26 @@ brew install ansible
 ## Vagrant
 
 Ansible provisioning is included in [Vagrant][vagrant], and I have included a
-`Vagrantfile` for deploying to [VirtualBox][virtualbox]. However, local wildcard
-DNS resolution for WordPress Multisite on a VM is a bit fraught, and there are
-no quick and easy solutions. We use [Pow][pow] to proxy per-host `.dev` entries
-for each VM. This allows everything to run off port 80 on the local machine,
-and requests are proxied by Pow to the local forwarded port (`9000` by default).
-Then the VM receives the request on its port 80. Once Pow is installed, you can
-run:
+`Vagrantfile` for deploying to [VirtualBox][virtualbox]. However, wildcard DNS
+resolution for WordPress Multisite on a VM is a bit fraught, and there are no
+quick and easy solutions. Explaining our solution is a bit out of scope for this
+README, but we create VMs under a `.dev` domain with the following supporting
+characters:
+
+1. [DNSmasq][dnsmasq]
+2. An `/etc/resolver/dev` file containing one line: `nameserver 127.0.0.1`
+3. Private networking for the VM provided by Vagrant
+4. Entries in `/usr/local/etc/dnsmasq.conf`
+
+With this approach, you can:
 
 ```sh
-vagrant up think-up-a-hostname 9000 && echo 9000 > ~/.pow/think-up-a-hostname
+vagrant up hostname
+echo "address=/\[hostname\].dev/\[private-ip\]" >> /usr/local/etc/dnsmasq.conf
 ```
 
-After the VM is provisioned, you can browse to `http://think-up-a-hostname.dev`
-on your local machine.
+After the VM is provisioned, you can browse to `http://hostname.dev` on your
+local machine and all network sites will work as expected.
 
 ## AWS
 
@@ -47,7 +53,7 @@ It also requires a few environment variables: `VAGRANT_AWS_ACCESS_KEY_ID`,
 just by typing:
 
 ```sh
-vagrant up think-up-a-hostname --provider=aws
+vagrant up \[hostname\] --provider=aws
 ```
 
 There's also a Ansible role that updates DNS records for a development domain
@@ -69,7 +75,7 @@ agent forwarding, making it unnecessary to specify or transfer any private keys.
 [cbox]: http://commonsinabox.org
 [commons]: http://commons.mla.org
 [brew]: http://brew.sh
-[pow]: http://pow.cx
+[dnsmasq]: http://www.thekelleys.org.uk/dnsmasq/doc.html
 [vagrant]: http://www.vagrantup.com
 [vagrant-aws]: https://github.com/mitchellh/vagrant-aws
 [virtualbox]: https://www.virtualbox.org
