@@ -27,6 +27,7 @@
     key="{{ lookup('file', item) }}"
     user="{{ admin_user }}"
   with_fileglob: "{{ authorized_keys_directory }}/*.pub"
+  notify: "enable ssh"
   tags:
     - "common"
     - "users"

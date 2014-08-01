@@ -4,6 +4,7 @@
   apt:
     name="nginx"
     state="present"
+  notify: "enable nginx"
   tags:
     - "nginx"
     - "packages"

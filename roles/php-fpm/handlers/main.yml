@@ -1,7 +1,12 @@
 ---
 
+- name: "enable php-fpm"
+  service:
+    name="php5-fpm"
+    state="started"
+    enabled="yes"
+
 - name: "restart php-fpm"
   service:
     name="php5-fpm"
     state="restarted"
-    enabled="yes"

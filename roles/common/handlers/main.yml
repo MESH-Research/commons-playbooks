@@ -2,11 +2,16 @@
 
 # Order these by the sequence you would want them to run.
 
+- name: "enable ssh"
+  service:
+    name="ssh"
+    state="started"
+    enabled="yes"
+
 - name: "restart ssh"
   service:
     name="ssh"
     state="restarted"
-    enabled="yes"
 
 - name: "restart networking"
   service:
