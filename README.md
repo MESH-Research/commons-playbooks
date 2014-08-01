@@ -32,7 +32,7 @@ With this approach, you can:
 
 ```sh
 vagrant up hostname
-echo "address=/\[hostname\].dev/\[private-ip\]" >> /usr/local/etc/dnsmasq.conf
+echo "address=/[hostname].dev/[private-ip]" >> /usr/local/etc/dnsmasq.conf
 ```
 
 After the VM is provisioned, you can browse to `http://hostname.dev` on your
@@ -53,7 +53,7 @@ It also requires a few environment variables: `VAGRANT_AWS_ACCESS_KEY_ID`,
 just by typing:
 
 ```sh
-vagrant up \[hostname\] --provider=aws
+vagrant up [hostname] --provider=aws
 ```
 
 There's also a Ansible role that updates DNS records for a development domain
