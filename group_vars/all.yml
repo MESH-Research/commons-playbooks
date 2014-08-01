@@ -9,7 +9,7 @@ ansible_ssh_user: "admin"
 # Common
 admin_user: "admin"
 admin_home_directory: "/home/{{ admin_user }}"
-authorized_keys_directory: "~/.ssh/deploy/commons/development/public"
+authorized_keys_directory: "~/.ssh/deploy/commons/development"
 current_date: "{{ ansible_date_time.year }}{{ ansible_date_time.month }}{{ ansible_date_time.day }}"
 ssh_port: "22"
 timezone: "America/New_York"
