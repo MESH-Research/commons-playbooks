@@ -35,6 +35,15 @@ vagrant up hostname
 echo "address=/[hostname].dev/[private-ip]" >> /usr/local/etc/dnsmasq.conf
 ```
 
+On GNU/Linux, the process is similar: 
+
+```sh
+vagrant up hostname
+sudo echo "address=/[hostname].dev/[private-ip]" >> /etc/dnsmasq.conf
+```
+
+Note: due to [a bug in VirtualBox](https://github.com/mitchellh/vagrant/issues/3083), it may be necessary to remove the default `dhcpserver` from VirtualBox to avoid collisions by running the command `VBoxManage dhcpserver remove --netname HostInterfaceNetworking-vboxnet0`. 
+
 After the VM is provisioned, you can browse to `http://hostname.dev` on your
 local machine and all network sites will work as expected.
 
