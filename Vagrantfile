@@ -7,7 +7,7 @@ options = {}
 options[:hostname] = ARGV[1] || false
 
 # Set playbook from environment variable.
-options[:playbook] = ENV['PLAYBOOK'] || "../commons-playbooks/development.yml"
+options[:playbook] = ENV['PLAYBOOK'] || "development.yml"
 
 # Require the user to specify a hostname.
 if ("#{ARGV[0]}" != "" && !options[:hostname])
@@ -89,8 +89,10 @@ Vagrant.configure("2") do |config|
         # Point to Ansible resources.
         ansible.playbook = options[:playbook]
 
-        # Skip DNS for local VMs.
-        ansible.skip_tags = "route53-dns,permissions"
+        # Skip DNS and file permissions for local VMs.
+        if ( options[:playbook] == "development.yml" )
+          ansible.skip_tags = "route53-dns,permissions"
+        end
 
         # Send extra variables.
         ansible.extra_vars = {
