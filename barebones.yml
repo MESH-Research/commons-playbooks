@@ -1,0 +1,10 @@
+---
+
+- name: "Barebones server"
+  hosts: "all"
+  sudo: "yes"
+  gather_facts: "yes"
+  vars_files:
+    - "group_vars/low-memory.yml"
+  roles:
+    - "common"
