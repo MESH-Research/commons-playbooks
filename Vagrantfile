@@ -101,6 +101,7 @@ Vagrant.configure("2") do |config|
           ansible_ssh_user: "vagrant",
           ansible_ssh_port: "2222",
           deploy_user: "vagrant",
+          nginx_sendfile: "off",
           set_hostname: options[:hostname],
           wordpress_hostname: options[:hostname] + ".dev",
           wordpress_install_directory: "/vagrant/app",
