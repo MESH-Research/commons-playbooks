@@ -26,10 +26,7 @@
     password="{{ mysql_root_password | default('password') }}"
     host="{{ item }}"
     state="present"
-  with_items:
-    - "127.0.0.1"
-    - "::1"
-    - "localhost"
+  with_items: mysql_default_hosts
   tags: "mysql"
 
 - name: "MySQL | credentials file"
@@ -56,7 +53,7 @@
     host="{{ item }}"
     priv="{{ mysql_app_database }}.*:ALL"
     state="present"
-  with_items: "{{ mysql_default_hosts + (mysql_app_hosts | default([])) }}"
+  with_items: mysql_default_hosts + (mysql_app_hosts | default([]))
   when: mysql_app_database is defined
   tags: "mysql"
 
