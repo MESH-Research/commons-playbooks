@@ -55,19 +55,5 @@
     - "wordpress"
     - "permissions"
 
-- name: "WordPress | change file permissions"
-  file:
-    path="{{ wordpress_install_directory }}/public/wp-content/{{ item }}"
-    owner="www-data"
-    group="www-data"
-    state="file"
-  with_items:
-    - "advanced-cache.php"
-    - "wp-cache-config.php"
-  tags:
-    - "s3-import"
-    - "wordpress"
-    - "permissions"
-
 - include: "config.yml"
 - include: "nginx.yml"
