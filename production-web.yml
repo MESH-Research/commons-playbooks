@@ -15,4 +15,5 @@
     - "nginx"
     - "php-fpm"
     - "wordpress"
+    - "fail2ban"
     - "s3-backup"
