@@ -1,0 +1,17 @@
+---
+
+- name: "enable fail2ban"
+  service:
+    name="fail2ban"
+    state="started"
+    enabled="yes"
+
+- name: "restart fail2ban"
+  service:
+    name="fail2ban"
+    state="restarted"
+
+- name: "reload fail2ban"
+  service:
+    name="fail2ban"
+    state="reloaded"

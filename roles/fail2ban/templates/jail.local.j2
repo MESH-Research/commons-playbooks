@@ -1,0 +1,8 @@
+[wordpress]
+enabled = true
+action = ufw
+filter = wordpress
+logpath = /var/log/auth.log
+bantime = {{ fail2ban_bantime | default('2592000') }}
+findtime = {{ fail2ban_findtime | default('86400') }}
+maxretry = {{ fail2ban_maxretry | default('25') }}
