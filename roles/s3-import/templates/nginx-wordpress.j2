@@ -14,6 +14,7 @@ server {
 		include fastcgi_params;
 		fastcgi_index index.php;
 		fastcgi_pass php;
+		limit_req zone=flood burst=100 nodelay;
 	}
 
 }

@@ -1,8 +1,29 @@
-[wordpress]
+[DEFAULT]
+ignoreip = 127.0.0.1/8
+
+[nginx-rate-limit]
 enabled = true
 action = ufw
-filter = wordpress
+filter = nginx-rate-limit
+logpath = /var/log/nginx/error.log
+bantime = {{ fail2ban_bantime | default('2592000') }}
+findtime = {{ fail2ban_findtime | default('86400') }}
+maxretry = 3
+
+[wordpress-auth]
+enabled = true
+action = ufw
+filter = wordpress-auth
 logpath = /var/log/auth.log
 bantime = {{ fail2ban_bantime | default('2592000') }}
 findtime = {{ fail2ban_findtime | default('86400') }}
-maxretry = {{ fail2ban_maxretry | default('25') }}
+maxretry = 25
+
+[wordpress-bots]
+enabled = true
+action = ufw
+filter = wordpress-bots
+logpath = /var/log/nginx/access.log
+bantime = {{ fail2ban_bantime | default('2592000') }}
+findtime = {{ fail2ban_findtime | default('86400') }}
+maxretry = 50

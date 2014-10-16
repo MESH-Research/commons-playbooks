@@ -16,10 +16,14 @@
   tags:
     - "fail2ban"
 
-- name: "Fail2Ban | WordPress login filter"
+- name: "Fail2Ban | Filters"
   copy:
-    src="wordpress.conf"
-    dest="/etc/fail2ban/filter.d/wordpress.conf"
+    src="{{ item }}"
+    dest="/etc/fail2ban/filter.d/{{ item }}"
+  with_items:
+    - "nginx-rate-limit.conf"
+    - "wordpress-auth.conf"
+    - "wordpress-bots.conf"
   tags:
     - "fail2ban"
 

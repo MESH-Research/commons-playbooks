@@ -18,6 +18,9 @@ http {
   access_log /var/log/nginx/access.log;
   error_log /var/log/nginx/error.log;
 
+  # Rate-limit
+  limit_req_zone $binary_remote_addr zone=flood:10m rate=10r/s;
+
   # PHP-FPM
   upstream php {
     server unix:/var/run/php5-fpm.sock;
