@@ -12,7 +12,3 @@ pm.min_spare_servers = {{ php_min_spare_servers | default('8') }}
 pm.max_spare_servers = {{ php_max_spare_servers | default('16') }}
 pm.max_requests = 1000
 chdir = /
-;php_value[session.save_handler] = files
-;php_value[session.save_path] = /var/lib/php/session
-;php_admin_value[error_log] = /var/log/php-fpm/wordpress-error.log
-;php_admin_flag[log_errors] = on
