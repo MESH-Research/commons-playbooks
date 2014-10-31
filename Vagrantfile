@@ -33,16 +33,21 @@ Vagrant.configure("2") do |config|
       aws.secret_access_key = ENV['VAGRANT_AWS_SECRET_ACCESS_KEY']
       aws.keypair_name = ENV['VAGRANT_AWS_KEYPAIR_NAME']
 
-      # Debian 7.5 wheezy x86_64 EBS us-east-1.
-      aws.ami = "ami-2c886c44"
-      aws.instance_type = "m1.small"
-      aws.security_groups = "commons"
+      # Debian 7.7 wheezy hvm x86_64 ebs us-east-1.
+      aws.ami = "ami-a458e2cc"
+      aws.instance_type = "t2.small"
+      aws.security_groups = ENV['VAGRANT_AWS_SECURITY_GROUP']
+      aws.subnet_id = ENV['VAGRANT_AWS_SUBNET_ID']
+
+      # Use IAM role.
+      aws.iam_instance_profile_name = "commons-dev"
 
       # Create an Elastic IP and associate it with the instance.
       aws.elastic_ip = "true"
 
-      # Set instance name to match hostname.
+      # Set instance tags.
       aws.tags["Name"] = options[:hostname]
+      aws.tags["Project"] = "commons"
 
       # Override vagrant defaults.
       override.ssh.username = "admin"
