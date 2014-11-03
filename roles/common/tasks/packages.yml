@@ -36,8 +36,6 @@
     - "ufw"
     - "unzip"
     - "vim"
-    - "vim-nox"
-    - "weechat"
     - "wget"
   tags:
     - "common"
