@@ -42,8 +42,8 @@ Vagrant.configure("2") do |config|
       # Use IAM role.
       aws.iam_instance_profile_name = "commons-dev"
 
-      # Create an Elastic IP and associate it with the instance.
-      aws.elastic_ip = "true"
+      # Associate a public IP with the instance.
+      aws.associate_public_ip = "true"
 
       # Set instance tags.
       aws.tags["Name"] = options[:hostname]
