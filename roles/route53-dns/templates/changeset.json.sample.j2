@@ -2,27 +2,27 @@
   "Comment": "DNS records for zone {{ route53_zone_id }}",
   "Changes": [
     {
-      "Action": "UPSERT",
+      "Action": "${ACTION}",
       "ResourceRecordSet": {
         "Name": "{{ wordpress_hostname }}",
         "Type": "A",
         "TTL": 300,
         "ResourceRecords": [
           {
-            "Value": "{{ public_ip_address.stdout }}"
+            "Value": "${IP}"
           }
         ]
       }
     },
     {
-      "Action": "UPSERT",
+      "Action": "${ACTION}",
       "ResourceRecordSet": {
         "Name": "*.{{ wordpress_hostname }}",
         "Type": "A",
         "TTL": 300,
         "ResourceRecords": [
           {
-            "Value": "{{ public_ip_address.stdout }}"
+            "Value": "${IP}"
           }
         ]
       }

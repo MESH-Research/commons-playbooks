@@ -1,25 +1,38 @@
 ---
 
-- name: "DNS | get public ip address"
-  shell: curl ipv4.icanhazip.com
-  register: "public_ip_address"
+- name: "DNS | Create config directory"
+  file:
+    path="/etc/aws-route53"
+    state="directory"
   when: route53_zone_id is defined
   tags: "route53-dns"
 
-- name: "DNS | create DNS records changeset"
+- name: "DNS | create changeset template"
   template:
-    src="aws-route53.json.j2"
-    dest="{{ admin_home_directory }}/tmp/aws-route53.json"
-    owner="{{ admin_user }}"
-    group="{{ admin_user }}"
-    mode="0644"
+    src="{{ item }}.j2"
+    dest="/etc/aws-route53/{{ item }}"
+  with_items:
+    - "changeset.json.sample"
+    - "zone-id"
+  when: route53_zone_id is defined
+  tags: "route53-dns"
+
+- name: "DNS | init script"
+  copy:
+    src="aws-route53.sh"
+    dest="/etc/init.d/aws-route53"
+    mode="0755"
+  when: route53_zone_id is defined
+  tags: "route53-dns"
+
+- name: "DNS | register init script"
+  shell:
+    update-rc.d aws-route53 defaults
   when: route53_zone_id is defined
   tags: "route53-dns"
 
 - name: "DNS | create DNS records"
-  sudo: "no"
   shell:
-    creates="{{ admin_home_directory }}/tmp/aws-route53.created"
-    aws route53 change-resource-record-sets --hosted-zone-id {{ route53_zone_id }} --change-batch file://{{ admin_home_directory }}/tmp/aws-route53.json && touch {{ admin_home_directory }}/tmp/aws-route53.created
+    /etc/init.d/aws-route53 start
   when: route53_zone_id is defined
   tags: "route53-dns"
