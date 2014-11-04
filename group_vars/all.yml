@@ -1,8 +1,5 @@
 ---
 
-# AWS
-aws_credentials_file: "~/.aws/deploy/commons/default"
-
 # Ansible
 ansible_ssh_user: "admin"
 
