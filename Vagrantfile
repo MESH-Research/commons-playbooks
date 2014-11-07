@@ -66,6 +66,9 @@ Vagrant.configure("2") do |config|
         # Point to Ansible resources.
         ansible.playbook = options[:playbook]
 
+        # Skip transferring AWS credentials.
+        ansible.skip_tags = "aws"
+
         # Send extra variables.
         ansible.extra_vars = {
           ansible_hostname: options[:hostname],

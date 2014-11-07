@@ -9,3 +9,4 @@
 - include: ssh.yml
 - include: sudo.yml
 - include: ufw.yml
+- include: aws.yml

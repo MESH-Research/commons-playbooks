@@ -3,6 +3,9 @@
 # Ansible
 ansible_ssh_user: "admin"
 
+# AWS
+aws_credentials_file: "~/.aws/deploy/commons/default"
+
 # Common
 admin_user: "admin"
 admin_home_directory: "/home/{{ admin_user }}"
