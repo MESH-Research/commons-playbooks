@@ -21,3 +21,12 @@
     group="{{ admin_user }}"
     mode="0644"
   tags: "wordpress"
+
+- name: "WordPress | update script"
+  template:
+    src="update-wordpress.sh.j2"
+    dest="{{ admin_home_directory }}/bin/update-wordpress.sh"
+    owner="{{ admin_user }}"
+    group="{{ admin_user }}"
+    mode="0744"
+  tags: "wordpress"
