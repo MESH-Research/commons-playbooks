@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# Update WordPress core with wp-cli.
+# Run as root. Update version number.
+
+VERSION=4.0.1
+chown admin:admin {{ wordpress_install_directory }}/public/wp-content/upgrade
+sudo -u admin php {{ admin_home_directory }}/bin/wp-cli.phar core update --version=$VERSION --path={{ wordpress_install_directory }}/public
+chown www-data:www-data {{ wordpress_install_directory }}/public/wp-content/upgrade
