@@ -19,11 +19,20 @@ bantime = {{ fail2ban_bantime | default('2592000') }}
 findtime = {{ fail2ban_findtime | default('86400') }}
 maxretry = 25
 
-[wordpress-bots]
+[wordpress-comments]
 enabled = true
 action = ufw
-filter = wordpress-bots
+filter = wordpress-comments
 logpath = /var/log/nginx/access.log
 bantime = {{ fail2ban_bantime | default('2592000') }}
 findtime = {{ fail2ban_findtime | default('86400') }}
 maxretry = 50
+
+[wordpress-trackbacks]
+enabled = true
+action = ufw
+filter = wordpress-trackbacks
+logpath = /var/log/nginx/access.log
+bantime = {{ fail2ban_bantime | default('2592000') }}
+findtime = {{ fail2ban_findtime | default('86400') }}
+maxretry = 5

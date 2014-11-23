@@ -23,7 +23,8 @@
   with_items:
     - "nginx-rate-limit.conf"
     - "wordpress-auth.conf"
-    - "wordpress-bots.conf"
+    - "wordpress-comments.conf"
+    - "wordpress-trackbacks.conf"
   tags:
     - "fail2ban"
 
