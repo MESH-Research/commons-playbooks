@@ -12,7 +12,9 @@
   roles:
     - "common"
     - "route53-dns"
+    - "dnsmasq"
     - "mysql"
+    - "ssl"
     - "nginx"
     - "php-fpm"
     - "wordpress-cbox"
