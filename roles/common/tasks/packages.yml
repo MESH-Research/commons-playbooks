@@ -16,6 +16,7 @@
     - "grep"
     - "gzip"
     - "hostname"
+    - "htop"
     - "iotop"
     - "less"
     - "logrotate"
@@ -34,6 +35,7 @@
     - "ufw"
     - "unzip"
     - "vim"
+    - "w3m"
     - "wget"
   tags:
     - "common"
