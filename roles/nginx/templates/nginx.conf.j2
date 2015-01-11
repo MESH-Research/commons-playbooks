@@ -26,7 +26,8 @@ http {
     server unix:/var/run/php5-fpm.sock;
   }
 
-  client_max_body_size 4m;
+  client_max_body_size 24m;
+  client_body_timeout 120s;
 
   gzip on;
   gzip_disable "msie6";

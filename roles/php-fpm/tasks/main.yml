@@ -22,8 +22,26 @@
 - name: "PHP-FPM | raise file upload limit"
   lineinfile:
     dest="/etc/php5/fpm/php.ini"
+    regexp="^upload_max_filesize"
+    line="upload_max_filesize = {{ php_upload_max_filesize | default('24M') }}"
+    state="present"
+  notify: "restart php-fpm"
+  tags: "php-fpm"
+
+- name: "PHP-FPM | raise file upload limit"
+  lineinfile:
+    dest="/etc/php5/fpm/php.ini"
     regexp="^post_max_size"
-    line="post_max_size = {{ php_post_max_size | default('8M') }}"
+    line="post_max_size = {{ php_post_max_size | default('24M') }}"
+    state="present"
+  notify: "restart php-fpm"
+  tags: "php-fpm"
+
+- name: "PHP-FPM | extend max input time"
+  lineinfile:
+    dest="/etc/php5/fpm/php.ini"
+    regexp="^max_input_time"
+    line="max_input_time = {{ php_max_input_time | default('120') }}"
     state="present"
   notify: "restart php-fpm"
   tags: "php-fpm"
