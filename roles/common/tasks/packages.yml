@@ -21,6 +21,7 @@
     - "logrotate"
     - "manpages"
     - "nano"
+    - "ntp"
     - "python-setuptools"
     - "python-software-properties"
     - "rsync"
