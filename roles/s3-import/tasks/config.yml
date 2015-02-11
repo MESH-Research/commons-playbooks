@@ -10,7 +10,7 @@
 
 - name: "WordPress | load salts into variable"
   shell:
-    cat {{ admin_home_directory }}/tmp/wordpress.salts.txt
+    echo {% raw %} "$(cat {{ admin_home_directory }}/tmp/wordpress.salts.txt)" {% endraw %}
   register: "wordpress_salts"
   tags:
     - "wordpress"
