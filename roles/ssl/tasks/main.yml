@@ -1,5 +1,11 @@
 ---
 
+- name: "SSL | generate stronger DHE parameter"
+  shell:
+    creates="/etc/ssl/certs/dhparam.pem"
+    openssl dhparam -out /etc/ssl/certs/dhparam.pem 4096
+  tags: "ssl"
+
 - name: "SSL | create directory"
   file:
     path="/etc/ssl/private/app"
