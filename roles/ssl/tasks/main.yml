@@ -4,6 +4,7 @@
   shell:
     creates="/etc/ssl/certs/dhparam.pem"
     openssl dhparam -out /etc/ssl/certs/dhparam.pem 4096
+  when: ssl_certs_directory is defined
   tags: "ssl"
 
 - name: "SSL | create directory"
