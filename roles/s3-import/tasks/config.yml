@@ -58,3 +58,12 @@
   tags:
     - "wordpress"
     - "config"
+
+- name: "WordPress | install robots.txt"
+  copy:
+    src="robots.txt"
+    dest="{{ wordpress_install_directory }}/public/robots.txt"
+  when: wordpress_production_hostname is defined
+  tags:
+    - "wordpress"
+    - "config"
