@@ -46,6 +46,15 @@
   notify: "restart php-fpm"
   tags: "php-fpm"
 
+- name: "PHP-FPM | raise form input limit for ninja forms"
+  lineinfile:
+    dest="/etc/php5/fpm/php.ini"
+    regexp="^max_input_vars"
+    line="max_input_vars = {{ php_max_input_vars | default('2000') }}"
+    state="present"
+  notify: "restart php-fpm"
+  tags: "php-fpm"
+
 - name: "PHP-FPM | allow wp-cli"
   lineinfile:
     dest="/etc/php5/cli/php.ini"
