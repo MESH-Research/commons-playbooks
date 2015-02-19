@@ -35,6 +35,7 @@ upsert_file="/etc/aws-route53/upsert.json"
 delete_file="/etc/aws-route53/delete.json"
 
 # Load values
+region=`curl -s http://169.254.169.254/latest/dynamic/instance-identity/document | awk -F\" '/region/ {print $4}'`
 zoneid=`cat $zoneid_file`
 publicip=`dig +short myip.opendns.com @resolver1.opendns.com`
 
@@ -48,7 +49,7 @@ do_start()
   else
     sed -e "s/\${IP}/$publicip/g" -e "s/\${ACTION}/UPSERT/g" $sample_file > $upsert_file
     sed -e "s/\${IP}/$publicip/g" -e "s/\${ACTION}/DELETE/g" $sample_file > $delete_file
-    aws route53 change-resource-record-sets --hosted-zone-id $zoneid --change-batch file://${upsert_file} 1> /tmp/aws-route53 2>&1
+    aws route53 change-resource-record-sets --region $region --hosted-zone-id $zoneid --change-batch file://${upsert_file} 1> /tmp/aws-route53 2>&1
   fi
 }
 
@@ -58,7 +59,7 @@ do_start()
 do_stop()
 {
   if test -f $delete_file; then
-            aws route53 change-resource-record-sets --hosted-zone-id $zoneid --change-batch file://${delete_file} 1> /tmp/aws-route53 2>&1
+            aws route53 change-resource-record-sets --region $region --hosted-zone-id $zoneid --change-batch file://${delete_file} 1> /tmp/aws-route53 2>&1
             rm -f $upsert_file $delete_file
   fi
 }
