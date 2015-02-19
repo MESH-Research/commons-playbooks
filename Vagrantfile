@@ -82,8 +82,8 @@ Vagrant.configure("2") do |config|
     # Virtualbox provider
     machine.vm.provider :virtualbox do |vb, override|
 
-      # Ubuntu 12.04.
-      override.vm.box = "hashicorp/precise64"
+      # Debian 7.7.
+      override.vm.box = "chef/debian-7.7"
 
       # Use private networking.
       override.vm.network "private_network", type: "dhcp"
