@@ -11,3 +11,27 @@
     - "wordpress"
     - "mysql"
     - "migrate"
+
+- name: "WordPress | update WordPress site URL"
+  sudo: "no"
+  shell:
+    creates="{{ admin_home_directory }}/tmp/wordpress.siteurl.updated"
+    php {{ admin_home_directory }}/bin/wp-cli.phar option update siteurl 'https://{{ wordpress_hostname }}' --path='{{ wordpress_install_directory }}/public' && touch {{ admin_home_directory }}/tmp/wordpress.config.siteurl.updated
+  when: wordpress_production_hostname is defined
+  tags:
+    - "s3-import"
+    - "wordpress"
+    - "mysql"
+    - "migrate"
+
+- name: "WordPress | update WordPress home URL"
+  sudo: "no"
+  shell:
+    creates="{{ admin_home_directory }}/tmp/wordpress.home.updated"
+    php {{ admin_home_directory }}/bin/wp-cli.phar option update home 'https://{{ wordpress_hostname }}' --path='{{ wordpress_install_directory }}/public' && touch {{ admin_home_directory }}/tmp/wordpress.config.home.updated
+  when: wordpress_production_hostname is defined
+  tags:
+    - "s3-import"
+    - "wordpress"
+    - "mysql"
+    - "migrate"
