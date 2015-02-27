@@ -27,6 +27,7 @@
     - "sites-available"
     - "sites-enabled"
     - "conf.d"
+    - "include"
   notify: "restart nginx"
   tags: "nginx"
 

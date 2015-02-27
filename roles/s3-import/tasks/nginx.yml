@@ -1,5 +1,16 @@
 ---
 
+- name: "WordPress | nginx server includes"
+  template:
+    src="include-{{ item }}.j2"
+    dest="/etc/nginx/include/{{ item }}"
+  with_items:
+    - "php-fpm"
+    - "ssl"
+  tags:
+    - "wordpress"
+    - "nginx"
+
 - name: "WordPress | nginx virtual hosts"
   template:
     src="nginx-{{ item }}.j2"
