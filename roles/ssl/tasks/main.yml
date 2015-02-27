@@ -4,17 +4,18 @@
   shell:
     creates="/etc/ssl/certs/dhparam.pem"
     openssl dhparam -out /etc/ssl/certs/dhparam.pem 4096
-  when: ssl_certs_directory is defined
-  tags: "ssl"
+  tags:
+    - "ssl"
 
-- name: "SSL | create directory"
+- name: "SSL | create certificate directory"
   file:
     path="/etc/ssl/private/app"
     state="directory"
     owner="root"
     group="root"
     mode="0700"
-  tags: "ssl"
+  tags:
+    - "ssl"
 
 - name: "SSL | install official certificates"
   copy:
@@ -24,12 +25,5 @@
     group="root"
     mode="0600"
   with_fileglob: "{{ ssl_certs_directory }}/*"
-  when: ssl_certs_directory is defined
-  tags: "ssl"
-
-- name: "SSL | create self-signed certificates"
-  shell:
-    creates="/etc/ssl/private/app/server.crt"
-    openssl req -new -nodes -x509 -subj "/C=US/ST=New York/L=New York/O=/CN={{ wordpress_hostname }}" -days 3650 -keyout /etc/ssl/private/app/server.key -out /etc/ssl/private/app/server.crt -extensions v3_ca
-  when: ssl_certs_directory is not defined
-  tags: "ssl"
+  tags:
+    - "ssl"

@@ -13,7 +13,7 @@
     - "route53-dns"
     - "dnsmasq"
     - "mysql"
-    - "ssl"
+    - "ssl-self-signed"
     - "nginx"
     - "php-fpm"
     - "wordpress"
