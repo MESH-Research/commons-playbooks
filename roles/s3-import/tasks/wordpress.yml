@@ -38,19 +38,8 @@
     state="directory"
   with_items:
     - "blogs.dir"
-    - "plugins"
-    - "themes"
-    - "upgrade"
     - "uploads"
     - "wptouch-data"
-  tags:
-    - "s3-import"
-    - "wordpress"
-    - "permissions"
-
-- name: "WordPress | change repository permissions"
-  shell:
-    find {{ wordpress_install_directory }}/public -name '.git' -type d -exec dirname {} \; | xargs chown -R {{ admin_user }}:{{ admin_user }}
   tags:
     - "s3-import"
     - "wordpress"
