@@ -11,25 +11,19 @@
     - "wordpress"
     - "nginx"
 
-- name: "WordPress | nginx virtual hosts"
+- name: "WordPress | nginx virtual host"
   template:
-    src="nginx-{{ item }}.j2"
-    dest="/etc/nginx/sites-available/{{ item }}"
-  with_items:
-    - "wordpress"
-    - "wordpress-ssl"
+    src="nginx-wordpress.j2"
+    dest="/etc/nginx/sites-available/wordpress"
   tags:
     - "wordpress"
     - "nginx"
 
-- name: "WordPress | nginx virtual host symlinks"
+- name: "WordPress | nginx virtual host symlink"
   file:
-    src="/etc/nginx/sites-available/{{ item }}"
-    dest="/etc/nginx/sites-enabled/{{ item }}"
+    src="/etc/nginx/sites-available/wordpress}"
+    dest="/etc/nginx/sites-enabled/wordpress"
     state="link"
-  with_items:
-    - "wordpress"
-    - "wordpress-ssl"
   notify: reload nginx
   tags:
     - "wordpress"
