@@ -1,0 +1,25 @@
+---
+
+- name: "Nginx | add wheezy backports"
+  apt_repository:
+    repo="deb http://http.debian.net/debian wheezy-backports main"
+    state="present"
+    update_cache="yes"
+  notify: "enable nginx"
+  tags:
+    - "nginx"
+    - "packages"
+    - "debian"
+    - "wheezy"
+
+- name: "Nginx | install"
+  apt:
+    name="nginx"
+    default_release="wheezy-backports"
+    state="present"
+  notify: "enable nginx"
+  tags:
+    - "nginx"
+    - "packages"
+    - "debian"
+    - "wheezy"

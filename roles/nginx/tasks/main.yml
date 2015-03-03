@@ -1,13 +1,10 @@
 ---
 
-- name: "Nginx | install"
-  apt:
-    name="nginx"
-    state="present"
-  notify: "enable nginx"
-  tags:
-    - "nginx"
-    - "packages"
+# This application requires Nginx >1.6 (for SPDY support), which is usually not
+# available in stable repos. Write your own task if you are not using Debian 7.
+
+- include: "distro/debian7.yml"
+  when: "ansible_distribution_release == 'wheezy'"
 
 - name: "Nginx | nginx.conf"
   template:

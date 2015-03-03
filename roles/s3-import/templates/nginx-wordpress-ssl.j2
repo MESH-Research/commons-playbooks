@@ -1,6 +1,6 @@
 server {
 
-  listen 443 ssl;
+  listen 443 ssl spdy deferred;
   server_name {{ wordpress_hostname }} *.{{ wordpress_hostname }};
 
   root {{ wordpress_install_directory }}/public;
