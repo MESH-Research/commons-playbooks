@@ -23,7 +23,7 @@
   lineinfile:
     dest="/etc/php5/fpm/php.ini"
     regexp="^upload_max_filesize"
-    line="upload_max_filesize = {{ php_upload_max_filesize | default('24M') }}"
+    line="upload_max_filesize = {{ php_upload_max_filesize }}"
     state="present"
   notify: "restart php-fpm"
   tags: "php-fpm"
@@ -32,7 +32,7 @@
   lineinfile:
     dest="/etc/php5/fpm/php.ini"
     regexp="^post_max_size"
-    line="post_max_size = {{ php_post_max_size | default('24M') }}"
+    line="post_max_size = {{ php_post_max_size }}"
     state="present"
   notify: "restart php-fpm"
   tags: "php-fpm"
@@ -41,7 +41,7 @@
   lineinfile:
     dest="/etc/php5/fpm/php.ini"
     regexp="^max_input_time"
-    line="max_input_time = {{ php_max_input_time | default('120') }}"
+    line="max_input_time = {{ php_max_input_time }}"
     state="present"
   notify: "restart php-fpm"
   tags: "php-fpm"
@@ -50,7 +50,7 @@
   lineinfile:
     dest="/etc/php5/fpm/php.ini"
     regexp="^max_input_vars"
-    line="max_input_vars = {{ php_max_input_vars | default('2000') }}"
+    line="max_input_vars = {{ php_max_input_vars }}"
     state="present"
   notify: "restart php-fpm"
   tags: "php-fpm"
