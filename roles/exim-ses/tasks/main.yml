@@ -36,7 +36,7 @@
 - name: "exim-ses | SES credentials"
   lineinfile:
     dest="/etc/exim4/passwd.client"
-    regexp="^*.amazonaws.com:"
+    regexp="^\*\.amazonaws\.com:"
     line="*.amazonaws.com:{{ wordpress_smtp_user }}:{{ wordpress_smtp_password }}"
     state="present"
   notify: "restart exim"
