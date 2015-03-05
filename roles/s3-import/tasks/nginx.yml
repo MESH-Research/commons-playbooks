@@ -21,7 +21,7 @@
 
 - name: "WordPress | nginx virtual host symlink"
   file:
-    src="/etc/nginx/sites-available/wordpress}"
+    src="/etc/nginx/sites-available/wordpress"
     dest="/etc/nginx/sites-enabled/wordpress"
     state="link"
   notify: reload nginx
