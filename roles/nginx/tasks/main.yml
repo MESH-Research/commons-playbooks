@@ -35,8 +35,8 @@
   with_items:
     - "php-fpm"
     - "ssl"
-  tags:
     - "wordpress"
+  tags:
     - "nginx"
 
 - name: "Nginx | remove default virtual host"
