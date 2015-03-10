@@ -3,3 +3,4 @@
 authorized_keys_directory: "~/.ssh/deploy/commons/production"
 aws_credentials_file: "~/.aws/deploy/commons/s3-backup"
 ssl_certs_directory: "~/.ssh/ssl/commons.mla.org"
+wordpress_enable_debug: "false"

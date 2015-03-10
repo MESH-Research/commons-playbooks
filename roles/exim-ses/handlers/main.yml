@@ -1,0 +1,15 @@
+---
+
+- name: "enable exim"
+  service:
+    name="exim4"
+    state="started"
+    enabled="yes"
+
+- name: "restart exim"
+  service:
+    name="exim4"
+    state="restarted"
+
+- name: "update exim"
+  shell: update-exim4.conf

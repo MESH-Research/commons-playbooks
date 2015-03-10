@@ -16,12 +16,12 @@ set -e
 SOURCE_DIR={{ wordpress_install_directory }}/public/wp-content
 SOURCE_ITEMS="blogs.dir plugins themes uploads wptouch-data"
 BACKUP_DIR={{ admin_home_directory }}/s3
-BACKUP_SLUG={{ s3_backup_project | default('app') }}-www
+BACKUP_SLUG={{ s3_backup_project }}-www
 TAR_FLAGS=
 
 # AWS configuration.
 AWS_CLI=/usr/local/bin/aws
-S3_LOCATION=s3://{{ s3_backup_bucket }}/{{ s3_backup_project | default('app') }}/www
+S3_LOCATION=s3://{{ s3_backup_bucket }}/{{ s3_backup_project }}/www
 S3_FLAGS="--sse"
 
 # Get the current date and time.

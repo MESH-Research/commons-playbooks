@@ -1,0 +1,8 @@
+---
+
+mysql_bind_ip_address: "127.0.0.1"
+mysql_key_buffer_size: "256M"
+mysql_query_cache_size: "256M"
+mysql_tmp_table_size: "128M"
+mysql_max_heap_table_size: "128M"
+mysql_root_password: "password"

@@ -1,16 +1,5 @@
 ---
 
-- name: "WordPress | nginx server includes"
-  template:
-    src="include-{{ item }}.j2"
-    dest="/etc/nginx/include/{{ item }}"
-  with_items:
-    - "php-fpm"
-    - "ssl"
-  tags:
-    - "wordpress"
-    - "nginx"
-
 - name: "WordPress | nginx virtual host"
   template:
     src="nginx-wordpress.j2"
@@ -21,7 +10,7 @@
 
 - name: "WordPress | nginx virtual host symlink"
   file:
-    src="/etc/nginx/sites-available/wordpress}"
+    src="/etc/nginx/sites-available/wordpress"
     dest="/etc/nginx/sites-enabled/wordpress"
     state="link"
   notify: reload nginx

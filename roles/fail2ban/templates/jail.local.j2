@@ -6,8 +6,8 @@ enabled = true
 action = ufw
 filter = nginx-rate-limit
 logpath = /var/log/nginx/error.log
-bantime = {{ fail2ban_bantime | default('2592000') }}
-findtime = {{ fail2ban_findtime | default('86400') }}
+bantime = {{ fail2ban_bantime }}
+findtime = {{ fail2ban_findtime }}
 maxretry = 3
 
 [wordpress-auth]
@@ -15,8 +15,8 @@ enabled = true
 action = ufw
 filter = wordpress-auth
 logpath = /var/log/auth.log
-bantime = {{ fail2ban_bantime | default('2592000') }}
-findtime = {{ fail2ban_findtime | default('86400') }}
+bantime = {{ fail2ban_bantime }}
+findtime = {{ fail2ban_findtime }}
 maxretry = 25
 
 [wordpress-comments]
@@ -24,8 +24,8 @@ enabled = true
 action = ufw
 filter = wordpress-comments
 logpath = /var/log/nginx/access.log
-bantime = {{ fail2ban_bantime | default('2592000') }}
-findtime = {{ fail2ban_findtime | default('86400') }}
+bantime = {{ fail2ban_bantime }}
+findtime = {{ fail2ban_findtime }}
 maxretry = 50
 
 [wordpress-trackbacks]
@@ -33,6 +33,6 @@ enabled = true
 action = ufw
 filter = wordpress-trackbacks
 logpath = /var/log/nginx/access.log
-bantime = {{ fail2ban_bantime | default('2592000') }}
-findtime = {{ fail2ban_findtime | default('86400') }}
+bantime = {{ fail2ban_bantime }}
+findtime = {{ fail2ban_findtime }}
 maxretry = 5

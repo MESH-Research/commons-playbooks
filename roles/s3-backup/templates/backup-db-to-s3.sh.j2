@@ -16,12 +16,12 @@ set -e
 
 # Local configuration.
 BACKUP_DIR={{ admin_home_directory }}/s3
-BACKUP_SLUG={{ s3_backup_project | default('app') }}-db
+BACKUP_SLUG={{ s3_backup_project }}-db
 DUMP_COMMAND="mysqldump --skip-lock-tables {{ mysql_app_database }}"
 
 # AWS configuration.
 AWS_CLI=/usr/local/bin/aws
-S3_LOCATION=s3://{{ s3_backup_bucket }}/{{ s3_backup_project | default('app') }}/db
+S3_LOCATION=s3://{{ s3_backup_bucket }}/{{ s3_backup_project }}/db
 S3_FLAGS="--sse"
 
 # Get the current date and time.

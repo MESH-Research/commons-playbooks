@@ -1,15 +1,6 @@
 ---
 
-- name: "WordPress | install wp-cli"
-  sudo: "no"
-  get_url:
-    url="{{ wordpress_cli }}"
-    dest="{{ admin_home_directory }}/bin/wp-cli.phar"
-  tags:
-    - "wordpress"
-    - "wordpress-cbox"
-
-- name: "WordPress | create webroot directory"
+- name: "WordPress CBOX | create webroot directory"
   file:
     path="{{ wordpress_install_directory }}/public"
     state="directory"
