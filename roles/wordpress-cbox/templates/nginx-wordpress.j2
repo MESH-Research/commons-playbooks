@@ -37,12 +37,6 @@ server {
 		try_files $uri $uri/ /index.php?$args;
 	}
 
-	# PHP-FPM
-	location ~ \.php {
-		try_files $uri =404;
-		include fastcgi_params;
-		fastcgi_index index.php;
-		fastcgi_pass php;
-	}
+	include include/php-fpm;
 
 }
