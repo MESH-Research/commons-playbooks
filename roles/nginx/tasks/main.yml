@@ -28,6 +28,17 @@
   notify: "restart nginx"
   tags: "nginx"
 
+- name: "Nginx | server includes"
+  template:
+    src="include-{{ item }}.j2"
+    dest="/etc/nginx/include/{{ item }}"
+  with_items:
+    - "php-fpm"
+    - "ssl"
+  tags:
+    - "wordpress"
+    - "nginx"
+
 - name: "Nginx | remove default virtual host"
   file:
     path="/etc/nginx/sites-enabled/default"
