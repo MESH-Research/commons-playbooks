@@ -4,7 +4,7 @@
   apt:
     pkg="exim4"
     state="present"
-  notify: enable exim4
+  notify: "enable exim"
   tags:
     - "exim-ses"
     - "packages"
@@ -17,8 +17,8 @@
     - "router"
     - "transport"
   notify:
-    - "update exim4"
-    - "restart exim4"
+    - "update exim"
+    - "restart exim"
   tags:
     - "exim-ses"
 
@@ -29,17 +29,17 @@
   with_items:
     - "router"
     - "transport"
-  notify: "restart exim4"
+  notify: "restart exim"
   tags:
     - "exim-ses"
 
 - name: "exim-ses | SES credentials"
   lineinfile:
     dest="/etc/exim4/passwd.client"
-    regexp="^*.amazonaws.com:"
+    regexp="^\*\.amazonaws\.com:"
     line="*.amazonaws.com:{{ wordpress_smtp_user }}:{{ wordpress_smtp_password }}"
     state="present"
-  notify: "restart exim4"
+  notify: "restart exim"
   tags:
     - "exim-ses"
     - "ssh"
