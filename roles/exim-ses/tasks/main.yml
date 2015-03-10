@@ -1,0 +1,45 @@
+---
+
+- name: "exim-ses | install"
+  apt:
+    pkg="exim4"
+    state="present"
+  notify: enable exim4
+  tags:
+    - "exim-ses"
+    - "packages"
+
+- name: "exim-ses | config"
+  template:
+    src="update-exim4.conf.conf.j2"
+    dest="/etc/exim4/update-exim4.conf.conf"
+  with_items:
+    - "router"
+    - "transport"
+  notify:
+    - "update exim4"
+    - "restart exim4"
+  tags:
+    - "exim-ses"
+
+- name: "exim-ses | SES config"
+  template:
+    src="00_exim4-config_{{ item }}_ses_smtp.j2"
+    dest="/etc/exim4/conf.d/{{ item }}/00_exim4-config_{{ item }}_ses_smtp"
+  with_items:
+    - "router"
+    - "transport"
+  notify: "restart exim4"
+  tags:
+    - "exim-ses"
+
+- name: "exim-ses | SES credentials"
+  lineinfile:
+    dest="/etc/exim4/passwd.client"
+    regexp="^*.amazonaws.com:"
+    line="*.amazonaws.com:{{ wordpress_smtp_user }}:{{ wordpress_smtp_password }}"
+    state="present"
+  notify: "restart exim4"
+  tags:
+    - "exim-ses"
+    - "ssh"
