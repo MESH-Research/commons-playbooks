@@ -12,4 +12,4 @@
     state="restarted"
 
 - name: "update exim"
-  shell: update−exim4.conf
+  shell: update-exim4.conf
