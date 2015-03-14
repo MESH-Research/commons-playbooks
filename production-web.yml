@@ -18,3 +18,4 @@
     - "wordpress"
     - "fail2ban"
     - "s3-backup"
+    - "new-relic"

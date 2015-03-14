@@ -1,0 +1,7 @@
+---
+
+# This application requires you to add New Relic's apt repository. Write your
+# own task if you are not using Debian 7.
+
+- include: "distro/debian7.yml"
+  when: "ansible_distribution_release == 'wheezy'"

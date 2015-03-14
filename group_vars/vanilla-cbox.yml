@@ -13,6 +13,7 @@ mysql_app_password: "password"
 # mysql_s3_restore_file: "s3://s3-bucket/path/to/backup.file"
 # wordpress_s3_restore_file: "s3://s3-bucket/path/to/backup.file"
 
+# new_relic_license_key: ""
 # route53_zone_id: ""
 # s3_backup_bucket: "s3-bucket"
 # s3_backup_project: "project-name"
