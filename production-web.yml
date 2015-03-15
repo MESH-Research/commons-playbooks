@@ -12,7 +12,7 @@
   roles:
     - "common"
     - "ssl"
-    - "exim-ses"
+    - "nullmailer"
     - "nginx"
     - "php-fpm"
     - "wordpress"
