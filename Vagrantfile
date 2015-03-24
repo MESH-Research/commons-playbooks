@@ -105,6 +105,7 @@ Vagrant.configure("2") do |config|
         # Send extra variables.
         ansible.extra_vars = {
           admin_user: "vagrant",
+          ansible_distribution_release: "wheezy",
           ansible_ssh_host: "127.0.0.1",
           ansible_ssh_user: "vagrant",
           ansible_ssh_port: "2222",
