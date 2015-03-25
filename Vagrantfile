@@ -102,6 +102,9 @@ Vagrant.configure("2") do |config|
           ansible.skip_tags = "route53-dns,permissions"
         end
 
+        # Uncomment for verbose output.
+        #ansible.verbose = "vvvv"
+
         # Send extra variables.
         ansible.extra_vars = {
           admin_user: "vagrant",
