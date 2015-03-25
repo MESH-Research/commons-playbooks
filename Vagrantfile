@@ -108,7 +108,6 @@ Vagrant.configure("2") do |config|
         # Send extra variables.
         ansible.extra_vars = {
           admin_user: "vagrant",
-          ansible_distribution_release: "wheezy",
           ansible_ssh_user: "vagrant",
           deploy_user: "vagrant",
           nginx_sendfile: "off",
