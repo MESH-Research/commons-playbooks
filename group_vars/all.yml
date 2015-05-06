@@ -10,19 +10,7 @@ aws_credentials_file: "~/.aws/deploy/commons/default"
 admin_user: "admin"
 admin_home_directory: "/home/{{ admin_user }}"
 authorized_keys_directory: "~/.ssh/deploy/commons/development"
-current_date: "{{ ansible_date_time.year }}{{ ansible_date_time.month }}{{ ansible_date_time.day }}"
-ssh_port: "22"
-timezone: "America/New_York"
-
-# MySQL
-mysql_default_hosts:
-  - "127.0.0.1"
-  - "::1"
-  - "localhost"
-mysql_port: "3306"
-mysql_tuner: "https://raw.github.com/major/MySQLTuner-perl/master/mysqltuner.pl"
 
 # WordPress
 wordpress_install_directory: "{{ admin_home_directory }}/app"
-wordpress_cli: "https://raw.github.com/wp-cli/builds/gh-pages/phar/wp-cli.phar"
 wordpress_hostname: "commons.mla.org"
