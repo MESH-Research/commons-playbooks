@@ -13,15 +13,6 @@
     state="latest"
   tags: "wordpress"
 
-- name: "WordPress | useful exports in bash"
-  template:
-    src="local_exports.j2"
-    dest="{{ admin_home_directory }}/.local_exports"
-    owner="{{ admin_user }}"
-    group="{{ admin_user }}"
-    mode="0644"
-  tags: "wordpress"
-
 - name: "WordPress | update script"
   template:
     src="update-wordpress.sh.j2"
