@@ -1,29 +1,31 @@
-"variables": {
-  "aws_access_key": "{{env `VAGRANT_AWS_ACCESS_KEY_ID`}}",
-  "aws_secret_key": "{{env `VAGRANT_AWS_SECRET_ACCESS_KEY`}}",
-  "aws_security_group": "{{env `VAGRANT_AWS_SECURITY_GROUP`}}",
-  "aws_subnet_id": "{{env `VAGRANT_AWS_SUBNET_ID`}}"
-},
-"builders": [
-  {
-    "type": "amazon-ebs",
-    "access_key": "{{user `aws_access_key`}}",
-    "ami_name": "mla_commons_{{timestamp}}",
-    "associate_public_ip_address": true,
-    "iam_instance_profile": "commons-dev",
-    "instance_type": "t2.small",
-    "region": "us-east-1",
-    "secret_key": "{{user `aws_secret_key`}}",
-    "security_group_ids": ["{{user `aws_security_group`}}"],
-    "ssh_username": "ubuntu",
-    "source_ami": "ami-f63b3e9e",
-    "subnet_id": "{{user `aws_subnet_id`}}",
-    "tags": {
-      "Project": "commons"
+{
+  "variables": {
+    "aws_access_key": "{{env `VAGRANT_AWS_ACCESS_KEY_ID`}}",
+    "aws_secret_key": "{{env `VAGRANT_AWS_SECRET_ACCESS_KEY`}}",
+    "aws_security_group": "{{env `VAGRANT_AWS_SECURITY_GROUP`}}",
+    "aws_subnet_id": "{{env `VAGRANT_AWS_SUBNET_ID`}}"
+  },
+  "builders": [
+    {
+      "type": "amazon-ebs",
+      "access_key": "{{user `aws_access_key`}}",
+      "ami_name": "mla_commons_{{timestamp}}",
+      "associate_public_ip_address": true,
+      "iam_instance_profile": "commons-dev",
+      "instance_type": "t2.small",
+      "region": "us-east-1",
+      "secret_key": "{{user `aws_secret_key`}}",
+      "security_group_ids": ["{{user `aws_security_group`}}"],
+      "ssh_username": "ubuntu",
+      "source_ami": "ami-f63b3e9e",
+      "subnet_id": "{{user `aws_subnet_id`}}",
+      "tags": {
+        "Project": "commons"
+      }
     }
+  ],
+  "provisioners": {
+    "type": "ansible-local",
+    "playbook_file": "development.yml"
   }
-],
-"provisioners": {
-  "type": "ansible-local",
-  "playbook_file": "development.yml"
 }
