@@ -6,9 +6,6 @@ options = {}
 # Set hostname from command-line argument.
 options[:hostname] = ARGV[1] || false
 
-# Set playbook from environment variable.
-options[:playbook] = ENV['PLAYBOOK'] || "development.yml"
-
 # Require the user to specify a hostname.
 if ("#{ARGV[0]}" != "" && !options[:hostname])
   abort("Please provide a hostname, e.g.: `vagrant #{ARGV[0]} hostname`")
@@ -59,23 +56,16 @@ Vagrant.configure("2") do |config|
       # Provision with Ansible.
       override.vm.provision :ansible do |ansible|
 
-        # Point to Ansible resources.
-        ansible.playbook = options[:playbook]
+        ansible.playbook = "development.yml"
 
         # Add to development group.
         ansible.groups = {
           'development' => [options[:hostname]]
         }
 
-        # Skip transferring AWS credentials.
-        #ansible.skip_tags = "aws"
-
         # Send extra variables.
         ansible.extra_vars = {
-          ansible_hostname: options[:hostname],
-          ansible_ssh_user: "ubuntu",
-          set_hostname: options[:hostname],
-          web_user: "www-data"
+          ansible_ssh_user: "ubuntu"
         }
 
       end
@@ -85,31 +75,25 @@ Vagrant.configure("2") do |config|
     # Virtualbox provider
     machine.vm.provider :virtualbox do |vb, override|
 
-      # Debian 7.7.
-      override.vm.box = "chef/debian-7.7"
+      # Ubuntu trusty x86_64.
+      override.vm.box = "ubuntu/trusty64"
 
       # Use private networking.
       override.vm.network "private_network", type: "dhcp"
 
       # Synced folder.
-      override.vm.synced_folder "sync/" + options[:hostname], "/vagrant", :disabled => "true"
+      override.vm.synced_folder "sync/" + options[:hostname], "/srv/www"
 
       # Provision with Ansible.
       override.vm.provision :ansible do |ansible|
 
         # Point to Ansible resources.
-        ansible.playbook = options[:playbook]
+        ansible.playbook = "development.yml"
 
         # Send extra variables.
         ansible.extra_vars = {
-          admin_user: "vagrant",
           ansible_ssh_user: "vagrant",
-          deploy_user: "vagrant",
-          nginx_sendfile: "off",
-          set_hostname: options[:hostname],
-          wordpress_hostname: options[:hostname] + ".dev",
-          wordpress_install_directory: "/vagrant/app",
-          www_user: "vagrant"
+          web_user: "vagrant"
         }
 
       end
