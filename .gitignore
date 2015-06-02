@@ -1,5 +1,5 @@
 /.vagrant
 /env_vars
-/host_var
+/host_vars
 /vagrant_ansible_inventory*
 /vendor/roles
