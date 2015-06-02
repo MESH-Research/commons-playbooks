@@ -1,0 +1,29 @@
+---
+
+- name: "Common Additions | install packages"
+  apt:
+    pkg="{{ item }}"
+    state="latest"
+  with_items:
+    - "python-setuptools"
+  tags:
+    - "common"
+    - "additions"
+    - "packages"
+
+- name: "Common Additions | install pip"
+  easy_install:
+    name="pip"
+  tags:
+    - "common"
+    - "additions"
+    - "packages"
+
+- name: "Common Additions | install aws-cli"
+  pip:
+    name="awscli"
+  tags:
+    - "common"
+    - "additions"
+    - "packages"
+    - "aws-cli"

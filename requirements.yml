@@ -1,0 +1,8 @@
+- name: ntp
+  src: resmo.ntp
+- name: logrotate
+  src: nickhammond.logrotate
+- name: php5-xdebug
+  src: MaximeThoonsen.php5-xdebug
+- name: newrelic-php
+  src: nleutner.newrelic-php

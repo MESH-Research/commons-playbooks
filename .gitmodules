@@ -1,0 +1,3 @@
+[submodule "vendor/trellis"]
+	path = vendor/trellis
+	url = https://github.com/roots/bedrock-ansible

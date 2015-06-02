@@ -1,9 +1,19 @@
 ---
 
-mysql_bind_ip_address: "127.0.0.1"
-mysql_app_hosts: []
+# Nginx
+nginx_worker_processes: "2"
 
-wordpress_enable_debug: "true"
-wordpress_git_branch: "develop"
-wordpress_hostname: "{{ ansible_hostname }}.mlacommons.org"
-wordpress_production_hostname: "commons.mla.org"
+# PHP-FPM
+php_max_children: "8"
+php_start_servers: "2"
+php_min_spare_servers: "2"
+php_max_spare_servers: "4"
+
+# APC
+apc_shm_size: "128M"
+
+# MySQL
+mysql_key_buffer_size: "64M"
+mysql_query_cache_size: "64M"
+mysql_tmp_table_size: "16M"
+mysql_max_heap_table_size: "16M"

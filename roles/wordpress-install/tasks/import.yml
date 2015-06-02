@@ -1,0 +1,20 @@
+---
+
+- name: "WordPress Install | create bin directory"
+  sudo: "no"
+  file:
+    dest="{{ www_root }}/{{ item.key }}/bin"
+    state="directory"
+  with_dict: "wordpress_sites"
+  tags:
+    - "wordpress-install"
+
+- name: "WordPress Install | install import script"
+  sudo: "no"
+  template:
+    src="import.sh.j2"
+    dest="{{ www_root }}/{{ item.key }}/bin/import.sh"
+    mode="0744"
+  with_dict: "wordpress_sites"
+  tags:
+    - "wordpress-install"

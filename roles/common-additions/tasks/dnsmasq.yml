@@ -1,0 +1,20 @@
+---
+
+- name: "dnsmasq | install"
+  apt:
+    pkg="dnsmasq"
+    state="latest"
+  when: "ansible_ssh_host == '127.0.0.1'"
+  notify: "enable dnsmasq"
+  tags:
+    - "dnsmasq"
+    - "packages"
+
+- name: "dnsmasq | dnsmasq.conf"
+  copy:
+    src="dnsmasq.conf"
+    dest="/etc/dnsmasq.conf"
+  notify: "restart dnsmasq"
+  when: "ansible_ssh_host == '127.0.0.1'"
+  tags:
+    - "dnsmasq"

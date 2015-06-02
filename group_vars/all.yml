@@ -1,16 +1,23 @@
 ---
 
-# Ansible
-ansible_ssh_user: "admin"
-
-# AWS
-aws_credentials_file: "~/.aws/deploy/commons/default"
-
-# Common
-admin_user: "admin"
-admin_home_directory: "/home/{{ admin_user }}"
-authorized_keys_directory: "~/.ssh/deploy/commons/development"
-
-# WordPress
-wordpress_install_directory: "{{ admin_home_directory }}/app"
-wordpress_hostname: "commons.mla.org"
+wordpress_sites:
+  commons:
+    multisite:
+      enabled: true
+      subdomains: true
+      base_path: "/"
+    repo: "git@github.com:mlaa/commons.git"
+    repo_branch: "bedrock"
+    site_hosts:
+      - "commons.mla.org"
+      - "*.commons.mla.org"
+    site_install: false
+    ssl:
+      enabled: true
+      cert: "roles/ssl/files/self-signed.crt"
+      key: "roles/ssl/files/self-signed.key"
+    system_cron: false
+    env:
+      wp_env: "development"
+      wp_home: "https://commons.mla.org"
+      wp_siteurl: "https://commons.mla.org"

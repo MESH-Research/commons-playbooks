@@ -1,20 +1,28 @@
 ---
 
+# Tracks with trellis/dev.yml, but omits unused servies. We also do not depend
+# on a local working copy of our repo, so we substitute our own WordPress
+# install task.
+
 - name: "Development server"
-  hosts: "all"
+  hosts: "development"
   sudo: "yes"
-  gather_facts: "yes"
   vars_files:
-    - "group_vars/development.yml"
-    - "group_vars/low-memory.yml"
-    - "~/.ansible/commons.yml"
+    - "vendor/trellis/group_vars/all"
+    - "env_vars/commons.yml"
   roles:
     - "common"
-    - "route53-dns"
-    - "dnsmasq"
-    - "mysql"
-    - "ssl-self-signed"
+    - "common-additions"   # local
+    - "nullmailer"         # local
+    - "ssl"                # local
+    - "fail2ban"
+    - "ferm"
+    - "ntp"
+    - "mariadb"
+    - "php"
     - "nginx"
-    - "php-fpm"
-    - "wordpress"
-    - "s3-import"
+    - "logrotate"
+    - "composer"
+    - "wp-cli"
+    - "wordpress-setup"
+    - "wordpress-install"  # local

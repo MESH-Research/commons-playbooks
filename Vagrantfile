@@ -33,8 +33,8 @@ Vagrant.configure("2") do |config|
       aws.secret_access_key = ENV['VAGRANT_AWS_SECRET_ACCESS_KEY']
       aws.keypair_name = ENV['VAGRANT_AWS_KEYPAIR_NAME']
 
-      # Debian 7.8 wheezy hvm x86_64 ebs us-east-1.
-      aws.ami = "ami-e0efab88"
+      # Ubuntu trusty hvm x86_64 ebs us-east-1.
+      aws.ami = "ami-f63b3e9e"
       aws.instance_type = "t2.small"
       aws.security_groups = ENV['VAGRANT_AWS_SECURITY_GROUP']
       aws.subnet_id = ENV['VAGRANT_AWS_SUBNET_ID']
@@ -45,12 +45,8 @@ Vagrant.configure("2") do |config|
       # Associate a public IP with the instance.
       aws.associate_public_ip = "true"
 
-      # Set instance tags.
-      aws.tags["Name"] = options[:hostname]
-      aws.tags["Project"] = "commons"
-
       # Override vagrant defaults.
-      override.ssh.username = "admin"
+      override.ssh.username = "ubuntu"
       override.ssh.private_key_path = ENV['VAGRANT_AWS_PRIVATE_KEY']
 
       # Vagrant-AWS uses a dummy box.
@@ -66,13 +62,20 @@ Vagrant.configure("2") do |config|
         # Point to Ansible resources.
         ansible.playbook = options[:playbook]
 
+        # Add to development group.
+        ansible.groups = {
+          'development' => [options[:hostname]]
+        }
+
         # Skip transferring AWS credentials.
-        ansible.skip_tags = "aws"
+        #ansible.skip_tags = "aws"
 
         # Send extra variables.
         ansible.extra_vars = {
           ansible_hostname: options[:hostname],
-          set_hostname: options[:hostname]
+          ansible_ssh_user: "ubuntu",
+          set_hostname: options[:hostname],
+          web_user: "www-data"
         }
 
       end
@@ -89,21 +92,13 @@ Vagrant.configure("2") do |config|
       override.vm.network "private_network", type: "dhcp"
 
       # Synced folder.
-      override.vm.synced_folder "sync/" + options[:hostname], "/vagrant", create: true
+      override.vm.synced_folder "sync/" + options[:hostname], "/vagrant", :disabled => "true"
 
       # Provision with Ansible.
       override.vm.provision :ansible do |ansible|
 
         # Point to Ansible resources.
         ansible.playbook = options[:playbook]
-
-        # Skip DNS and file permissions for local VMs.
-        if ( options[:playbook] == "development.yml" )
-          ansible.skip_tags = "route53-dns,permissions"
-        end
-
-        # Uncomment for verbose output.
-        #ansible.verbose = "vvvv"
 
         # Send extra variables.
         ansible.extra_vars = {

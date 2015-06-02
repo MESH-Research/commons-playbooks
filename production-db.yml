@@ -13,4 +13,4 @@
     - "common"
     - "mysql"
     - "s3-backup"
-    - "new-relic"
+    - "newrelic-server"

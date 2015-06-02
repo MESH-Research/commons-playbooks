@@ -1,0 +1,92 @@
+---
+
+- name: "WordPress Install | change webroot permissions"
+  file:
+    path="{{ www_root }}"
+    owner="{{ ansible_ssh_user }}"
+    group="{{ ansible_ssh_user }}"
+    state="directory"
+    recurse="yes"
+  tags:
+    - "wordpress-install"
+
+- name: "WordPress Install | restore logs permissions"
+  file:
+    path="{{ www_root }}/{{ item.key }}/logs"
+    owner="{{ web_user }}"
+    group="{{ web_group }}"
+    mode="0755"
+    state="directory"
+  with_dict: "wordpress_sites"
+  tags:
+    - "wordpress-install"
+
+- name: "WordPress Install | clone project repo"
+  sudo: "no"
+  git:
+    repo="{{ item.value.repo }}"
+    dest="{{ www_root }}/{{ item.key }}/current"
+    accept_hostkey="yes"
+    recursive="yes"
+    version="{{ item.value.repo_branch }}"
+  with_dict: "wordpress_sites"
+  tags:
+    - "wordpress-install"
+
+- name: "WordPress Install | create .env file"
+  sudo: "no"
+  template:
+    src="env.j2"
+    dest="{{ www_root }}/{{ item.key }}/current/.env"
+  with_dict: "wordpress_sites"
+  tags:
+    - "wordpress-install"
+
+- name: "WordPress Install | install composer dependencies"
+  sudo: "no"
+  command:
+    composer install
+  args:
+    chdir: "{{ www_root }}/{{ item.key }}/current"
+  register: "composer_results"
+  with_dict: "wordpress_sites"
+  changed_when: "'Nothing to install or update' not in composer_results.stderr"
+  tags:
+    - "wordpress-install"
+
+- name: "WordPress Install | install tables"
+  command:
+    wp core install
+    --allow-root
+    --url="{{ item.value.env.wp_home }}"
+    --title="{{ item.value.site_title | default(item.key) }}"
+    --admin_user="{{ item.value.admin_user | default('admin') }}"
+    --admin_password="{{ item.value.admin_password | default('correct horse battery staple') }}"
+    --admin_email="{{ item.value.admin_email | default('user@example.com') }}"
+  args:
+    chdir: "{{ www_root }}/{{ item.key }}/current/"
+  when: "item.value.site_install == True and (item.value.multisite.enabled | default(False) == False)"
+  with_dict: "wordpress_sites"
+  tags:
+    - "wordpress-install"
+
+- name: "WordPress Install | install multisite tables"
+  command:
+    wp core multisite-install
+    --allow-root
+    --url="{{ item.value.env.wp_home }}"
+    --base="{{ item.value.multisite.base_path | default('/') }}"
+    --subdomains="{{ item.value.multisite.subdomains | default('false') }}"
+    --title="{{ item.value.site_title | default(item.key) }}"
+    --admin_user="{{ item.value.admin_user | default('admin') }}"
+    --admin_password="{{ item.value.admin_password | default('correct horse battery staple') }}"
+    --admin_email="{{ item.value.admin_email | default('user@example.com') }}"
+  args:
+    chdir: "{{ www_root }}/{{ item.key }}/current/"
+  when: "item.value.site_install == True and (item.value.multisite.enabled | default(False) == True)"
+  with_dict: "wordpress_sites"
+  tags:
+    - "wordpress-install"
+
+- include: "mysql.yml"
+- include: "import.yml"

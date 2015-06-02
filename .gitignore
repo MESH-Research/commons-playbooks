@@ -1,4 +1,5 @@
-.vagrant
-host_vars
-sync
-roles/s3-import/templates/wp-config.php.j2
+/.vagrant
+/env_vars
+/host_var
+/vagrant_ansible_inventory*
+/vendor/roles

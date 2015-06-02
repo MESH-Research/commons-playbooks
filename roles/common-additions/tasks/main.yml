@@ -1,0 +1,17 @@
+---
+
+- include: "packages.yml"
+- include: "networking.yml"
+- include: "timezone.yml"
+
+# Local VM tasks
+- include: "aws-credentials.yml"
+  when: "ansible_ssh_host == '127.0.0.1'"
+- include: "dnsmasq.yml"
+  when: "ansible_ssh_host == '127.0.0.1'"
+
+# Amazon EC2 tasks
+- include: "aws-user-data.yml"
+  when: "ansible_ssh_host != '127.0.0.1'"
+- include: "aws-route53.yml"
+  when: "ansible_ssh_host != '127.0.0.1' and route53_zone_id is defined"

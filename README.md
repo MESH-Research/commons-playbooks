@@ -18,7 +18,7 @@ brew install ansible
 The playbooks have been most recently tested with:
 
 * OS X 10.10
-* Ansible 1.8.4
+* Ansible 1.9.1-1
 * Vagrant 1.7.2
 * Vagrant-AWS plugin 0.6.0
 * VirtualBox 4.3.14

@@ -1,6 +1,12 @@
 ---
 
-authorized_keys_directory: "~/.ssh/deploy/commons/production"
-aws_credentials_file: "~/.aws/deploy/commons/s3-backup"
-ssl_certs_directory: "~/.ssh/ssl/commons.mla.org"
-wordpress_enable_debug: "false"
+wordpress_sites:
+  commons:
+    repo_branch: "master"
+    ssl:
+      enabled: true
+      cert: "~/.ssh/deploy/commons/ssl/commons.mla.org.crt"
+      key: "~/.ssh/deploy/commons/ssl/commons.mla.org.key"
+    system_cron: true
+    env:
+      wp_env: "production"

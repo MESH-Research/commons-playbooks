@@ -1,4 +1,0 @@
----
-
-- name: "update ca-certificates"
-  shell: update-ca-certificates --fresh

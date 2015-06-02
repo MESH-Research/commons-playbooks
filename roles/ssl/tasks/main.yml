@@ -4,26 +4,9 @@
   shell:
     creates="/etc/ssl/certs/dhparam.pem"
     openssl dhparam -out /etc/ssl/certs/dhparam.pem 4096
+  when: "'production' in group_names"
   tags:
     - "ssl"
 
-- name: "SSL | create certificate directory"
-  file:
-    path="/etc/ssl/private/app"
-    state="directory"
-    owner="root"
-    group="root"
-    mode="0700"
-  tags:
-    - "ssl"
-
-- name: "SSL | install official certificates"
-  copy:
-    src="{{ item }}"
-    dest="/etc/ssl/private/app"
-    owner="root"
-    group="root"
-    mode="0600"
-  with_fileglob: "{{ ssl_certs_directory }}/*"
-  tags:
-    - "ssl"
+- include: "self-signed.yml"
+  when: "'production' not in group_names"

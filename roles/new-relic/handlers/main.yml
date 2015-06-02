@@ -1,7 +1,0 @@
----
-
-- name: "enable new relic"
-  service:
-    name="newrelic-sysmond"
-    state="started"
-    enabled="yes"

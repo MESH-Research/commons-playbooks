@@ -1,9 +1,0 @@
----
-
-- include: "wordpress.yml"
-  when: wordpress_s3_restore_file is defined
-
-- include: "mysql.yml"
-  when: mysql_s3_restore_file is defined
-
-- include: "migrate.yml"

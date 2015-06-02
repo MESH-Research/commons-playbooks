@@ -1,4 +1,0 @@
----
-
-fail2ban_bantime: "2592000"
-fail2ban_findtime: "86400"
