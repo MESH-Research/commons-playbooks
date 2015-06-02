@@ -1,0 +1,27 @@
+---
+
+# Overrides to Trellis
+web_user: "www-data"
+
+# Sensitive environment variables
+mysql_root_password: ""
+new_relic_license_key: ""
+route53_zone_id: ""
+s3_backup_bucket: ""
+s3_backup_project: ""
+wordpress_smtp_host: ""
+wordpress_smtp_user: ""
+wordpress_smtp_password: ""
+
+# WordPress ENV variables to be merged into existing hash
+wordpress_sites:
+  default:
+    env:
+      cbox_auth_api_key: ""
+      cbox_auth_api_token: ""
+      cbox_auth_api_url: ""
+      db_name: ""
+      db_user: ""
+      db_password: ""
+      global_smtp_from: ""
+      wpcom_api_key: ""
