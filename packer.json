@@ -26,6 +26,10 @@
   ],
   "provisioners": {
     "type": "ansible-local",
-    "playbook_file": "development.yml"
+    "playbook_file": "development.yml",
+    "extra_arguments": [
+      "--extra-vars",
+      "'ansible_ssh_user=ubuntu'"
+    ]
   }
 }
