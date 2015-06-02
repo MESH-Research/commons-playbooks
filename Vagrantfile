@@ -58,11 +58,6 @@ Vagrant.configure("2") do |config|
 
         ansible.playbook = "development.yml"
 
-        # Add to development group.
-        ansible.groups = {
-          'development' => [options[:hostname]]
-        }
-
         # Send extra variables.
         ansible.extra_vars = {
           ansible_ssh_user: "ubuntu"
