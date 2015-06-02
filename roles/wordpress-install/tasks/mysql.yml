@@ -5,7 +5,7 @@
     dest="/etc/mysql/my.cnf"
     state="present"
     regexp="^open_files_limit"
-    line="open_files_limit = 8192"
+    line="open_files_limit = 10240"
   notify: "restart mysql"
   tags:
     - "wordpress-install"
