@@ -1,5 +1,7 @@
 /.vagrant
-/env_vars
-/host_vars
+/ansible/env_vars
+/ansible/host_vars
+/ansible/vendor/roles
+/builds
+/packer_cache
 /vagrant_ansible_inventory*
-/vendor/roles
