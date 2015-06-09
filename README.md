@@ -1,30 +1,16 @@
 # Commons playbooks
 
-This is a set of [Ansible][ansible] playbooks that provides a customized
-[Commons-in-a-Box][cbox] installation in a production or development
-environment. They were written for the [MLA Commons][commons] but could be
-generally useful for any Debian-based LEMP stack. They can be used on
-bare-metal, local-VM, or cloud-VM deployments.
+This is a set of [Ansible][ansible] playbooks and [Packer][packer] templates 
+that produce a customized [Commons-in-a-Box][cbox] installation, in the form of
+Amazon EC2 AMIs and Vagrant boxes. It was written for [MLA Commons][commons] 
+but could be adapted for other purposes.
+
+This project has two sets of target users: builders and runners. “Builders” 
+use Ansible and Packer to create AMIs and Vagrant boxes. The “runners” use a 
+simple provisioning script to spin up resources.
 
 
-## Dependencies
-
-The only hard dependency is Ansible. On OS X, I use [Homebrew][brew]:
-
-```sh
-brew install ansible
-```
-
-The playbooks have been most recently tested with:
-
-* OS X 10.10
-* Ansible 1.9.1-1
-* Vagrant 1.7.2
-* Vagrant-AWS plugin 0.6.0
-* VirtualBox 4.3.14
-
-
-### Vagrant
+## Running
 
 Ansible provisioning is included in [Vagrant][vagrant], and I have included a
 `Vagrantfile` for deploying to [VirtualBox][virtualbox] and Amazon EC2 (more
@@ -154,6 +140,7 @@ switch, set the `VAGRANT_DEFAULT_PROVIDER` environment variable.
 
 
 [ansible]: http://www.ansible.com
+[packer]: http://packer.io
 [cbox]: http://commonsinabox.org
 [commons]: http://commons.mla.org
 [brew]: http://brew.sh

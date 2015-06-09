@@ -2,6 +2,5 @@
 /ansible/env_vars
 /ansible/host_vars
 /ansible/vendor/roles
-/builds
-/packer_cache
-/vagrant_ansible_inventory*
+/packer/builds
+/packer/packer_cache

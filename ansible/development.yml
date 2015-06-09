@@ -5,6 +5,7 @@
 # install task.
 
 - name: "Development server"
+  hosts: "all"
   sudo: "yes"
   vars_files:
     - "vendor/trellis/group_vars/all"

@@ -1,0 +1,34 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+options = {}
+
+# Set hostname from command-line argument.
+options[:hostname] = ARGV[1] || false
+
+# Require the user to specify a hostname.
+if ("#{ARGV[0]}" != "" && !options[:hostname])
+  abort("Please provide a hostname, e.g.: `vagrant #{ARGV[0]} hostname`")
+end
+
+
+Vagrant.configure("2") do |config|
+
+  # Forward SSH credentials.
+  config.ssh.forward_agent = true
+
+  config.vm.define options[:hostname] do |machine|
+
+    # Use user-supplied hostname.
+    machine.vm.hostname = options[:hostname]
+
+    # Virtualbox provider
+    machine.vm.provider :virtualbox do |vb, override|
+      override.vm.box = "ubuntu/trusty64"
+      override.vm.network "private_network", type: "dhcp"
+      override.vm.synced_folder "sync/" + options[:hostname], "/srv/www"
+    end
+
+  end
+
+end
