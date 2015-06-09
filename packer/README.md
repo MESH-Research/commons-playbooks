@@ -13,21 +13,19 @@ The playbooks and templates have been most recently tested with:
 * Ansible 1.9.1-1
 * Packer 0.7.5
 
-Next install the playbook dependencies:
+Next install the playbook dependencies. In the `ansible` directory, run:
 
 ```sh
 git submodule update --init --recursive
-cd ansible
-ansible-galaxy install -r requirements.yml
+ansible-galaxy install -f -r requirements.yml
 ```
 
 Configure your build by copying the `ansible/env_vars/commons.yml.example` 
 template and populating it.
 
-Now you’re ready to build:
+Now you’re ready to build. In the `packer` directory, run:
 
 ```sh
-cd ../packer
 packer build packer.json
 ```
 

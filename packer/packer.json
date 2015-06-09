@@ -1,25 +1,26 @@
 {
   "variables": {
-    "AWS_ACCESS_KEY": "{{env `PACKER_AWS_ACCESS_KEY_ID`}}",
-    "AWS_SECRET_KEY": "{{env `PACKER_AWS_SECRET_ACCESS_KEY`}}",
-    "AWS_SECURITY_GROUP": "{{env `PACKER_AWS_SECURITY_GROUP`}}",
-    "AWS_SUBNET_ID": "{{env `PACKER_AWS_SUBNET_ID`}}",
-    "BUILD_VERSION": "2015-06-08",
-    "PACKER_BOX_NAME": "ubuntu-14.04.2-server-amd64"
+    "AWS_ACCESS_KEY_ID": "{{env `AWS_ACCESS_KEY_ID`}}",
+    "AWS_SECRET_ACCESS_KEY": "{{env `AWS_SECRET_ACCESS_KEY`}}",
+    "AWS_SECURITY_GROUP": "{{env `COMMONS_AWS_SECURITY_GROUP`}}",
+    "AWS_SUBNET_ID": "{{env `COMMONS_AWS_SUBNET_ID`}}",
+    "BUILD_SLUG": "commons-dev-{{isotime \"2006-01-02\"}}",
+    "SOURCE_AMI": "ami-7172991a",
+    "SOURCE_ISO": "http://releases.ubuntu.com/14.04.2/ubuntu-14.04.2-server-amd64.iso"
   },
   "builders": [
     {
       "type": "amazon-ebs",
-      "access_key": "{{user `AWS_ACCESS_KEY`}}",
-      "ami_name": "mla_commons_{{timestamp}}",
+      "access_key": "{{user `AWS_ACCESS_KEY_ID`}}",
+      "ami_name": "{{user `BUILD_SLUG`}}",
       "associate_public_ip_address": true,
       "iam_instance_profile": "commons-dev",
       "instance_type": "t2.small",
       "region": "us-east-1",
-      "secret_key": "{{user `AWS_SECRET_KEY`}}",
+      "secret_key": "{{user `AWS_SECRET_ACCESS_KEY`}}",
       "security_group_ids": ["{{user `AWS_SECURITY_GROUP`}}"],
       "ssh_username": "ubuntu",
-      "source_ami": "ami-7172991a",
+      "source_ami": "{{user `SOURCE_AMI`}}",
       "subnet_id": "{{user `AWS_SUBNET_ID`}}",
       "tags": {
         "Project": "commons"
@@ -59,24 +60,25 @@
       "http_directory": "http",
       "iso_checksum": "8acd2f56bfcba2f7ac74a7e4a5e565ce68c024c38525c0285573e41c86ae90c0",
       "iso_checksum_type": "sha256",
-      "iso_url": "http://releases.ubuntu.com/14.04.2/{{ user `PACKER_BOX_NAME` }}.iso",
+      "iso_url": "{{ user `SOURCE_ISO` }}",
       "shutdown_command": "echo 'vagrant'|sudo -S shutdown -P now",
       "ssh_password": "vagrant",
       "ssh_port": 22,
       "ssh_username": "vagrant",
       "ssh_wait_timeout": "10000s",
       "type": "virtualbox-iso",
-      "vm_name": "{{ user `PACKER_BOX_NAME` }}",
       "vboxmanage": [
         ["modifyvm", "{{.Name}}", "--memory", "1024"],
         ["modifyvm", "{{.Name}}", "--cpus", "2"]
       ],
-      "virtualbox_version_file": ".vbox_version"
+      "virtualbox_version_file": ".vbox_version",
+      "vm_name": "{{user `BUILD_SLUG`}}"
     }
   ],
   "provisioners": [
     {
       "type": "shell",
+      "execute_command": "echo 'vagrant' | sudo -S -E sh {{.Path}}",
       "scripts": [
         "scripts/ansible-ubuntu.sh"
       ]
@@ -84,7 +86,7 @@
     {
       "type": "file",
       "source": "../ansible/ansible.cfg",
-      "destination": "/home/ubuntu/.ansible.cfg"
+      "destination": "~/.ansible.cfg"
     },
     {
       "type": "ansible-local",
@@ -109,7 +111,7 @@
       {
         "type": "vagrant",
         "compression_level": "9",
-        "output": "builds/commons-dev-{{ user `BUILD_VERSION` }}.box"
+        "output": "builds/{{user `BUILD_SLUG`}}-{{.Provider}}.box"
       }
     ]
   ]
