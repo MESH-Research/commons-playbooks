@@ -2,8 +2,8 @@
   "variables": {
     "AWS_ACCESS_KEY_ID": "{{env `AWS_ACCESS_KEY_ID`}}",
     "AWS_SECRET_ACCESS_KEY": "{{env `AWS_SECRET_ACCESS_KEY`}}",
-    "AWS_SECURITY_GROUP": "{{env `COMMONS_AWS_SECURITY_GROUP`}}",
-    "AWS_SUBNET_ID": "{{env `COMMONS_AWS_SUBNET_ID`}}",
+    "AWS_SECURITY_GROUP": "sg-ceb3b8ab",
+    "AWS_SUBNET_ID": "subnet-0d3ef154",
     "BUILD_SLUG": "commons-dev",
     "BUILD_VERSION": "0.1.0",
     "SOURCE_AMI": "ami-7172991a",
