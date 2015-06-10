@@ -4,3 +4,4 @@
 /ansible/vendor/roles
 /packer/builds
 /packer/packer_cache
+/packer/*.pem
