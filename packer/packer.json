@@ -4,15 +4,17 @@
     "AWS_SECRET_ACCESS_KEY": "{{env `AWS_SECRET_ACCESS_KEY`}}",
     "AWS_SECURITY_GROUP": "{{env `COMMONS_AWS_SECURITY_GROUP`}}",
     "AWS_SUBNET_ID": "{{env `COMMONS_AWS_SUBNET_ID`}}",
-    "BUILD_SLUG": "commons-dev-{{isotime \"2006-01-02\"}}",
+    "BUILD_SLUG": "commons-dev",
+    "BUILD_VERSION": "0.1.0",
     "SOURCE_AMI": "ami-7172991a",
-    "SOURCE_ISO": "http://releases.ubuntu.com/14.04.2/ubuntu-14.04.2-server-amd64.iso"
+    "SOURCE_ISO": "http://releases.ubuntu.com/14.04.2/ubuntu-14.04.2-server-amd64.iso",
+    "TIME_STAMP": "{{isotime \"2006-01-02-15-04-05\"}}"
   },
   "builders": [
     {
       "type": "amazon-ebs",
       "access_key": "{{user `AWS_ACCESS_KEY_ID`}}",
-      "ami_name": "{{user `BUILD_SLUG`}}",
+      "ami_name": "{{user `BUILD_SLUG`}}-{{user `TIME_STAMP`}}",
       "associate_public_ip_address": true,
       "iam_instance_profile": "commons-dev",
       "instance_type": "t2.small",
@@ -120,7 +122,7 @@
       {
         "type": "vagrant",
         "compression_level": "9",
-        "output": "builds/{{user `BUILD_SLUG`}}-{{.Provider}}.box"
+        "output": "builds/boxes/{{user `BUILD_SLUG`}}-{{.Provider}}-{{user `BUILD_VERSION`}}.box"
       }
     ]
   ]
