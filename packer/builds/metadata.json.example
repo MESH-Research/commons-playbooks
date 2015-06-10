@@ -1,0 +1,19 @@
+{
+  "name": "box-name",
+  "description": "Box description",
+  "versions": [
+    {
+      "version": "0.1.0",
+      "providers": [
+        {
+          "name": "aws",
+          "url": "s3://bucket/aws.box"
+        },
+        {
+          "name": "virtualbox",
+          "url": "s3://bucket/vbox.box"
+        }
+      ]
+    }
+  ]
+}
