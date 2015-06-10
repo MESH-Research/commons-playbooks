@@ -12,6 +12,7 @@ wordpress_sites:
       - "commons.mla.org"
       - "*.commons.mla.org"
     site_install: false
+    site_title: "MLA Commons"
     ssl:
       enabled: true
       cert: "roles/ssl/files/self-signed.crt"
