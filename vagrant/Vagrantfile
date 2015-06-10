@@ -1,6 +1,18 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+# Make sure vagrant-aws is installed.
+unless Vagrant.has_plugin?('vagrant-aws')
+  system('vagrant plugin install vagrant-aws') || exit!
+  exit system('vagrant', *ARGV)
+end
+
+# Make sure vagrant-s3auth is installed.
+unless Vagrant.has_plugin?('vagrant-s3auth')
+  system('vagrant plugin install vagrant-s3auth') || exit!
+  exit system('vagrant', *ARGV)
+end
+
 options = {}
 
 # Set hostname from command-line argument.
@@ -11,24 +23,43 @@ if ("#{ARGV[0]}" != "" && !options[:hostname])
   abort("Please provide a hostname, e.g.: `vagrant #{ARGV[0]} hostname`")
 end
 
-
 Vagrant.configure("2") do |config|
 
-  # Forward SSH credentials.
+  config.vm.box = "commons-dev"
+  config.vm.box_url = "s3://mla-vagrant/commons-dev/metadata.json"
+
   config.ssh.forward_agent = true
 
   config.vm.define options[:hostname] do |machine|
 
-    # Use user-supplied hostname.
     machine.vm.hostname = options[:hostname]
 
-    # Virtualbox provider
+    machine.vm.provider :aws do |aws, override|
+
+      override.ssh.username = "ubuntu"
+      override.ssh.private_key_path = "~/.ssh/deploy/commons-dev"
+      override.vm.synced_folder ".", "/vagrant", :disabled => "true"
+
+      aws.access_key_id = ENV['AWS_ACCESS_KEY_ID']
+      aws.secret_access_key = ENV['AWS_SECRET_ACCESS_KEY']
+      aws.keypair_name = "mla-czarate"
+
+      aws.instance_type = "t2.small"
+      aws.security_groups = "sg-ceb3b8ab"
+      aws.subnet_id = "subnet-0d3ef154"
+      aws.iam_instance_profile_name = "commons-dev"
+      aws.associate_public_ip = "true"
+
+      aws.tags["Name"] = options[:hostname]
+      aws.tags["Project"] = "commons"
+
+      aws.user_data = "fqdn: " + options[:hostname] + ".mlacommons.org"
+
+    end
+
     machine.vm.provider :virtualbox do |vb, override|
-      override.vm.box = "ubuntu/trusty64"
       override.vm.network "private_network", type: "dhcp"
-      override.vm.synced_folder "sync/" + options[:hostname], "/srv/www"
+      override.vm.synced_folder "sync/" + options[:hostname], "/vagrant", create: true
     end
 
   end
-
-end
