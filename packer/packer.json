@@ -79,8 +79,8 @@
   "provisioners": [
     {
       "type": "shell",
-      "execute_command": "echo 'vagrant' | sudo -S -E sh {{.Path}}",
       "scripts": [
+        "scripts/sudo-passwd.sh",
         "scripts/ansible-ubuntu.sh"
       ]
     },
