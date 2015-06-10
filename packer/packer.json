@@ -23,6 +23,7 @@
       "source_ami": "{{user `SOURCE_AMI`}}",
       "subnet_id": "{{user `AWS_SUBNET_ID`}}",
       "tags": {
+        "Name": "{{user `BUILD_SLUG`}}",
         "Project": "commons"
       }
     },
