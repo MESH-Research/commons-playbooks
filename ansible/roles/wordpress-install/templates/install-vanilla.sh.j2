@@ -1,0 +1,28 @@
+#!/bin/sh
+
+# Clone Bedrock project.
+cd {{ www_root }}/commons/current
+git init
+git remote add origin https://github.com/roots/bedrock.git
+git fetch
+git checkout origin/master
+
+# Install dependencies.
+composer install
+
+# Install tables.
+wp core install \
+--path="{{ www_root }}/commons/current/web/wp" \
+--url="{{ item.value.env.wp_home }}" \
+--base="{{ item.value.multisite.base_path | default('/') }}"
+--subdomains="{{ item.value.multisite.subdomains | default('false') }}"
+--title="{{ item.value.site_title | default('Title') }}" \
+--admin_user="{{ item.value.admin_user | default('admin') }}" \
+--admin_password="{{ item.value.admin_password | default('correct horse battery staple') }}" \
+--admin_email="{{ item.value.admin_email | default('user@example.com') }}"
+
+# Install plugins
+wp core install \
+--path="{{ www_root }}/commons/current/web/wp" \
+--url="{{ item.value.env.wp_home }}" \
+plugin install commons-in-a-box

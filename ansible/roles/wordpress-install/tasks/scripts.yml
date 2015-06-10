@@ -9,10 +9,20 @@
   tags:
     - "wordpress-install"
 
-- name: "WordPress Install | install import script"
+- name: "WordPress Install | commons install script"
   sudo: "no"
   template:
-    src="import.sh.j2"
+    src="install-commons.sh.j2"
+    dest="{{ www_root }}/{{ item.key }}/bin/import.sh"
+    mode="0744"
+  with_dict: "wordpress_sites"
+  tags:
+    - "wordpress-install"
+
+- name: "WordPress Install | vanilla install script"
+  sudo: "no"
+  template:
+    src="install-vanilla.sh.j2"
     dest="{{ www_root }}/{{ item.key }}/bin/import.sh"
     mode="0744"
   with_dict: "wordpress_sites"
