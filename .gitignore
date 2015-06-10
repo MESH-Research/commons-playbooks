@@ -1,7 +1,7 @@
-/.vagrant
-/ansible/env_vars
+/ansible/env_vars/*.yml
 /ansible/host_vars
 /ansible/vendor/roles
-/packer/builds
+/packer/builds/*.json
+/packer/builds/boxes
 /packer/packer_cache
 /packer/*.pem
