@@ -17,6 +17,7 @@
     - "ssl"                # local
     - "fail2ban"
     - "ferm"
+    - "github-ssh-keys"
     - "ntp"
     - "mariadb"
     - "php"

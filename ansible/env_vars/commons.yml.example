@@ -13,6 +13,12 @@ wordpress_smtp_host: ""
 wordpress_smtp_user: ""
 wordpress_smtp_password: ""
 
+# SSH public keys to pull from GitHub and authorize
+github_ssh_keys:
+  - username: "github_username"
+    authorized:
+      - "{{ ansible_ssh_user }}"
+
 # WordPress ENV variables to be merged into existing hash
 wordpress_sites:
   default:
