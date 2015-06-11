@@ -25,9 +25,9 @@ aws s3 cp $mysql_s3_restore_file $restore_dir/mysql.backup.sql.gz
 f [ ! -d "$project_root_dir/.git" ]; then
   cd $project_root_dir
   git init
-  git remote add origin {{ item.value.repo }}
+  git remote add origin {{ wordpress_sites.commons.repo }}
   git fetch
-  git checkout -t origin/{{ item.value.repo_branch }}
+  git checkout -t origin/{{ wordpress_sites.commons.repo_branch }}
   composer install
 fi
 
@@ -38,7 +38,7 @@ sudo chown -R {{ web_user }}:{{ web_group }} $project_root_dir/web/app/blogs.dir
 
 # Extract database backup and replace existing database.
 echo "Loading database backup...."
-gunzip -c $restore_dir/mysql.backup.sql.gz | mysql {{ item.value.env.db_name }}
+gunzip -c $restore_dir/mysql.backup.sql.gz | mysql {{ wordpress_sites.commons.env.db_name }}
 
 # Update .env file to use development domain.
 echo "Updating project environment...."

@@ -13,9 +13,9 @@
   sudo: "no"
   template:
     src="install-commons.sh.j2"
-    dest="{{ www_root }}/{{ item.key }}/bin/import.sh"
+    dest="{{ www_root }}/commons/bin/install-commons.sh"
     mode="0744"
-  with_dict: "wordpress_sites"
+  when: "wordpress_sites.commons is defined"
   tags:
     - "wordpress-install"
 
