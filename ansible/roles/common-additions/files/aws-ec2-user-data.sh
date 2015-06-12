@@ -1,9 +1,7 @@
 #! /bin/sh
 ### BEGIN INIT INFO
-# Provides:          aws-user-data
-# Required-Start:    $remote_fs $syslog
-# Required-Stop:     $remote_fs $syslog
-# X-Start-Before:    hostname
+# Provides:          aws-ec2-user-data
+# Required-Start:    $network
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
 # Short-Description: Process EC2 instance user data

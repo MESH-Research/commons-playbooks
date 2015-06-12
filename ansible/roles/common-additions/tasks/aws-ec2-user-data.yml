@@ -2,16 +2,16 @@
 
 - name: "EC2 User Data | create init script"
   copy:
-    src="aws-user-data.sh"
-    dest="/etc/init.d/aws-user-data"
+    src="aws-ec2-user-data.sh"
+    dest="/etc/init.d/aws-ec2-user-data"
     mode="0755"
   tags:
     - "aws"
-    - "aws-user-data"
+    - "aws-ec2-user-data"
 
 - name: "EC2 User Data | register init script"
   shell:
-    update-rc.d aws-user-data defaults
+    update-rc.d aws-ec2-user-data defaults 80
   tags:
     - "aws"
-    - "aws-user-data"
+    - "aws-ec2-user-data"

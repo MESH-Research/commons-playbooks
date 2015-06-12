@@ -104,7 +104,7 @@
         },
         "virtualbox-iso": {
           "extra_arguments": [
-            "--skip-tags=aws-route53,aws-user-data"
+            "--skip-tags=aws-route53,aws-ec2-user-data"
           ]
         }
       }
