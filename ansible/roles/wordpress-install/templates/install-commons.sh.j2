@@ -22,7 +22,7 @@ aws s3 cp $wordpress_s3_restore_file $restore_dir/wordpress.backup.tar.gz
 aws s3 cp $mysql_s3_restore_file $restore_dir/mysql.backup.sql.gz
 
 # Clone project and install dependencies.
-f [ ! -d "$project_root_dir/.git" ]; then
+if [ ! -d "$project_root_dir/.git" ]; then
   cd $project_root_dir
   git init
   git remote add origin {{ wordpress_sites.commons.repo }}
