@@ -3,7 +3,7 @@
 # Provides:          aws-route53
 # Required-Start:    $remote_fs $syslog
 # Required-Stop:     $remote_fs $syslog
-# X-Start-After:     user-data
+# X-Start-After:     aws-user-data
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
 # Short-Description: Dynamic DNS using Route53

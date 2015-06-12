@@ -1,6 +1,6 @@
 #! /bin/sh
 ### BEGIN INIT INFO
-# Provides:          user-data
+# Provides:          aws-user-data
 # Required-Start:    $remote_fs $syslog
 # Required-Stop:     $remote_fs $syslog
 # X-Start-Before:    hostname
