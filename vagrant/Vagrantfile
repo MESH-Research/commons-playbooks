@@ -36,8 +36,11 @@ Vagrant.configure("2") do |config|
 
     machine.vm.provider :aws do |aws, override|
 
-      override.ssh.username = "ubuntu"
+      # Note: You must use a passphrase-less private key.
+      # This command removes a passphrase from an existing key:
+      # openssl rsa -in in_key -out out_key
       override.ssh.private_key_path = "~/.ssh/deploy/commons-dev"
+      override.ssh.username = "ubuntu"
       override.vm.synced_folder ".", "/vagrant", :disabled => "true"
 
       aws.access_key_id = ENV['AWS_ACCESS_KEY_ID']
