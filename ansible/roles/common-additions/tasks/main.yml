@@ -3,6 +3,7 @@
 - include: "packages.yml"
 - include: "networking.yml"
 - include: "timezone.yml"
+- include: "known-hosts.yml"
 
 # Local VM tasks
 - include: "aws-credentials.yml"
