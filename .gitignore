@@ -5,3 +5,4 @@
 /packer/builds/boxes
 /packer/packer_cache
 /packer/*.pem
+/vagrant/.vagrant
