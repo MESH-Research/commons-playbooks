@@ -9,6 +9,7 @@ project_root_dir="{{ www_root }}/commons/current"
 nginx_conf_dir="/etc/nginx/sites-available"
 restore_dir="/tmp/wordpress-restore"
 production_domain="commons.mla.org"
+production_domain_regex="commons\\.mla\\.org"
 fqdn=`hostname -f`
 
 # Define restore files.
@@ -42,12 +43,12 @@ gunzip -c $restore_dir/mysql.backup.sql.gz | mysql {{ wordpress_sites.commons.en
 
 # Update .env file to use development domain.
 echo "Updating project environment...."
-sed -i "s/$production_domain/$fqdn/g" $project_root_dir/.env
+sed -i "s/$production_domain_regex/$fqdn/g" $project_root_dir/.env
 
 # Update nginx configuration to use development domain.
 echo "Updating nginx configuration...."
 for file in $nginx_conf_dir/*.conf; do
-  sudo sed -i "s/$production_domain/$fqdn/g" $file
+  sudo sed -i "s/$production_domain_regex/$fqdn/g" $file
 done
 sudo service nginx reload
 
