@@ -35,7 +35,8 @@ server_cert="/etc/nginx/ssl/self-signed.crt"
 openssl_conf_template="/etc/ssl/self-signed-certificate-openssl.cnf.example"
 openssl_conf="/etc/ssl/self-signed-certificate-openssl.cnf"
 ca_conf="/etc/ca-certificates.conf"
-ca_cert="/usr/share/ca-certificates/app/self-signed.crt"
+ca_cert_dir="/usr/share/ca-certificates/app"
+ca_cert_file="self-signed-browser.crt"
 
 # Load values
 fqdn=`hostname -f`
@@ -58,11 +59,13 @@ do_start()
     openssl req -new -nodes -x509 -batch -days 3650 -newkey rsa:2048 -keyout $server_private_key -out $server_cert -extensions v3_req -config $openssl_conf
 
     # Create self-signed SAN wildcard CA (browser) certificate.
-    openssl req -new -nodes -x509 -batch -days 3650 -key $server_private_key -out $ca_cert -extensions v3_ca -config $openssl_conf
+    sudo mkdir -p $ca_cert_dir
+    openssl req -new -nodes -x509 -batch -days 3650 -key $server_private_key -out $ca_cert_dir/$ca_cert_file -extensions v3_ca -config $openssl_conf
 
     # Update CA certificate conf.
-    if ! grep -FLxq "$server_cert" $ca_conf; then
-      echo "$server_cert" >> $ca_conf
+    ca_cert_entry="$(basename $ca_cert_dir)/$ca_cert_file"
+    if ! grep -FLxq "$ca_cert_entry" $ca_conf; then
+      echo "$ca_cert_entry" >> $ca_conf
     fi
 
     # Update CA certificates bundle.

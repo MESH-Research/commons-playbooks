@@ -30,7 +30,7 @@
 
 - name: "Self-signed SSL | register init script"
   shell:
-    update-rc.d self-signed-certificate defaults
+    update-rc.d self-signed-certificate defaults 95
   tags:
     - "ssl"
     - "self-signed"
