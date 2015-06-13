@@ -5,8 +5,18 @@
     dest="/etc/mysql/my.cnf"
     state="present"
     regexp="^open_files_limit"
-    line="open_files_limit = 10240"
-  notify: "restart mysql"
+    line="open_files_limit = 32768"
+    insertafter="^\[mysqld\]"
+  tags:
+    - "wordpress-install"
+    - "mysql"
+
+- name: "WordPress Install | increase system open files hard limit"
+  lineinfile:
+    dest="/etc/security/limits.conf"
+    state="present"
+    regexp="^mysql"
+    line="mysql hard nofile 32768"
   tags:
     - "wordpress-install"
     - "mysql"
