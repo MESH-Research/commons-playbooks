@@ -23,7 +23,7 @@
   sudo: "no"
   template:
     src="install-vanilla.sh.j2"
-    dest="{{ www_root }}/{{ item.key }}/bin/import.sh"
+    dest="{{ www_root }}/{{ item.key }}/bin/install-vanilla.sh"
     mode="0744"
   with_dict: "wordpress_sites"
   tags:
