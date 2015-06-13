@@ -22,4 +22,5 @@ wordpress_sites:
       wp_env: "development"
       wp_home: "https://commons.mla.org"
       wp_siteurl: "https://commons.mla.org"
+      wp_domain: "commons.mla.org"
       wp_logs_dir: "{{ www_root }}/commons/logs"
