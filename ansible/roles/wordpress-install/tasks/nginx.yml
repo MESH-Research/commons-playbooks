@@ -1,38 +1,5 @@
 ---
 
-- name: "WordPress Install | TEMPORARY: fix bedrock-ansible WP core rewrite"
-  lineinfile:
-    dest="/etc/nginx/sites-available/{{ item.key }}.conf"
-    state="present"
-    regexp="^[\t ]*rewrite \^/\(wp\-\(content\|admin\|includes\)\.\*\)"
-    line="  rewrite ^/(wp-(content|admin|includes)/.*) /wp/$1 last;"
-  with_dict: "wordpress_sites"
-  tags:
-    - "wordpress-install"
-    - "nginx"
-
-- name: "WordPress Install | TEMPORARY: include includes.d directories"
-  lineinfile:
-    dest="/etc/nginx/sites-available/{{ item.key }}.conf"
-    state="present"
-    regexp="^[\t ]*include includes.d/{{ item.key }}/*.conf;"
-    line="  include includes.d/{{ item.key }}/*.conf;"
-    insertbefore="^[\t ]*include wordpress.conf;"
-  with_dict: "wordpress_sites"
-  tags:
-    - "wordpress-install"
-    - "nginx"
-
-- name: "WordPress Install | TEMPORARY: create includes.d directories"
-  file:
-    path="/etc/nginx/includes.d/{{ item.key }}"
-    state="directory"
-    mode="0755"
-  with_dict: "wordpress_sites"
-  tags:
-    - "wordpress-install"
-    - "nginx"
-
 - name: "WordPress Install | install commons site includes"
   template:
     src="nginx-include-{{ item }}.j2"
