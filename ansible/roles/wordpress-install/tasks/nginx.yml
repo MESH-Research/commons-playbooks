@@ -1,0 +1,34 @@
+---
+
+- name: "WordPress Install | TEMPORARY: include includes.d directories"
+  lineinfile:
+    dest="/etc/nginx/sites-available/{{ item.key }}.conf"
+    state="present"
+    regexp="^[\t ]*include includes.d/{{ item.key }}/*.conf;"
+    line="  include includes.d/{{ item.key }}/*.conf;"
+    insertbefore="^[\t ]*include wordpress.conf;"
+  with_dict: "wordpress_sites"
+  tags:
+    - "wordpress-install"
+    - "nginx"
+
+- name: "WordPress Install | TEMPORARY: create includes.d directories"
+  file:
+    path="/etc/nginx/includes.d/{{ item.key }}"
+    state="directory"
+    mode="0755"
+  with_dict: "wordpress_sites"
+  tags:
+    - "wordpress-install"
+    - "nginx"
+
+- name: "WordPress Install | install commons site includes"
+  template:
+    src="nginx-include-{{ item }}.j2"
+    dest="/etc/nginx/includes.d/commons/{{ item }}"
+  with_items:
+    - "fedora.conf"
+    - "rewrites.conf"
+  tags:
+    - "wordpress-install"
+    - "nginx"

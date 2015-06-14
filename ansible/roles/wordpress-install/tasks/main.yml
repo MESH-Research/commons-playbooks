@@ -39,4 +39,5 @@
     - "wordpress-install"
 
 - include: "mysql.yml"
+- include: "nginx.yml"
 - include: "scripts.yml"
