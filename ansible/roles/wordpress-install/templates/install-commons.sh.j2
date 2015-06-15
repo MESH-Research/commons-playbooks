@@ -11,7 +11,18 @@ nginx_conf_dir="/etc/nginx/sites-available"
 restore_dir="/tmp/wordpress-restore"
 production_domain="commons.mla.org"
 production_domain_regex="commons\\.mla\\.org"
+
+# Get FQDN.
 fqdn=`hostname -f`
+
+# If no TLD is present, use .dev.
+case "$fqdn" in
+  *.*)
+    echo "FQDN: $fqdn" ;;
+  *)
+    fqdn=$fqdn.dev
+    echo "FQDN: $fqdn" ;;
+esac
 
 # Create project directory
 mkdir -p $project_root_dir
