@@ -6,7 +6,6 @@
 - include: "known-hosts.yml"
 
 # Local VM tasks
-- include: "aws-credentials.yml"
 - include: "dnsmasq.yml"
 
 # Amazon EC2 tasks

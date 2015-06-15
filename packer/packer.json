@@ -6,6 +6,7 @@
     "AWS_SUBNET_ID": "subnet-0d3ef154",
     "BUILD_SLUG": "commons-dev",
     "BUILD_VERSION": "0.1.0",
+    "REMOTE_AWS_CONFIG": "/Users/czarate/.aws/virtualbox",
     "SOURCE_AMI": "ami-7172991a",
     "SOURCE_ISO": "http://releases.ubuntu.com/14.04.2/ubuntu-14.04.2-server-amd64.iso",
     "SOURCE_ISO_CHECKSUM": "8acd2f56bfcba2f7ac74a7e4a5e565ce68c024c38525c0285573e41c86ae90c0",
@@ -94,13 +95,21 @@
       "destination": "~/.ansible.cfg"
     },
     {
+      "type": "file",
+      "source": "{{user `REMOTE_AWS_CONFIG`}}",
+      "destination": "~/.aws/config",
+      "only": [
+        "virtualbox-iso"
+      ]
+    },
+    {
       "type": "ansible-local",
       "playbook_file": "../ansible/development.yml",
       "playbook_dir": "../ansible",
       "override": {
         "amazon-ebs": {
           "extra_arguments": [
-            "--skip-tags=aws-credentials,dnsmasq"
+            "--skip-tags=dnsmasq"
           ]
         },
         "virtualbox-iso": {
