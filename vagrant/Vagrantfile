@@ -27,6 +27,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.box = "commons-dev"
   config.vm.box_url = "s3://mla-vagrant/commons-dev/metadata.json"
+  config.vm.synced_folder ".", "/vagrant", :disabled => "true"
 
   config.ssh.forward_agent = true
 
@@ -41,7 +42,6 @@ Vagrant.configure("2") do |config|
       # openssl rsa -in in_key -out out_key
       override.ssh.private_key_path = "~/.ssh/deploy/commons-dev"
       override.ssh.username = "ubuntu"
-      override.vm.synced_folder ".", "/vagrant", :disabled => "true"
 
       aws.access_key_id = ENV['AWS_ACCESS_KEY_ID']
       aws.secret_access_key = ENV['AWS_SECRET_ACCESS_KEY']
@@ -66,7 +66,7 @@ Vagrant.configure("2") do |config|
     machine.vm.provider :virtualbox do |vb, override|
       override.ssh.password = "vagrant"
       override.vm.network "private_network", type: "dhcp"
-      override.vm.synced_folder "sync/" + options[:hostname], "/vagrant", create: true
+      override.vm.synced_folder "sync/" + options[:hostname], "/src/www/commons/current", create: true
     end
 
   end
