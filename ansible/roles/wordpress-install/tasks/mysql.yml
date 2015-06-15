@@ -22,11 +22,10 @@
     - "mysql"
 
 - name: "WordPress Install | mysql credentials file"
+  sudo: "no"
   template:
     src="user.my.cnf.j2"
     dest="~/.my.cnf"
-    owner="{{ ansible_ssh_user }}"
-    group="{{ ansible_ssh_user }}"
     mode="0600"
   tags:
     - "wordpress-install"
