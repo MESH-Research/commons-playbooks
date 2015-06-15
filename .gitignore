@@ -6,3 +6,4 @@
 /packer/packer_cache
 /packer/*.pem
 /vagrant/.vagrant
+/vagrant/sync
