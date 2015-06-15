@@ -6,11 +6,15 @@
 # Configuration.
 current_date=`date +%Y%m%d`
 project_root_dir="{{ www_root }}/commons/current"
+project_env_template="{{ www_root }}/commons/conf/env.template"
 nginx_conf_dir="/etc/nginx/sites-available"
 restore_dir="/tmp/wordpress-restore"
 production_domain="commons.mla.org"
 production_domain_regex="commons\\.mla\\.org"
 fqdn=`hostname -f`
+
+# Create project directory
+mkdir -p $project_root_dir
 
 # Define restore files.
 mysql_s3_restore_file="s3://mla-backup/commons/db/daily/commons-db_$current_date.sql.gz"
@@ -41,9 +45,9 @@ sudo chown -R {{ web_user }}:{{ web_group }} $project_root_dir/web/app/blogs.dir
 echo "Loading database backup...."
 gunzip -c $restore_dir/mysql.backup.sql.gz | mysql {{ wordpress_sites.commons.env.db_name }}
 
-# Update .env file to use development domain.
+# Populate .env with development domain.
 echo "Updating project environment...."
-sed -i "s/$production_domain_regex/$fqdn/g" $project_root_dir/.env
+sed "s/$production_domain_regex/$fqdn/g" $project_env_template > $project_root_dir/.env
 
 # Update nginx configuration to use development domain.
 echo "Updating nginx configuration...."

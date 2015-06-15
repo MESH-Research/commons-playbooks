@@ -1,13 +1,5 @@
 ---
 
-- name: "WordPress Install | create project directory"
-  file:
-    path="{{ www_root }}/{{ item.key }}/current"
-    state="directory"
-  with_dict: "wordpress_sites"
-  tags:
-    - "wordpress-install"
-
 - name: "WordPress Install | change webroot permissions"
   file:
     path="{{ www_root }}"
@@ -29,11 +21,22 @@
   tags:
     - "wordpress-install"
 
-- name: "WordPress Install | create .env file"
-  sudo: "no"
+- name: "WordPress Install | create conf directory"
+  file:
+    path="{{ www_root }}/{{ item.key }}/conf"
+    owner="{{ ansible_ssh_user }}"
+    group="{{ ansible_ssh_user }}"
+    state="directory"
+  with_dict: "wordpress_sites"
+  tags:
+    - "wordpress-install"
+
+- name: "WordPress Install | create .env template"
   template:
     src="env.j2"
-    dest="{{ www_root }}/{{ item.key }}/current/.env"
+    dest="{{ www_root }}/{{ item.key }}/conf/env.template"
+    owner="{{ ansible_ssh_user }}"
+    group="{{ ansible_ssh_user }}"
   with_dict: "wordpress_sites"
   tags:
     - "wordpress-install"
