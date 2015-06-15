@@ -90,6 +90,14 @@
       ]
     },
     {
+      "type": "shell",
+      "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
+      "script": "scripts/virtualbox.sh",
+      "only": [
+        "virtualbox-iso"
+      ]
+    },
+    {
       "type": "file",
       "source": "../ansible/ansible.cfg",
       "destination": "~/.ansible.cfg"
