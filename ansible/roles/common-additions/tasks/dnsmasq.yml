@@ -12,7 +12,7 @@
 - name: "dnsmasq | dnsmasq.conf"
   copy:
     src="dnsmasq.conf"
-    dest="/etc/dnsmasq.conf"
+    dest="/etc/dnsmasq.d/dev"
   notify: "restart dnsmasq"
   tags:
     - "dnsmasq"
