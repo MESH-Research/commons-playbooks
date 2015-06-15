@@ -22,7 +22,7 @@ github_ssh_keys:
 
 # WordPress ENV variables to be merged into existing hash
 wordpress_sites:
-  default:
+  commons:
     env:
       cbox_auth_api_key: ""
       cbox_auth_api_secret: ""
