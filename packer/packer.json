@@ -98,9 +98,13 @@
       ]
     },
     {
-      "type": "file",
-      "source": "../ansible/ansible.cfg",
-      "destination": "~/.ansible.cfg"
+      "type": "shell",
+      "inline": [
+        "mkdir -p ~/.aws"
+      ],
+      "only": [
+        "virtualbox-iso"
+      ]
     },
     {
       "type": "file",
@@ -109,6 +113,11 @@
       "only": [
         "virtualbox-iso"
       ]
+    },
+    {
+      "type": "file",
+      "source": "../ansible/ansible.cfg",
+      "destination": "~/.ansible.cfg"
     },
     {
       "type": "ansible-local",
