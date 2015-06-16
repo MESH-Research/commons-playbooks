@@ -1,18 +1,45 @@
 #!/bin/sh
 
+## Create vanilla CBOX install.
+
+# Configuration.
+project_root_dir="{{ www_root }}/commons/current"
+project_env_template="{{ www_root }}/commons/conf/env.template"
+
+# Get FQDN.
+fqdn=`hostname -f`
+
+# If no TLD is present, use .dev.
+case "$fqdn" in
+  *.*)
+    echo "FQDN: $fqdn" ;;
+  *)
+    fqdn=$fqdn.dev
+    echo "FQDN: $fqdn" ;;
+esac
+
+# Create project directory
+mkdir -p $project_root_dir
+
 # Clone Bedrock project.
-cd {{ www_root }}/{{ item.key }}/current
-git init
-git remote add origin https://github.com/roots/bedrock.git
-git fetch
-git checkout origin/master
+if [ ! -d "$project_root_dir/.git" ]; then
+  cd $project_root_dir
+  git init
+  git remote add origin https://github.com/roots/bedrock.git
+  git fetch
+  git checkout origin/master
+fi
 
 # Install dependencies.
 composer install
 
+# Populate .env with development domain.
+echo "Updating project environment...."
+sed "s/$production_domain_regex/$fqdn/g" $project_env_template > $project_root_dir/.env
+
 # Install tables.
 wp core install \
---path="{{ www_root }}/{{ item.key }}/current/web/wp" \
+--path="$project_root_dir/web/wp" \
 --url="{{ item.value.env.wp_home }}" \
 --base="{{ item.value.multisite.base_path | default('/') }}"
 --subdomains="{{ item.value.multisite.subdomains | default('false') }}"
@@ -23,6 +50,6 @@ wp core install \
 
 # Install plugins
 wp core install \
---path="{{ www_root }}/{{ item.key }}/current/web/wp" \
+--path="$project_root_dir/web/wp" \
 --url="{{ item.value.env.wp_home }}" \
 plugin install commons-in-a-box
