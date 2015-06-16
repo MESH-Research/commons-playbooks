@@ -7,7 +7,7 @@ wordpress_sites:
       subdomains: true
       base_path: "/"
     repo: "git@github.com:mlaa/commons.git"
-    repo_branch: "bedrock"
+    repo_branch: "develop"
     site_hosts:
       - "commons.mla.org"
       - "*.commons.mla.org"
