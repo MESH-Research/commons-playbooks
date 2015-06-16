@@ -7,6 +7,7 @@ web_user: "www-data"
 fedora_proxy_url: ""
 mysql_root_password: ""
 new_relic_license_key: ""
+newrelic_appname: ""
 route53_zone_id: ""
 s3_backup_bucket: ""
 s3_backup_project: ""
@@ -24,6 +25,7 @@ github_ssh_keys:
 wordpress_sites:
   commons:
     env:
+      admin_email: ""
       cbox_auth_api_key: ""
       cbox_auth_api_secret: ""
       cbox_auth_api_url: ""
