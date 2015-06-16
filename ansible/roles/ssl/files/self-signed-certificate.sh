@@ -41,6 +41,15 @@ ca_cert_file="self-signed-browser.crt"
 # Load values
 fqdn=`hostname -f`
 
+# If no TLD is present, use .dev.
+case "$fqdn" in
+  *.*)
+    echo "FQDN: $fqdn" ;;
+  *)
+    fqdn=$fqdn.dev
+    echo "FQDN: $fqdn" ;;
+esac
+
 #
 # Function that starts the daemon/service
 #
