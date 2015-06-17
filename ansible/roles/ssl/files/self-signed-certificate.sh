@@ -56,31 +56,27 @@ esac
 do_start()
 {
 
-# Check for existing key/certificate.
-  if test -f $server_private_key && test -f $server_cert; then
-    echo "Self-signed certificates have already been generated."
-  else
+  # Create OpenSSL template with our desired FQDN.
+  sed "s/example.com/$fqdn/g" $openssl_conf_template > $openssl_conf
 
-    # Create OpenSSL template with our desired FQDN.
-    sed "s/example.com/$fqdn/g" $openssl_conf_template > $openssl_conf
+  # Create self-signed SAN wildcard server certifcate.
+  openssl req -new -nodes -x509 -batch -days 3650 -newkey rsa:2048 -keyout $server_private_key -out $server_cert -extensions v3_req -config $openssl_conf
 
-    # Create self-signed SAN wildcard server certifcate.
-    openssl req -new -nodes -x509 -batch -days 3650 -newkey rsa:2048 -keyout $server_private_key -out $server_cert -extensions v3_req -config $openssl_conf
+  # Create self-signed SAN wildcard CA (browser) certificate.
+  sudo mkdir -p $ca_cert_dir
+  openssl req -new -nodes -x509 -batch -days 3650 -key $server_private_key -out $ca_cert_dir/$ca_cert_file -extensions v3_ca -config $openssl_conf
 
-    # Create self-signed SAN wildcard CA (browser) certificate.
-    sudo mkdir -p $ca_cert_dir
-    openssl req -new -nodes -x509 -batch -days 3650 -key $server_private_key -out $ca_cert_dir/$ca_cert_file -extensions v3_ca -config $openssl_conf
-
-    # Update CA certificate conf.
-    ca_cert_entry="$(basename $ca_cert_dir)/$ca_cert_file"
-    if ! grep -FLxq "$ca_cert_entry" $ca_conf; then
-      echo "$ca_cert_entry" >> $ca_conf
-    fi
-
-    # Update CA certificates bundle.
-    update-ca-certificates --fresh
-
+  # Update CA certificate conf.
+  ca_cert_entry="$(basename $ca_cert_dir)/$ca_cert_file"
+  if ! grep -FLxq "$ca_cert_entry" $ca_conf; then
+    echo "$ca_cert_entry" >> $ca_conf
   fi
+
+  # Update CA certificates bundle.
+  update-ca-certificates --fresh
+
+  # Unregister this script.
+  update-rc.d -f self-signed-certificate remove
 
 }
 
