@@ -60,6 +60,9 @@ gunzip -c $restore_dir/mysql.backup.sql.gz | mysql {{ wordpress_sites.commons.en
 echo "Updating project environment...."
 sed "s/$production_domain_regex/$fqdn/g" $project_env_template > $project_root_dir/.env
 
+# Create wp-cli.local.yml with development domain.
+echo "url: http://$fqdn" > $project_root_dir/wp-cli.local.yml
+
 # Update nginx configuration to use development domain.
 echo "Updating nginx configuration...."
 for file in $nginx_conf_dir/*.conf; do
