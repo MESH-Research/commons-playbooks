@@ -12,6 +12,7 @@
   apt:
     name="nullmailer"
     state="present"
+    update_cache="yes"
   tags:
     - "nullmailer"
     - "packages"
