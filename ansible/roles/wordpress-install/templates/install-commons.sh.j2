@@ -44,7 +44,7 @@ if [ ! -d "$project_root_dir/.git" ]; then
   git remote add origin {{ wordpress_sites.commons.repo }}
   git fetch
   git checkout -t origin/{{ wordpress_sites.commons.repo_branch }}
-  composer install
+  composer install --prefer-source
 fi
 
 # Extract wp-content directory from backup.
