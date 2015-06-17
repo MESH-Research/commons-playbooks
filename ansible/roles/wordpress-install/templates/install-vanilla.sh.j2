@@ -28,10 +28,8 @@ if [ ! -d "$project_root_dir/.git" ]; then
   git remote add origin https://github.com/roots/bedrock.git
   git fetch
   git checkout origin/master
+  composer install
 fi
-
-# Install dependencies.
-composer install
 
 # Populate .env with development domain.
 echo "Updating project environment...."
