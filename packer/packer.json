@@ -126,12 +126,14 @@
       "override": {
         "amazon-ebs": {
           "extra_arguments": [
-            "--skip-tags=dnsmasq"
+            "--skip-tags=dnsmasq",
+            "--extra-vars 'web_user=www-data'"
           ]
         },
         "virtualbox-iso": {
           "extra_arguments": [
-            "--skip-tags=aws-route53,aws-ec2-user-data"
+            "--skip-tags=aws-route53,aws-ec2-user-data",
+            "--extra-vars 'web_user=vagrant nginx_user=vagrant'"
           ]
         }
       }

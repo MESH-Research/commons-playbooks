@@ -1,8 +1,5 @@
 ---
 
-# Overrides to Trellis
-web_user: "www-data"
-
 # Sensitive environment variables
 fedora_proxy_url: ""
 mysql_root_password: ""
