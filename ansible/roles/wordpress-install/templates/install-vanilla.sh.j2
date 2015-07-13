@@ -41,9 +41,19 @@ fi
 echo "Updating project environment...."
 sed "s/$production_domain_regex/$fqdn/g" $project_env_template > $project_root_dir/.env
 
+# Create wp-cli.local.yml with development domain.
+echo "url: http://$fqdn" > $project_root_dir/wp-cli.local.yml
+
 # Generate self-signed SSL certificate for development domain.
 echo "Generating self-signed SSL certificate...."
 sudo /etc/init.d/self-signed-certificate start
+
+# Update nginx configuration to use development domain.
+echo "Updating nginx configuration...."
+for file in $nginx_conf_dir/*.conf; do
+  sudo sed -i "s/$production_domain_regex/$fqdn/g" $file
+done
+sudo service nginx reload
 
 # Install tables.
 wp core install \
