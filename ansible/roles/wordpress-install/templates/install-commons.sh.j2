@@ -12,6 +12,12 @@ restore_dir="/tmp/wordpress-restore"
 production_domain="commons.mla.org"
 production_domain_regex="commons\\.mla\\.org"
 
+# Make sure script is not run by root.
+if [ "$(id -u)" = "0" ]; then
+   echo "Do not run this script as root." 1>&2
+   exit 1
+fi
+
 # Get FQDN.
 fqdn=`hostname -f`
 
@@ -62,6 +68,10 @@ sed "s/$production_domain_regex/$fqdn/g" $project_env_template > $project_root_d
 
 # Create wp-cli.local.yml with development domain.
 echo "url: http://$fqdn" > $project_root_dir/wp-cli.local.yml
+
+# Generate self-signed SSL certificate for development domain.
+echo "Generating self-signed SSL certificate...."
+sudo /etc/init.d/self-signed-certificate start
 
 # Update nginx configuration to use development domain.
 echo "Updating nginx configuration...."

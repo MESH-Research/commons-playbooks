@@ -6,6 +6,12 @@
 project_root_dir="{{ www_root }}/commons/current"
 project_env_template="{{ www_root }}/commons/conf/env.template"
 
+# Make sure script is not run by root.
+if [ "$(id -u)" = "0" ]; then
+   echo "Do not run this script as root." 1>&2
+   exit 1
+fi
+
 # Get FQDN.
 fqdn=`hostname -f`
 
@@ -34,6 +40,10 @@ fi
 # Populate .env with development domain.
 echo "Updating project environment...."
 sed "s/$production_domain_regex/$fqdn/g" $project_env_template > $project_root_dir/.env
+
+# Generate self-signed SSL certificate for development domain.
+echo "Generating self-signed SSL certificate...."
+sudo /etc/init.d/self-signed-certificate start
 
 # Install tables.
 wp core install \

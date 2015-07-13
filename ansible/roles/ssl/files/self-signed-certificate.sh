@@ -75,9 +75,6 @@ do_start()
   # Update CA certificates bundle.
   update-ca-certificates --fresh
 
-  # Unregister this script.
-  update-rc.d -f self-signed-certificate remove
-
 }
 
 #
