@@ -5,7 +5,11 @@
     pkg="{{ item }}"
     state="latest"
   with_items:
+    - "ack-grep"
+    - "htop"
     - "python-setuptools"
+    - "tree"
+    - "unzip"
   tags:
     - "common"
     - "additions"
