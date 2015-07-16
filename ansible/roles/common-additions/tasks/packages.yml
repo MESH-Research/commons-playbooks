@@ -8,6 +8,7 @@
     - "ack-grep"
     - "htop"
     - "python-setuptools"
+    - "subversion"
     - "tree"
     - "unzip"
   tags:
