@@ -1,6 +1,12 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+# Check for updates to this Vagrantfile at:
+# https://raw.githubusercontent.com/mlaa/commons-playbooks/master/vagrant/Vagrantfile
+
+# Check for updated Vagrant boxes by running:
+# vagrant box add s3://mla-vagrant/commons-dev/metadata.json
+
 # Make sure vagrant-aws is installed.
 unless Vagrant.has_plugin?('vagrant-aws')
   system('vagrant plugin install vagrant-aws') || exit!
