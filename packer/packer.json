@@ -3,7 +3,7 @@
     "AWS_SECURITY_GROUP": "sg-ceb3b8ab",
     "AWS_SUBNET_ID": "subnet-0d3ef154",
     "BUILD_SLUG": "commons-dev",
-    "BUILD_VERSION": "0.1.0",
+    "BUILD_VERSION": "0.1.1",
     "REMOTE_AWS_CONFIG": "/Users/czarate/.aws/virtualbox",
     "SOURCE_AMI": "ami-3b6a8050",
     "SOURCE_ISO": "http://releases.ubuntu.com/14.04.2/ubuntu-14.04.2-server-amd64.iso",
