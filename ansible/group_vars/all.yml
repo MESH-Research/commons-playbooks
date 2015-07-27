@@ -1,5 +1,11 @@
 ---
 
+# Overrides
+strip_www: false
+sudoer_passwords:
+web_user: "www-data"
+
+# WordPress configuration
 wordpress_sites:
   commons:
     multisite:

@@ -1,23 +1,22 @@
 ---
 
-- name: "Development server on AWS EC2"
+- name: "Development server on Vagrant"
   hosts: "all"
   sudo: "yes"
-  remote_user: "ubuntu"
+  remote_user: "vagrant"
   vars_files:
     - "vendor/trellis/group_vars/all"
     - "env_vars/commons.yml"
+    - "env_vars/vagrant.yml"
 
   roles:
     - { role: common, tags: [common] }
     - { role: common-additions, tags: [local] }
-    - { role: sshd, tags: [sshd, server] }
-    - { role: aws, tags: [local] }
+    - { role: vagrant, tags: [local] }
     - { role: ssl, tags: [ssl, local] }
     - { role: fail2ban, tags: [fail2ban] }
     - { role: ferm, tags: [ferm] }
     - { role: ntp }
-    - { role: users, tags: [users] }
     - { role: mariadb, tags: [mariadb] }
     - { role: nullmailer, tags: [local, no-ssmtp] }
     - { role: php, when: not hhvm, tags: [php] }

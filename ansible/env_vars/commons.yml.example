@@ -12,11 +12,6 @@ wordpress_smtp_host: ""
 wordpress_smtp_user: ""
 wordpress_smtp_password: ""
 
-# Overrides
-sshd_permit_root_login: "no"
-strip_www: false
-sudoer_passwords:
-
 # Users and SSH public keys
 users:
   - name: "{{ ansible_ssh_user }}"

@@ -117,20 +117,13 @@
     },
     {
       "type": "ansible-local",
-      "playbook_file": "../ansible/development.yml",
       "playbook_dir": "../ansible",
       "override": {
         "amazon-ebs": {
-          "extra_arguments": [
-            "--skip-tags=dnsmasq",
-            "--extra-vars 'web_user=www-data'"
-          ]
+          "playbook_file": "../ansible/dev-aws.yml"
         },
         "virtualbox-iso": {
-          "extra_arguments": [
-            "--skip-tags=aws-route53,aws-ec2-user-data",
-            "--extra-vars 'web_user=vagrant nginx_user=vagrant'"
-          ]
+          "playbook_file": "../ansible/dev-vagrant.yml"
         }
       }
     },

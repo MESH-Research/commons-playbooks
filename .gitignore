@@ -1,4 +1,4 @@
-/ansible/env_vars/*.yml
+/ansible/env_vars/commons.yml
 /ansible/host_vars
 /ansible/vendor/roles
 /packer/builds/*.json
