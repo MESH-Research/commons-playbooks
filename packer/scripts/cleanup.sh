@@ -1,9 +1,8 @@
 #!/bin/sh
 
 # Remove local Ansible
-# apt-get -y purge ansible
-# apt-add-repository --remove -y ppa:ansible/ansible
-pip uninstall -y ansible
+apt-get -y purge ansible
+apt-add-repository --remove -y ppa:ansible/ansible
 
 # Cleanup apt cache and unused packages
 apt-get autoremove -y --purge
