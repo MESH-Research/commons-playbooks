@@ -9,6 +9,7 @@ project_root_dir="{{ www_root }}/commons/current"
 project_env_template="{{ www_root }}/commons/conf/env.template"
 nginx_conf_dir="/etc/nginx/sites-available"
 restore_dir="/tmp/wordpress-restore"
+package_dir="/tmp/wordpress-packages"
 production_domain="commons.mla.org"
 production_domain_regex="commons\\.mla\\.org"
 
@@ -43,6 +44,14 @@ mkdir -p $restore_dir
 aws s3 cp $wordpress_s3_restore_file $restore_dir/wordpress.backup.tar.gz
 aws s3 cp $mysql_s3_restore_file $restore_dir/mysql.backup.sql.gz
 
+# Define private packages.
+private_packages_dir="s3://mla-backup/commons/packages"
+
+# Copy private packages.
+echo "Downloading private packages...."
+mkdir -p $package_dir
+aws s3 sync $private_packages_dir $package_dir
+
 # Clone project and install dependencies.
 if [ ! -d "$project_root_dir/.git" ]; then
   cd $project_root_dir
@@ -50,7 +59,7 @@ if [ ! -d "$project_root_dir/.git" ]; then
   git remote add origin {{ wordpress_sites.commons.repo }}
   git fetch
   git checkout -t origin/{{ wordpress_sites.commons.repo_branch }}
-  composer install --prefer-source
+  composer install
 fi
 
 # Extract wp-content directory from backup.
