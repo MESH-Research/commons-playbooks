@@ -29,6 +29,10 @@ This requires some Vagrant plugins ([vagrant-aws][vagrant-aws] and
 vagrant up my-hostname --provider=virtualbox
 ```
 
+Using NFS, Vagrant will create a synced folder between `./sync/my-hostname`
+on the host machine and `/srv/www/commons/current` on the VM. When booting and
+destroying VMs, Vagrant will ask for the *host machine’s* administrator
+password so that it can modify `/etc/exports`.
 
 ### VirtualBox wildcard DNS
 
@@ -103,6 +107,15 @@ vagrant up my-hostname --provider=aws
 
 If you’d like to set a default provider instead of using the `--provider` 
 switch, set the `VAGRANT_DEFAULT_PROVIDER` environment variable.
+
+
+## Updating boxes
+
+Boxes are hosted remotely. Check for updated Vagrant boxes with:
+
+```sh
+vagrant box add s3://mla-vagrant/commons-dev/metadata.json
+```
 
 
 [vagrant-aws]: https://github.com/mitchellh/vagrant-aws
