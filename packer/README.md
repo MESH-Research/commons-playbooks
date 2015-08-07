@@ -10,18 +10,18 @@ brew install ansible packer
 The playbooks and templates have been most recently tested with:
 
 * OS X 10.10
-* Ansible 1.9.0.1
-* Packer 0.7.5
+* Ansible 1.9.2
+* Packer 0.8.2
 
-Next install the playbook dependencies. In the `ansible` directory, run:
+Next install the playbook dependencies:
 
 ```sh
 git submodule update --init --recursive
-ansible-galaxy install -f -r requirements.yml
+cd ansible && ansible-galaxy install -f -r requirements.yml
 ```
 
-Configure your build by copying the `ansible/env_vars/commons.yml.example` 
-template and populating it.
+Configure your build by copying the `ansible/vars/config.yml` 
+template to `~/.ansible/commons.yml` and populating it.
 
 Now you’re ready to build. In the `packer` directory, run:
 

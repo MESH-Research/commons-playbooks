@@ -1,9 +1,0 @@
-# Proxy fedora requests
-location /deposits/objects/ {
-  proxy_buffering on;
-  proxy_buffer_size 1k;
-  proxy_buffers 48 64k;
-  proxy_set_header Host $host;
-  proxy_set_header X-Real-IP $remote_addr;
-  proxy_pass {{ fedora_proxy_url | default('http://127.0.0.1:8443') }};
-}

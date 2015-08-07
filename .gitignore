@@ -1,6 +1,3 @@
-/ansible/env_vars/commons.yml
-/ansible/host_vars
-/ansible/vendor/roles
 /packer/builds/*.json
 /packer/builds/boxes
 /packer/packer_cache
