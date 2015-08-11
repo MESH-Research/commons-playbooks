@@ -22,6 +22,12 @@ unless Vagrant.has_plugin?('vagrant-s3auth')
   exit system('vagrant', *ARGV)
 end
 
+# Make sure landrush is installed.
+unless Vagrant.has_plugin?('landrush')
+  system('vagrant plugin install landrush') || exit!
+  exit system('vagrant', *ARGV)
+end
+
 options = {}
 
 # Set hostname from command-line argument.
@@ -42,9 +48,9 @@ Vagrant.configure("2") do |config|
 
   config.vm.define options[:hostname] do |machine|
 
-    machine.vm.hostname = options[:hostname]
-
     machine.vm.provider :aws do |aws, override|
+
+      override.vm.hostname = options[:hostname]
 
       # Note: You must use a passphrase-less private key.
       # This command removes a passphrase from an existing key:
@@ -73,9 +79,14 @@ Vagrant.configure("2") do |config|
     end
 
     machine.vm.provider :virtualbox do |vb, override|
+
+      config.landrush.enabled = true
+
       override.ssh.password = "vagrant"
+      override.vm.hostname = options[:hostname] + ".vagrant.dev"
       override.vm.network "private_network", type: "dhcp"
       override.vm.synced_folder "sync/" + options[:hostname], "/srv/www/commons/current", create: true, type: "nfs"
+
     end
 
   end
