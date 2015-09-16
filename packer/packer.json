@@ -96,14 +96,15 @@
     {
       "type": "ansible-local",
       "host_vars": "{{ user `ANSIBLE_HOST_VARS` }}",
-      "inventory_groups": "development",
       "playbook_dir": "../ansible",
+      "playbook_file": "../ansible/dev.yml",
       "override": {
         "amazon-ebs": {
-          "playbook_file": "../ansible/dev-aws.yml"
+          "inventory_groups": "development,web,aws,commons"
         },
         "virtualbox-iso": {
-          "playbook_file": "../ansible/dev-vagrant.yml"
+          "extra_arguments": ["--skip-tags='users'"],
+          "inventory_groups": "development,web,vagrant,commons"
         }
       }
     },
