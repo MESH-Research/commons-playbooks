@@ -5,7 +5,7 @@
     "AWS_SUBNET_ID": "subnet-0d3ef154",
     "BUILD_SLUG": "commons-dev",
     "BUILD_VERSION": "0.1.1",
-    "SOURCE_AMI": "ami-3b6a8050",
+    "SOURCE_AMI": "ami-2d630d48",
     "SOURCE_ISO": "http://releases.ubuntu.com/trusty/ubuntu-14.04.3-server-amd64.iso",
     "SOURCE_ISO_CHECKSUM": "a3b345908a826e262f4ea1afeb357fd09ec0558cf34e6c9112cead4bb55ccdfb",
     "TIME_STAMP": "{{isotime \"2006-01-02-15-04-05\"}}"
