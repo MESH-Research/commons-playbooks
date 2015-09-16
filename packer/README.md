@@ -10,8 +10,9 @@ brew install ansible packer
 The playbooks and templates have been most recently tested with:
 
 * OS X 10.10
-* Ansible 1.9.2
-* Packer 0.8.2
+* Ansible 1.9.3
+* Packer 0.8.6
+* VirtualBox 4.3.30
 
 Next install the playbook dependencies:
 

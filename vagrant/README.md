@@ -1,5 +1,10 @@
 # Running
 
+These Vagrant boxes have been most recently tested with:
+
+* Vagrant 1.7.4
+* VirtualBox 4.3.30
+
 The `Vagrantfile` expects a hostname to be passed as a parameter from your
 `vagrant` command. This allows you to simply think up a hostname and then
 summon it into existence with:
