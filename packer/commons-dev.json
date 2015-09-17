@@ -1,5 +1,6 @@
 {
   "variables": {
+    "ANSIBLE_GROUP_VARS": "/usr/local/etc/ansible/group_vars",
     "ANSIBLE_HOST_VARS": "/usr/local/etc/ansible/host_vars",
     "AWS_SECURITY_GROUP": "sg-ceb3b8ab",
     "AWS_SUBNET_ID": "subnet-0d3ef154",
@@ -95,6 +96,7 @@
     },
     {
       "type": "ansible-local",
+      "group_vars": "{{ user `ANSIBLE_GROUP_VARS` }}",
       "host_vars": "{{ user `ANSIBLE_HOST_VARS` }}",
       "playbook_dir": "../ansible",
       "playbook_file": "../ansible/dev.yml",
