@@ -105,7 +105,6 @@
           "inventory_groups": "development,web,aws,commons"
         },
         "virtualbox-iso": {
-          "extra_arguments": ["--skip-tags='users'"],
           "inventory_groups": "development,web,vagrant,commons"
         }
       }
