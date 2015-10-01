@@ -100,6 +100,7 @@
       "host_vars": "{{ user `ANSIBLE_HOST_VARS` }}",
       "playbook_dir": "../ansible",
       "playbook_file": "../ansible/dev.yml",
+      "extra_arguments": ["--extra-vars='ansible_connection=local'"],
       "override": {
         "amazon-ebs": {
           "inventory_groups": "development,web,aws,commons"
