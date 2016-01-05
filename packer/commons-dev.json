@@ -6,6 +6,7 @@
     "AWS_SUBNET_ID": "subnet-0d3ef154",
     "BUILD_SLUG": "commons-dev",
     "BUILD_VERSION": "0.1.6",
+    "COMPOSER_MANIFEST": "https://raw.githubusercontent.com/mlaa/commons/master/composer.json",
     "SOURCE_AMI": "ami-2d630d48",
     "SOURCE_ISO": "http://releases.ubuntu.com/trusty/ubuntu-14.04.3-server-amd64.iso",
     "SOURCE_ISO_CHECKSUM": "a3b345908a826e262f4ea1afeb357fd09ec0558cf34e6c9112cead4bb55ccdfb",
@@ -100,7 +101,9 @@
       "host_vars": "{{ user `ANSIBLE_HOST_VARS` }}",
       "playbook_dir": "../ansible",
       "playbook_file": "../ansible/dev.yml",
-      "extra_arguments": ["--extra-vars='ansible_connection=local'"],
+      "extra_arguments": [
+        "--extra-vars='ansible_connection=local prewarm_composer_manifest={{ user `COMPOSER_MANIFEST` }}'"
+      ],
       "override": {
         "amazon-ebs": {
           "inventory_groups": "development,web,aws,commons"
