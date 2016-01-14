@@ -71,7 +71,7 @@ Vagrant.configure("2") do |config|
       aws.iam_instance_profile_name = "commons-dev"
       aws.associate_public_ip = "true"
 
-      aws.tags["Name"] = options[:hostname]
+      aws.tags["Name"] = "commons-dev-" + options[:hostname]
       aws.tags["Project"] = "commons"
 
       aws.user_data = "fqdn: " + options[:hostname] + ".mlacommons.org"
