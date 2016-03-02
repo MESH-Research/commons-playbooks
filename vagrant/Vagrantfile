@@ -28,6 +28,12 @@ unless Vagrant.has_plugin?('landrush')
   exit system('vagrant', *ARGV)
 end
 
+# Make sure vbguest is installed (if guest & host versions don't match, synced folders can break).
+unless Vagrant.has_plugin?('vagrant-vbguest')
+  system('vagrant plugin install vagrant-vbguest') || exit!
+  exit system('vagrant', *ARGV)
+end
+
 options = {}
 
 # Set hostname from command-line argument.
