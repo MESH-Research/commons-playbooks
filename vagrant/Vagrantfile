@@ -40,7 +40,7 @@ options = {}
 options[:hostname] = ARGV[1] || false
 
 # Require the user to specify a hostname.
-if (("#{ARGV[0]}" != "" && !options[:hostname]) || options[:hostname].start_with?("-"))
+if (("#{ARGV[0]}" != "" && !options[:hostname]) || (options[:hostname] && options[:hostname].start_with?("-")))
   abort("Please provide a hostname, e.g.: `vagrant #{ARGV[0]} hostname [flags]`")
 end
 
