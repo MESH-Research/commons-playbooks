@@ -72,8 +72,8 @@ Vagrant.configure("2") do |config|
       aws.ami = ""
 
       aws.instance_type = "t2.small"
-      aws.security_groups = "sg-ceb3b8ab"
-      aws.subnet_id = "subnet-0d3ef154"
+      aws.security_groups = "sg-b7d014cf"
+      aws.subnet_id = "subnet-c031d098"
       aws.iam_instance_profile_name = "commons-dev"
       aws.associate_public_ip = "true"
 
