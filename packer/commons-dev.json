@@ -1,15 +1,15 @@
 {
   "variables": {
-    "ANSIBLE_GROUP_VARS": "/usr/local/etc/ansible/group_vars",
-    "ANSIBLE_HOST_VARS": "/usr/local/etc/ansible/host_vars",
-    "AWS_SECURITY_GROUP": "sg-ceb3b8ab",
-    "AWS_SUBNET_ID": "subnet-0d3ef154",
+    "ANSIBLE_GROUP_VARS": "../ansible/group_vars",
+    "ANSIBLE_HOST_VARS": "../ansible/hosts",
+    "AWS_SECURITY_GROUP": "sg-e0ba979f",
+    "AWS_SUBNET_ID": "subnet-2e495175",
     "BUILD_SLUG": "commons-dev",
     "BUILD_VERSION": "0.1.8",
     "COMPOSER_MANIFEST": "https://raw.githubusercontent.com/mlaa/commons/master/composer.json",
-    "SOURCE_AMI": "ami-5c207736",
-    "SOURCE_ISO": "http://releases.ubuntu.com/trusty/ubuntu-14.04.3-server-amd64.iso",
-    "SOURCE_ISO_CHECKSUM": "a3b345908a826e262f4ea1afeb357fd09ec0558cf34e6c9112cead4bb55ccdfb",
+    "SOURCE_AMI": "ami-2043965d",
+    "SOURCE_ISO": "http://releases.ubuntu.com/artful/ubuntu-17.10.1-server-amd64.iso",
+    "SOURCE_ISO_CHECKSUM": "8ff73f1b622276758475c3bd5190b382774626de5a82c50930519381f6c3a3f8",
     "TIME_STAMP": "{{isotime \"2006-01-02-15-04-05\"}}"
   },
   "builders": [
